@@ -2,7 +2,7 @@ package graduation.raitrest.service;
 
 import graduation.raitrest.model.entities.Role;
 import graduation.raitrest.model.entities.User;
-import graduation.raitrest.repository.datajpa.JpaUtil;
+import graduation.raitrest.util.JpaUtil;
 import graduation.raitrest.util.exception.NotFoundException;
 import org.junit.Before;
 import org.junit.Test;

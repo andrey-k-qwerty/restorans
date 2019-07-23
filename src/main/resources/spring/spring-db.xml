@@ -62,7 +62,7 @@
     <context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>
 
     <!--no pooling-->
-    <bean class="graduation.raitrest.repository.datajpa.JpaUtil"/>
+    <bean class="graduation.raitrest.util.JpaUtil"/>
 
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource"

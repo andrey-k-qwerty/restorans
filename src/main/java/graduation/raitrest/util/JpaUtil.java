@@ -1,4 +1,4 @@
-package graduation.raitrest.repository.datajpa;
+package graduation.raitrest.util;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
