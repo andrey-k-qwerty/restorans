@@ -14,9 +14,9 @@ public class Restoran extends AbstractNamedEntity {
     @NotNull
     private User user;
 
-    public Restoran(Integer id, String name, User user) {
+    public Restoran(Integer id, String name) {
         super(id, name);
-        this.user = user;
+      //  this.user = user;
     }
 
     public Restoran() {

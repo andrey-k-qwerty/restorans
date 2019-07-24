@@ -3,7 +3,9 @@ package graduation.raitrest;
 import graduation.raitrest.model.entities.Role;
 import graduation.raitrest.model.entities.User;
 import graduation.raitrest.web.user.AdminRestController;
+import org.junit.runner.RunWith;
 import org.springframework.context.support.GenericXmlApplicationContext;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 
@@ -12,11 +14,12 @@ public class SpringMain {
         // java 7 automatic resource management
         try (GenericXmlApplicationContext appCtx = new GenericXmlApplicationContext()) {
          //   appCtx.getEnvironment().setActiveProfiles(Profiles.getActiveDbProfile(), Profiles.REPOSITORY_IMPLEMENTATION);
-            appCtx.load("spring/inmemory.xml","spring/spring-app.xml", "spring/spring-db.xml");
+            appCtx.load("spring/inmemory.xml","spring/spring-app.xml");
             appCtx.refresh();
 
             System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
             AdminRestController adminUserController = appCtx.getBean(AdminRestController.class);
+            System.out.println(adminUserController.getAll());
             adminUserController.create(new User(null, "userName", "email@mail.ru", "password", Role.ROLE_ADMIN));
             System.out.println();
 

@@ -26,4 +26,8 @@ public interface CrudRestoranRepository extends JpaRepository<Restoran, Integer>
     @Override
     @Query("SELECT distinct  r FROM Restoran r left join FETCH r.user")
     List<Restoran> findAll();
+
+
+    @Query("SELECT distinct  r FROM Restoran r left join FETCH r.user where r.user.id = :user_id")
+    List<Restoran> findAll(@Param("user_id") int user_id);
 }

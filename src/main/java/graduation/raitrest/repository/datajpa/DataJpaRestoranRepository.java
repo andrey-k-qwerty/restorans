@@ -44,16 +44,16 @@ public class DataJpaRestoranRepository implements RestoranRepository {
 
     @Override
     public Restoran get(int id, int userId) {
-        return null;
+        return crudRestoranRepository.findById(id).filter(r -> r.getUser().getId() == userId).orElse(null);
     }
 
     @Override
     public List<Restoran> getAll() {
-        return null;
+        return crudRestoranRepository.findAll();
     }
 
     @Override
     public List<Restoran> getAll(int userId) {
-        return null;
+        return crudRestoranRepository.findAll(userId);
     }
 }
