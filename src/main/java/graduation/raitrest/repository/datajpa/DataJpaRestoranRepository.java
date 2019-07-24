@@ -10,6 +10,8 @@ import java.util.List;
 public class DataJpaRestoranRepository implements RestoranRepository {
     @Autowired
     private CrudRestoranRepository crudRestoranRepository;
+    @Autowired
+    private CrudUserRepository crudUserRepository;
 
     @Override
     public Restoran save(Restoran restoran) {
@@ -18,17 +20,21 @@ public class DataJpaRestoranRepository implements RestoranRepository {
 
     @Override
     public Restoran save(Restoran restoran, int userId) {
-        return null;
+        if (!restoran.isNew() && get(restoran.getId(), userId) == null) {
+            return null;
+        }
+        restoran.setUser(crudUserRepository.getOne(userId));
+        return crudRestoranRepository.save(restoran);
     }
 
     @Override
     public boolean delete(int id) {
-        return crudRestoranRepository.delete(id) != 0 ;
+        return crudRestoranRepository.delete(id) != 0;
     }
 
     @Override
     public boolean delete(int id, int userId) {
-        return false;
+        return crudRestoranRepository.delete(id,userId) !=0;
     }
 
     @Override

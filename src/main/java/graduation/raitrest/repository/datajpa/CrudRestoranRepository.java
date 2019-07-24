@@ -17,6 +17,12 @@ public interface CrudRestoranRepository extends JpaRepository<Restoran, Integer>
     @Query("DELETE FROM Restoran r WHERE r.id=:id")
     int delete(@Param("id") int id);
 
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Restoran r WHERE r.id=:id AND r.user.id=:userId")
+    int delete(@Param("id") int id, @Param("userId") int userId);
+
+
     @Override
     @Query("SELECT distinct  r FROM Restoran r left join FETCH r.user")
     List<Restoran> findAll();
