@@ -1,6 +1,6 @@
 package graduation.raitrest.repository.datajpa;
 
-import graduation.raitrest.model.entities.Restoran;
+import graduation.raitrest.model.entities.Menu;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -11,28 +11,28 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Transactional(readOnly = true)
-public interface CrudRestoranRepository extends JpaRepository<Restoran, Integer> {
+public interface CrudMenuRepository extends JpaRepository<Menu, Integer> {
     @Transactional
     @Modifying
     //    @Query(name = User.DELETE)
-    @Query("DELETE FROM Restoran r WHERE r.id=:id")
+    @Query("DELETE FROM Menu m WHERE m.id=:id")
     int delete(@Param("id") int id);
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Restoran r WHERE r.id=:id AND r.user.id=:userId")
+    @Query("DELETE FROM Menu m WHERE m.id=:id AND m.restoran.user.id=:userId")
     int delete(@Param("id") int id, @Param("userId") int userId);
 
 
     @Override
-    @Query("SELECT distinct  r FROM Restoran r left join FETCH r.user")
-    List<Restoran> findAll();
+    @Query("SELECT distinct  r FROM Menu r left join FETCH r.restoran.user")
+    List<Menu> findAll();
 
 
-    @Query("SELECT distinct  r FROM Restoran r left join FETCH r.user where r.user.id = :user_id")
-    List<Restoran> findAll(@Param("user_id") int user_id);
+    @Query("SELECT distinct  r FROM Menu r left join FETCH r.restoran where r.restoran.user.id = :user_id")
+    List<Menu> findAll(@Param("user_id") int user_id);
 
-    @EntityGraph(attributePaths = {"user"})
-    @Query("SELECT u FROM Restoran u WHERE u.id=?1")
-    Restoran getWithUser(int id);
+//    @EntityGraph(attributePaths = {"restoran"})
+//    @Query("SELECT u FROM Menu u WHERE u.id=?1")
+//    Menu getWithUser(int id);
 }
