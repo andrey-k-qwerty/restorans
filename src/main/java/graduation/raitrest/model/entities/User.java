@@ -60,6 +60,7 @@ public class User extends AbstractNamedEntity {
     @ElementCollection(fetch = FetchType.EAGER)
     //    @Fetch(FetchMode.SUBSELECT)
     @BatchSize(size = 200)
+    @org.hibernate.annotations.OrderBy(clause = "role desc")
     private Set<Role> roles;
 
 

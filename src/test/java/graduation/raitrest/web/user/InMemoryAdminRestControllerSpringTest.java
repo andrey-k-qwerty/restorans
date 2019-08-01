@@ -15,8 +15,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.Collection;
 
 import static graduation.raitrest.UserTestData.ADMIN;
-
-@ContextConfiguration({"classpath:spring/spring-app.xml", "classpath:spring/inmemory.xml"})
+//Чтобы использовать спринг апп, нужно добавить в инмемори - репозитоории соответсвующие сервисам. сервисы сканиру
+//ются через спринг апп
+//@ContextConfiguration({"classpath:spring/spring-app.xml", "classpath:spring/inmemory.xml"})
+@ContextConfiguration({ "classpath:spring/inmemory.xml"})
 @RunWith(SpringRunner.class)
 public class InMemoryAdminRestControllerSpringTest {
 

@@ -63,6 +63,11 @@ public class UserServiceTest extends AbstractServiceTest {
     public void get() throws Exception {
         User user = service.get(USER_ID);
         assertMatch(user, USER);
+        User admin = service.get(ADMIN_ID);
+        assertMatch(admin, ADMIN);
+        User manager = service.get(MANAGER_ID);
+        assertMatch(manager, MANAGER);
+
     }
 
     @Test(expected = NotFoundException.class)

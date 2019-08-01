@@ -42,6 +42,7 @@
                 <entry key="#{T(org.hibernate.cfg.AvailableSettings).USE_QUERY_CACHE}"
                        value="false"/> <!--default-->
                 <!--<entry key="#{T(org.hibernate.cfg.AvailableSettings).HBM2DDL_AUTO}" value="${hibernate.hbm2ddl.auto}"/>-->
+                <entry key="#{T(org.hibernate.cfg.AvailableSettings).DIALECT}" value="${hibernate.dialect}"/>
             </map>
         </property>
 

@@ -1,4 +1,4 @@
-package graduation.raitrest.repository.datajpa;
+package graduation.raitrest.model.test;
 
 import graduation.raitrest.model.entities.Menu;
 import org.springframework.data.jpa.repository.EntityGraph;

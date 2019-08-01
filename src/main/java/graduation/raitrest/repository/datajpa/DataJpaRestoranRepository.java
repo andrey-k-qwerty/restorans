@@ -8,15 +8,17 @@ import java.util.List;
 
 @Repository
 public class DataJpaRestoranRepository implements RestoranRepository {
+
     @Autowired
     private CrudRestoranRepository crudRestoranRepository;
+
     @Autowired
     private CrudUserRepository crudUserRepository;
 
-    @Override
-    public Restoran save(Restoran restoran) {
-        return crudRestoranRepository.save(restoran);
-    }
+//    @Override
+//    public Restoran save(Restoran restoran) {
+//        return crudRestoranRepository.save(restoran);
+//    }
 
     @Override
     public Restoran save(Restoran restoran, int userId) {
