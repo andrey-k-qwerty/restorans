@@ -1,5 +1,7 @@
 package graduation.raitrest.repository.datajpa;
 import graduation.raitrest.model.entities.User;
+import graduation.raitrest.repository.UserRepository;
+import graduation.raitrest.repository.datajpa.grud.CrudUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;

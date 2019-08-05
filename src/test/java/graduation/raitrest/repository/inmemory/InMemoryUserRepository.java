@@ -2,7 +2,7 @@ package graduation.raitrest.repository.inmemory;
 
 import graduation.raitrest.UserTestData;
 import graduation.raitrest.model.entities.User;
-import graduation.raitrest.repository.datajpa.UserRepository;
+import graduation.raitrest.repository.UserRepository;
 import org.springframework.stereotype.Repository;
 
 

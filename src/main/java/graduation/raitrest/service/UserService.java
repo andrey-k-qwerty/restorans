@@ -1,7 +1,7 @@
 package graduation.raitrest.service;
 
 import graduation.raitrest.model.entities.User;
-import graduation.raitrest.repository.datajpa.UserRepository;
+import graduation.raitrest.repository.UserRepository;
 import graduation.raitrest.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;

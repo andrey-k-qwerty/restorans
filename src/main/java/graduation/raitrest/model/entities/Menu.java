@@ -1,6 +1,8 @@
 package graduation.raitrest.model.entities;
 
 import graduation.raitrest.model.AbstractBaseEntity;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

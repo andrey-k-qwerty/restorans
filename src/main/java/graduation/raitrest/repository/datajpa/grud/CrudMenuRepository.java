@@ -1,4 +1,4 @@
-package graduation.raitrest.model.test;
+package graduation.raitrest.repository.datajpa.grud;
 
 import graduation.raitrest.model.entities.Menu;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -25,11 +25,17 @@ public interface CrudMenuRepository extends JpaRepository<Menu, Integer> {
 
 
     @Override
-    @Query("SELECT distinct  r FROM Menu r left join FETCH r.restoran.user")
+    @Query("SELECT distinct  r FROM Menu r left join FETCH r.restoran")
     List<Menu> findAll();
 
-
+// SELECT distinct m,  r, u FROM Menu m join Restoran r on r.id= m.restoran.id join User u on r.user.id = u.id
+// select m  from Menu m left join  Restoran r on m.restoran.id  = r.id left join User u on r.id = u.id
+// select m,r  from Menu m left join  Restoran r on m.restoran.id  = r.id left join fetch r.user
     @Query("SELECT distinct  r FROM Menu r left join FETCH r.restoran where r.restoran.user.id = :user_id")
+//    @Query(value = "select distinct m.* \n" +
+//            "from MENUS m\n" +
+//            "left join RESTORANS R on m.RESTORAN_ID = R.ID\n" +
+//            "left join USERS U on R.USER_ID = U.ID" , nativeQuery = true)
     List<Menu> findAll(@Param("user_id") int user_id);
 
 //    @EntityGraph(attributePaths = {"restoran"})

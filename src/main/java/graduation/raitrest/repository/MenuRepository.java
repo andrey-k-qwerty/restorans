@@ -1,4 +1,4 @@
-package graduation.raitrest.repository.datajpa;
+package graduation.raitrest.repository;
 
 
 import graduation.raitrest.model.entities.Menu;

@@ -1,4 +1,4 @@
-package graduation.raitrest.repository.datajpa;
+package graduation.raitrest.repository.datajpa.grud;
 
 
 import graduation.raitrest.model.entities.User;

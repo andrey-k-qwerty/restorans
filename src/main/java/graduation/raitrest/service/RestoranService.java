@@ -1,7 +1,7 @@
 package graduation.raitrest.service;
 
 import graduation.raitrest.model.entities.Restoran;
-import graduation.raitrest.repository.datajpa.RestoranRepository;
+import graduation.raitrest.repository.RestoranRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
