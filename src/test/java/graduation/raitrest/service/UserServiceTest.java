@@ -11,10 +11,8 @@ import org.springframework.cache.CacheManager;
 import org.springframework.dao.DataAccessException;
 
 import javax.validation.ConstraintViolationException;
-import java.util.Collections;
-import java.util.Date;
-import java.util.EnumSet;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static graduation.raitrest.UserTestData.*;
 
@@ -40,7 +38,11 @@ public class UserServiceTest extends AbstractServiceTest {
         User created = service.create(newUser);
         newUser.setId(created.getId());
         assertMatch(created, newUser);
-        assertMatch(service.getAll(), ADMIN, MANAGER,newUser, USER);
+
+        List<User> collect = listUsers.stream().collect(Collectors.toList());
+        collect.add(newUser);
+        collect.sort(Comparator.comparing(User::getName));
+        assertMatch(service.getAll(), collect);
     }
 
     @Test(expected = DataAccessException.class)
@@ -51,7 +53,10 @@ public class UserServiceTest extends AbstractServiceTest {
     @Test
     public void delete() throws Exception {
         service.delete(USER_ID);
-        assertMatch(service.getAll(), ADMIN,MANAGER);
+        List<User> collect = listUsers.stream()
+                .filter(user -> user.getId() != USER_ID)
+                .sorted(Comparator.comparing(User::getName)).collect(Collectors.toList());
+        assertMatch(service.getAll(), collect);
     }
 
     @Test(expected = NotFoundException.class)
@@ -67,6 +72,8 @@ public class UserServiceTest extends AbstractServiceTest {
         assertMatch(admin, ADMIN);
         User manager = service.get(MANAGER_ID);
         assertMatch(manager, MANAGER);
+        User user1 = service.get(MANAGER_3_ID);
+        assertMatch(user1, MANAGER_3);
 
     }
 
@@ -105,7 +112,8 @@ public class UserServiceTest extends AbstractServiceTest {
     @Test
     public void getAll() throws Exception {
         List<User> all = service.getAll();
-        assertMatch(all, ADMIN, MANAGER,USER);
+        List<User> collect = listUsers.stream().sorted(Comparator.comparing(User::getName)).collect(Collectors.toList());
+        assertMatch(all, collect);
     }
 
 

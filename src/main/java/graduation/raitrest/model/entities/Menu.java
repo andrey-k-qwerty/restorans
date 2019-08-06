@@ -24,7 +24,33 @@ public class Menu extends AbstractBaseEntity {
     @NotNull
     private Restoran restoran;
 
+    public Menu(String description, Date dateTime, @NotNull Restoran restoran) {
+        this.description = description;
+        this.dateTime = dateTime;
+        this.restoran = restoran;
+    }
+    public Menu(String description, Date dateTime) {
+        this.description = description;
+        this.dateTime = dateTime;
 
+    }
+
+    public Menu(Integer id, String description, Date dateTime, @NotNull Restoran restoran) {
+        super(id);
+        this.description = description;
+        this.dateTime = dateTime;
+        this.restoran = restoran;
+    }
+    public Menu(Integer id, String description, Date dateTime) {
+        super(id);
+        this.description = description;
+        this.dateTime = dateTime;
+        this.restoran = restoran;
+    }
+
+    public Menu() {
+
+    }
 
     public Restoran getRestoran() {
         return restoran;

@@ -24,7 +24,7 @@ public class RestoranServiceTest extends AbstractServiceTest {
     @Test
     public void getAllByUserID() {
         List<Restoran> all = service.getAll(ADMIN_ID);
-        assertMatch(all, RESTORAN1);
+        assertMatch(all, RESTORAN_STAR);
         all = service.getAll(MANAGER_ID);
         assertMatch(all, RESTORAN2);
     }
@@ -32,7 +32,7 @@ public class RestoranServiceTest extends AbstractServiceTest {
     @Test
     public void get() {
         Restoran restoran = service.get(RESTORAN_ID);
-        assertMatch(restoran, RESTORAN1);
+        assertMatch(restoran, RESTORAN_STAR);
     }
 
     @Test
@@ -44,13 +44,13 @@ public class RestoranServiceTest extends AbstractServiceTest {
     @Test
     public void delete() {
         service.delete(RESTORAN_ID);
-        assertMatch(service.getAll(), RESTORAN2);
+        assertMatch(service.getAll(), RESTORAN2,RESTORAN3,RESTORAN4,RESTORAN5);
     }
 
     @Test
     public void deleteWithUserID() {
         service.delete(RESTORAN_ID+1,MANAGER_ID);
-        assertMatch(service.getAll(), RESTORAN1);
+        assertMatch(service.getAll(), RESTORAN_STAR,RESTORAN3,RESTORAN4,RESTORAN5);
     }
 
     @Test
@@ -76,6 +76,6 @@ public class RestoranServiceTest extends AbstractServiceTest {
     public void updateNotFound() {
         thrown.expect(NotFoundException.class);
         thrown.expectMessage("Not found entity with id=" + RESTORAN_ID);
-        service.update(RESTORAN1, MANAGER_ID);
+        service.update(RESTORAN_STAR, MANAGER_ID);
     }
 }
