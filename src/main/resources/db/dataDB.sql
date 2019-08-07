@@ -1,7 +1,11 @@
-DELETE FROM MENUS;
-DELETE FROM RESTORANS;
-DELETE FROM USER_ROLES;
-DELETE FROM USERS;
+DELETE
+FROM MENUS;
+DELETE
+FROM RESTORANS;
+DELETE
+FROM USER_ROLES;
+DELETE
+FROM USERS;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO users (name, email, password)
@@ -41,8 +45,7 @@ VALUES ('ROLE_USER', (select U.ID FROM USERS U WHERE U.NAME = 'User')),
 ;
 --
 INSERT INTO RESTORANS (NAME, USER_ID)
-VALUES
-       ('Star', (select U.ID FROM USERS U WHERE U.NAME = 'Admin')),       --100015
+VALUES ('Star', (select U.ID FROM USERS U WHERE U.NAME = 'Admin')),       --100015
        ('Pearl', (select U.ID FROM USERS U WHERE U.NAME = 'Manager')),    --100016
        ('Star_1', (select U.ID FROM USERS U WHERE U.NAME = 'Manager_1')), --100017
        ('Star_2', (select U.ID FROM USERS U WHERE U.NAME = 'Manager_2')), --100018
@@ -50,5 +53,8 @@ VALUES
 ;
 
 INSERT INTO MENUS (RESTORAN_ID, DESCRIPTION, DATE_TIME)
-VALUES ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), 'Star_meal_1', curdate()), --100020
-       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'), 'Pearl_meal_2', curdate()); --100021
+VALUES ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), 'Star_meal_dinner', curdate()), --100020
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'), 'Pearl_meal_dinner', curdate()), --100021
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star_1'), 'Star_1_meal_dinner', curdate()), --100022
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star_2'), 'Star_2_meal_dinner', curdate()), --100023
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star_3'), 'Star_3_meal_dinner', curdate()); --100024

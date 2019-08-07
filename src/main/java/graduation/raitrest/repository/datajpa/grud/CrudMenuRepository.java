@@ -18,6 +18,8 @@ public interface CrudMenuRepository extends JpaRepository<Menu, Integer> {
     @Query("DELETE FROM Menu m WHERE m.id=:id")
     int delete(@Param("id") int id);
 
+
+
     @Modifying
     @Transactional
     @Query("DELETE FROM Menu m WHERE m.id=:id AND m.restoran.user.id=:userId")
@@ -38,7 +40,7 @@ public interface CrudMenuRepository extends JpaRepository<Menu, Integer> {
 //            "left join USERS U on R.USER_ID = U.ID" , nativeQuery = true)
     List<Menu> findAll(@Param("user_id") int user_id);
 
-//    @EntityGraph(attributePaths = {"restoran"})
-//    @Query("SELECT u FROM Menu u WHERE u.id=?1")
-//    Menu getWithUser(int id);
+    @EntityGraph(attributePaths = {"restoran"},type = EntityGraph.EntityGraphType.LOAD)
+    @Query("SELECT u FROM Menu u WHERE u.id=?1")
+    Menu getWithRestoran(int id);
 }

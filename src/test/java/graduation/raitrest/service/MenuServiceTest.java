@@ -12,14 +12,14 @@ public class MenuServiceTest extends AbstractServiceTest {
     @Autowired
     protected MenuService service;
     @Test
-    public void get() {
-
-
+    public void getWithRestoran() {
         Menu actual = service.get(MENU_ID,ADMIN_ID );
         assertMatch(actual, MENU_STAR);
     }
 
     @Test
-    public void testGet() {
+    public void get() {
+        Menu menu = service.get(MENU_ID + 1);
+        assertMatch(menu,MENU_PEARL);
     }
 }

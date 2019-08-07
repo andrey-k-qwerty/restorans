@@ -26,7 +26,7 @@ public class RestoranServiceTest extends AbstractServiceTest {
         List<Restoran> all = service.getAll(ADMIN_ID);
         assertMatch(all, RESTORAN_STAR);
         all = service.getAll(MANAGER_ID);
-        assertMatch(all, RESTORAN2);
+        assertMatch(all, RESTORAN_PEARL);
     }
 
     @Test
@@ -38,19 +38,19 @@ public class RestoranServiceTest extends AbstractServiceTest {
     @Test
     public void getByUserId() {
         Restoran restoran = service.get(RESTORAN_ID + 1, MANAGER_ID);
-        assertMatch(restoran, RESTORAN2);
+        assertMatch(restoran, RESTORAN_PEARL);
     }
 
     @Test
     public void delete() {
         service.delete(RESTORAN_ID);
-        assertMatch(service.getAll(), RESTORAN2,RESTORAN3,RESTORAN4,RESTORAN5);
+        assertMatch(service.getAll(), RESTORAN_PEARL, RESTORAN_STAR_1, RESTORAN_STAR_2, RESTORAN_STAR_3);
     }
 
     @Test
     public void deleteWithUserID() {
         service.delete(RESTORAN_ID+1,MANAGER_ID);
-        assertMatch(service.getAll(), RESTORAN_STAR,RESTORAN3,RESTORAN4,RESTORAN5);
+        assertMatch(service.getAll(), RESTORAN_STAR, RESTORAN_STAR_1, RESTORAN_STAR_2, RESTORAN_STAR_3);
     }
 
     @Test

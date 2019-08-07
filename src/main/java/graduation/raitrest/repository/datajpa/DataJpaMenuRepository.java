@@ -45,12 +45,16 @@ public class DataJpaMenuRepository implements MenuRepository {
 
     @Override
     public Menu get(int id) {
-        return crudMenuRepository.getOne(id);
+        return crudMenuRepository.findById(id).orElse(null);
     }
 
     @Override
     public Menu get(int id, int userId) {
-        return crudMenuRepository.findById(id).filter(menu -> menu.getRestoran().getUser().getId() == userId).orElse(null);
+//        return crudMenuRepository.findById(id).filter(menu -> menu.getRestoran().getUser().getId() == userId).orElse(null);
+        Menu menu = crudMenuRepository.getWithRestoran(id);
+        if (menu.getRestoran().getUser().getId() == userId)
+            return menu;
+        return null;
     }
 
     @Override
