@@ -16,10 +16,17 @@ public class RestoranTestData {
     public static final Restoran RESTORAN_STAR_3 = new Restoran(RESTORAN_ID + 4,"Star_3");
 
     public static  List<Restoran> RESTORAN_LIST = List.of(RESTORAN_STAR, RESTORAN_PEARL, RESTORAN_STAR_1, RESTORAN_STAR_2, RESTORAN_STAR_3);
+    public static Restoran getCreated() {
+        return new Restoran(null, "New restaurant");
+    }
+
+    public static Restoran getUpdated() {
+        return new Restoran(RESTORAN_ID,  "Update Star");
+    }
 
     public static void assertMatch(Restoran actual, Restoran expected) {
-        assertThat(actual).isEqualToIgnoringGivenFields(expected, "user");
-     //   assertThat(actual).isEqualToComparingFieldByField(expected);
+      //  assertThat(actual).isEqualToIgnoringGivenFields(expected, "user");
+        assertThat(actual).isEqualToComparingFieldByField(expected);
     }
 
     public static void assertMatch(Iterable<Restoran> actual, Restoran... expected) {

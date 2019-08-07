@@ -2,6 +2,7 @@ package graduation.raitrest.repository;
 
 
 import graduation.raitrest.model.entities.Menu;
+import graduation.raitrest.model.entities.Restoran;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ public interface MenuRepository {
     // null if not found, when updated
 
     Menu save(Menu menu, int userId);
-
+    Menu save(Menu menu, int restoranID, int userId);
     // false if not found
     boolean delete(int id);
 

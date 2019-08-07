@@ -45,8 +45,14 @@ public class RestoranService {
     }
 
     public void update(Restoran restoran, int userId) {
-        Assert.notNull(restoran, "meal must not be null");
+        Assert.notNull(restoran, "restoran must not be null");
         checkNotFoundWithId(restoranRepository.save(restoran, userId), restoran.getId());
     }
+
+    public Restoran create(Restoran restoran, int userId) {
+        Assert.notNull(restoran, "restoran must not be null");
+        return restoranRepository.save(restoran, userId);
+    }
+
 
 }

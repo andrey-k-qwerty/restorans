@@ -8,13 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.GregorianCalendar;
 import java.util.List;
 
 @Repository
 public class DataJpaMenuRepository implements MenuRepository {
-    private CrudMenuRepository crudMenuRepository;
     private final CrudRestoranRepository crudRestoranRepository;
+    private CrudMenuRepository crudMenuRepository;
 
     @Autowired
     public DataJpaMenuRepository(CrudMenuRepository crudMenuRepository, CrudRestoranRepository crudRestoranRepository) {
@@ -28,19 +27,28 @@ public class DataJpaMenuRepository implements MenuRepository {
         if (!menu.isNew() && get(menu.getId(), userId) == null) {
             return null;
         }
-        menu.setRestoran(crudRestoranRepository.getWithUser(userId));
+        if (menu.getRestoran() == null || menu.getRestoran().getUser().getId() != userId) return null;
+        return crudMenuRepository.save(menu);
+    }
+
+    @Override
+    public Menu save(Menu menu, int restoranID, int userId) {
+        if (!menu.isNew() && get(menu.getId(), userId) == null) {
+            return null;
+        }
+        menu.setRestoran(crudRestoranRepository.getWithUser(restoranID));
         return crudMenuRepository.save(menu);
     }
 
 
     @Override
     public boolean delete(int id) {
-        return false;
+        return crudMenuRepository.delete(id) != 0;
     }
 
     @Override
     public boolean delete(int id, int userId) {
-        return false;
+        return crudMenuRepository.delete(id, userId) != 0;
     }
 
     @Override
@@ -50,7 +58,6 @@ public class DataJpaMenuRepository implements MenuRepository {
 
     @Override
     public Menu get(int id, int userId) {
-//        return crudMenuRepository.findById(id).filter(menu -> menu.getRestoran().getUser().getId() == userId).orElse(null);
         Menu menu = crudMenuRepository.getWithRestoran(id);
         if (menu.getRestoran().getUser().getId() == userId)
             return menu;
@@ -59,11 +66,11 @@ public class DataJpaMenuRepository implements MenuRepository {
 
     @Override
     public List<Menu> getAll() {
-        return null;
+        return crudMenuRepository.findAll();
     }
 
     @Override
     public List<Menu> getAll(int userId) {
-        return null;
+        return crudMenuRepository.findAll(userId);
     }
 }

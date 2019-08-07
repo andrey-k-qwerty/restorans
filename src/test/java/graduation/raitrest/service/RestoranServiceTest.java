@@ -1,5 +1,6 @@
 package graduation.raitrest.service;
 
+import graduation.raitrest.UserTestData;
 import graduation.raitrest.model.entities.Restoran;
 import graduation.raitrest.util.exception.NotFoundException;
 import org.junit.Test;
@@ -27,6 +28,16 @@ public class RestoranServiceTest extends AbstractServiceTest {
         assertMatch(all, RESTORAN_STAR);
         all = service.getAll(MANAGER_ID);
         assertMatch(all, RESTORAN_PEARL);
+    }
+
+    @Test
+    public void create() throws Exception {
+        Restoran newRestaurant = getCreated();
+        Restoran created = service.create(newRestaurant, MANAGER_ID);
+        newRestaurant.setId(created.getId());
+
+        assertMatch(newRestaurant, created);
+        assertMatch(service.getAll(MANAGER_ID), RESTORAN_PEARL,newRestaurant);
     }
 
     @Test

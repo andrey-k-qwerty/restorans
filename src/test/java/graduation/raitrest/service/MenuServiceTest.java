@@ -1,5 +1,6 @@
 package graduation.raitrest.service;
 
+import graduation.raitrest.RestoranTestData;
 import graduation.raitrest.model.entities.Menu;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ public class MenuServiceTest extends AbstractServiceTest {
     public void getWithRestoran() {
         Menu actual = service.get(MENU_ID,ADMIN_ID );
         assertMatch(actual, MENU_STAR);
+        RestoranTestData.assertMatch(actual.getRestoran(),RestoranTestData.RESTORAN_STAR);
     }
 
     @Test
@@ -22,4 +24,10 @@ public class MenuServiceTest extends AbstractServiceTest {
         Menu menu = service.get(MENU_ID + 1);
         assertMatch(menu,MENU_PEARL);
     }
+
+    @Test
+    public void getAll() {
+        // service.get()
+    }
+
 }

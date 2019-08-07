@@ -1,8 +1,6 @@
 package graduation.raitrest.model.entities;
 
 import graduation.raitrest.model.AbstractBaseEntity;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,10 +10,10 @@ import java.util.Date;
 @Table(name = "MENUS")
 public class Menu extends AbstractBaseEntity {
 
-    @Column(name = "DESCRIPTION")
+    @Column(name = "DESCRIPTION", nullable = false)
     private String description;
 
-    @Column(name = "DATE_TIME")
+    @Column(name = "DATE_TIME", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateTime;
 
@@ -29,6 +27,7 @@ public class Menu extends AbstractBaseEntity {
         this.dateTime = dateTime;
         this.restoran = restoran;
     }
+
     public Menu(String description, Date dateTime) {
         this.description = description;
         this.dateTime = dateTime;
@@ -41,11 +40,11 @@ public class Menu extends AbstractBaseEntity {
         this.dateTime = dateTime;
         this.restoran = restoran;
     }
+
     public Menu(Integer id, String description, Date dateTime) {
         super(id);
         this.description = description;
         this.dateTime = dateTime;
-        this.restoran = restoran;
     }
 
     public Menu() {
@@ -76,7 +75,6 @@ public class Menu extends AbstractBaseEntity {
     public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
     }
-
 
 
 }
