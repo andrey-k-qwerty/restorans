@@ -1,9 +1,11 @@
 package graduation.raitrest.repository.datajpa;
 
 import graduation.raitrest.model.entities.Menu;
+import graduation.raitrest.model.entities.Restoran;
 import graduation.raitrest.repository.MenuRepository;
 import graduation.raitrest.repository.datajpa.grud.CrudMenuRepository;
 import graduation.raitrest.repository.datajpa.grud.CrudRestoranRepository;
+import graduation.raitrest.repository.datajpa.grud.CrudUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +16,7 @@ import java.util.List;
 public class DataJpaMenuRepository implements MenuRepository {
     private final CrudRestoranRepository crudRestoranRepository;
     private CrudMenuRepository crudMenuRepository;
+
 
     @Autowired
     public DataJpaMenuRepository(CrudMenuRepository crudMenuRepository, CrudRestoranRepository crudRestoranRepository) {
@@ -27,7 +30,13 @@ public class DataJpaMenuRepository implements MenuRepository {
         if (!menu.isNew() && get(menu.getId(), userId) == null) {
             return null;
         }
-        if (menu.getRestoran() == null || menu.getRestoran().getUser().getId() != userId) return null;
+//        Restoran restoran = crudRestoranRepository.getWithUser( menu.getRestoran().getId());
+//        if (restoran == null || restoran.getUser().getId() != userId) return null;
+
+//        Restoran restoran = crudRestoranRepository.getOne(menu.getRestoran().getId());
+//        if (restoran == null) {
+//            return  null;
+//        }
         return crudMenuRepository.save(menu);
     }
 
@@ -36,7 +45,16 @@ public class DataJpaMenuRepository implements MenuRepository {
         if (!menu.isNew() && get(menu.getId(), userId) == null) {
             return null;
         }
-        menu.setRestoran(crudRestoranRepository.getWithUser(restoranID));
+//        Restoran rest = crudRestoranRepository.getWithUser(restoranID);
+//        if (rest == null || rest.getUser().getId() != userId) {
+//            return null;
+//        }
+//        menu.setRestoran(rest);
+        Restoran restoran = crudRestoranRepository.getOne(restoranID);
+        if (restoran == null) {
+            return  null;
+        }
+        menu.setRestoran(restoran);
         return crudMenuRepository.save(menu);
     }
 
@@ -58,10 +76,11 @@ public class DataJpaMenuRepository implements MenuRepository {
 
     @Override
     public Menu get(int id, int userId) {
-        Menu menu = crudMenuRepository.getWithRestoran(id);
-        if (menu.getRestoran().getUser().getId() == userId)
-            return menu;
-        return null;
+//        Menu menu = crudMenuRepository.getWithRestoran(id);
+//        if (menu.getRestoran().getUser().getId() == userId)
+//            return menu;
+//        return null;
+      return   crudMenuRepository.getWithRestoran(id, userId);
     }
 
     @Override

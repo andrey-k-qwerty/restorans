@@ -45,8 +45,8 @@ VALUES ('ROLE_USER', (select U.ID FROM USERS U WHERE U.NAME = 'User')),
 ;
 --
 INSERT INTO RESTORANS (NAME, USER_ID)
-VALUES ('Star', (select U.ID FROM USERS U WHERE U.NAME = 'Admin')),       --100015
-       ('Pearl', (select U.ID FROM USERS U WHERE U.NAME = 'Manager')),    --100016
+VALUES ('Star', (select U.ID FROM USERS U WHERE U.NAME = 'Manager')),       --100015
+       ('Pearl', (select U.ID FROM USERS U WHERE U.NAME = 'Admin')),    --100016
        ('Star_1', (select U.ID FROM USERS U WHERE U.NAME = 'Manager_1')), --100017
        ('Star_2', (select U.ID FROM USERS U WHERE U.NAME = 'Manager_2')), --100018
        ('Star_3', (select U.ID FROM USERS U WHERE U.NAME = 'Manager_3')); --100019
@@ -59,14 +59,14 @@ VALUES ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), 'Star_meal_dinner'
        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star_2'), 'Star_2_meal_dinner', CURRENT_DATE),         --100023
        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star_3'), 'Star_3_meal_dinner', CURRENT_DATE),         --100024
 
-       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), 'Star_meal_dinner', CURRENT_DATE - 1 day),     --100025
-       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'), 'Pearl_meal_dinner', CURRENT_DATE - 1 day),   --100026
-       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star_1'), 'Star_1_meal_dinner', CURRENT_DATE - 1 day), --100027
-       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star_2'), 'Star_2_meal_dinner', CURRENT_DATE - 1 day), --100028
-       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star_3'), 'Star_3_meal_dinner', CURRENT_DATE - 1 day), --100029
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), 'Star_meal_lunch', CURRENT_DATE - 1 day),     --100025
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'), 'Pearl_meal_lunch', CURRENT_DATE - 1 day),   --100026
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star_1'), 'Star_1_meal_lunch', CURRENT_DATE - 1 day), --100027
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star_2'), 'Star_2_meal_lunch', CURRENT_DATE - 1 day), --100028
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star_3'), 'Star_3_meal_lunch', CURRENT_DATE - 1 day), --100029
 
-       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), 'Star_meal_dinner', CURRENT_DATE - 2 day),     --100030
-       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'), 'Pearl_meal_dinner', CURRENT_DATE - 2 day),   --100031
-       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star_1'), 'Star_1_meal_dinner', CURRENT_DATE - 2 day), --100032
-       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star_2'), 'Star_2_meal_dinner', CURRENT_DATE - 2 day), --100033
-       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star_3'), 'Star_3_meal_dinner', CURRENT_DATE - 2 day); --100034
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), 'Star_meal_breakfast', CURRENT_DATE - 2 day),     --100030
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'), 'Pearl_meal_breakfast', CURRENT_DATE - 2 day),   --100031
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star_1'), 'Star_1_meal_breakfast', CURRENT_DATE - 2 day), --100032
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star_2'), 'Star_2_meal_breakfast', CURRENT_DATE - 2 day), --100033
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star_3'), 'Star_3_meal_breakfast', CURRENT_DATE - 2 day); --100034

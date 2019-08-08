@@ -32,7 +32,7 @@ public interface CrudRestoranRepository extends JpaRepository<Restoran, Integer>
     @Query("SELECT distinct  r FROM Restoran r left join FETCH r.user where r.user.id = :user_id")
     List<Restoran> findAll(@Param("user_id") int user_id);
 
-    @EntityGraph(attributePaths = {"user"})
+    @EntityGraph(attributePaths = {"user"},type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT u FROM Restoran u WHERE u.id=?1")
     Restoran getWithUser(int id);
 }

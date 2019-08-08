@@ -25,9 +25,9 @@ public class RestoranServiceTest extends AbstractServiceTest {
     @Test
     public void getAllByUserID() {
         List<Restoran> all = service.getAll(ADMIN_ID);
-        assertMatch(all, RESTORAN_STAR);
-        all = service.getAll(MANAGER_ID);
         assertMatch(all, RESTORAN_PEARL);
+        all = service.getAll(MANAGER_ID);
+        assertMatch(all, RESTORAN_STAR);
     }
 
     @Test
@@ -37,7 +37,7 @@ public class RestoranServiceTest extends AbstractServiceTest {
         newRestaurant.setId(created.getId());
 
         assertMatch(newRestaurant, created);
-        assertMatch(service.getAll(MANAGER_ID), RESTORAN_PEARL,newRestaurant);
+        assertMatch(service.getAll(MANAGER_ID), RESTORAN_STAR,newRestaurant);
     }
 
     @Test
@@ -48,7 +48,7 @@ public class RestoranServiceTest extends AbstractServiceTest {
 
     @Test
     public void getByUserId() {
-        Restoran restoran = service.get(RESTORAN_ID + 1, MANAGER_ID);
+        Restoran restoran = service.get(RESTORAN_ID + 1, ADMIN_ID);
         assertMatch(restoran, RESTORAN_PEARL);
     }
 
@@ -60,7 +60,7 @@ public class RestoranServiceTest extends AbstractServiceTest {
 
     @Test
     public void deleteWithUserID() {
-        service.delete(RESTORAN_ID+1,MANAGER_ID);
+        service.delete(RESTORAN_ID+1,ADMIN_ID);
         assertMatch(service.getAll(), RESTORAN_STAR, RESTORAN_STAR_1, RESTORAN_STAR_2, RESTORAN_STAR_3);
     }
 
@@ -73,20 +73,20 @@ public class RestoranServiceTest extends AbstractServiceTest {
     @Test
     public void deleteNotOwn() {
         thrown.expect(NotFoundException.class);
-        service.delete(RESTORAN_ID, MANAGER_ID);
+        service.delete(RESTORAN_ID, ADMIN_ID);
     }
 
     @Test
     public void update() {
         Restoran updated = new Restoran(RESTORAN_ID + 1,"XXX");
-        service.update(updated, MANAGER_ID);
-        assertMatch(service.get(RESTORAN_ID + 1, MANAGER_ID), updated);
+        service.update(updated, ADMIN_ID);
+        assertMatch(service.get(RESTORAN_ID + 1, ADMIN_ID), updated);
     }
 
     @Test
     public void updateNotFound() {
         thrown.expect(NotFoundException.class);
         thrown.expectMessage("Not found entity with id=" + RESTORAN_ID);
-        service.update(RESTORAN_STAR, MANAGER_ID);
+        service.update(RESTORAN_STAR, ADMIN_ID);
     }
 }

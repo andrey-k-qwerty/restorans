@@ -22,7 +22,9 @@ public interface CrudMenuRepository extends JpaRepository<Menu, Integer> {
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Menu m WHERE m.id=:id AND m.restoran.user.id=:userId")
+ //   @EntityGraph(attributePaths = {"restoran"},type = EntityGraph.EntityGraphType.LOAD)
+    @Query("DELETE FROM Menu m WHERE m.id=:id AND m.restoran.id = (select r.id from Restoran r where r.user.id= :userId and r.id=m.restoran.id)")
+  //not work  @Query("DELETE  FROM Menu u WHERE u.id=?1 and u.restoran.user.id =?2")
     int delete(@Param("id") int id, @Param("userId") int userId);
 
 
@@ -46,4 +48,8 @@ public interface CrudMenuRepository extends JpaRepository<Menu, Integer> {
     @EntityGraph(attributePaths = {"restoran"},type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT u FROM Menu u WHERE u.id=?1")
     Menu getWithRestoran(int id);
+
+    @EntityGraph(attributePaths = {"restoran"},type = EntityGraph.EntityGraphType.LOAD)
+    @Query("SELECT u FROM Menu u WHERE u.id=?1 and u.restoran.user.id =?2")
+    Menu getWithRestoran(int id,int userId);
 }
