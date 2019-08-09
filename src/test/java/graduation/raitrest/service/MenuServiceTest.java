@@ -38,6 +38,17 @@ public class MenuServiceTest extends AbstractServiceTest {
         assertMatch(menu,MENU_STAR);
     }
 
+    @Test
+   public  void getNotFound() throws Exception {
+        thrown.expect(NotFoundException.class);
+        service.get(1, ADMIN_ID);
+    }
+    @Test
+    public void getNotOwn() throws Exception {
+        thrown.expect(NotFoundException.class);
+        service.get(MENU_ID, ADMIN_ID);
+    }
+
 
     @Test
     public void getAll() {
@@ -85,6 +96,12 @@ public class MenuServiceTest extends AbstractServiceTest {
         service.update(updated,RestoranTestData.RESTORAN_ID + 1, ADMIN_ID);
         assertMatch(service.get(MENU_ID + 1, ADMIN_ID), updated);
 
+    }
+    @Test
+    public void updateNotFound() throws Exception {
+        thrown.expect(NotFoundException.class);
+        thrown.expectMessage("Not found entity with id=" + MENU_ID);
+        service.update(MENU_STAR, ADMIN_ID);
     }
 
     @Test
