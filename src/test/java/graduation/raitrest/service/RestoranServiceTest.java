@@ -1,6 +1,5 @@
 package graduation.raitrest.service;
 
-import graduation.raitrest.UserTestData;
 import graduation.raitrest.model.entities.Restoran;
 import graduation.raitrest.util.exception.NotFoundException;
 import org.junit.Test;
@@ -25,9 +24,10 @@ public class RestoranServiceTest extends AbstractServiceTest {
     @Test
     public void getAllByUserID() {
         List<Restoran> all = service.getAll(ADMIN_ID);
-        assertMatch(all, RESTORAN_PEARL);
+        // admin have 2 restaurant
+        assertMatch(all, RESTORAN_STAR, RESTORAN_SUPER_STAR);
         all = service.getAll(MANAGER_ID);
-        assertMatch(all, RESTORAN_STAR);
+        assertMatch(all, RESTORAN_PEARL,RESTORAN_BLACK_PEARL_MAN);
     }
 
     @Test
@@ -37,7 +37,7 @@ public class RestoranServiceTest extends AbstractServiceTest {
         newRestaurant.setId(created.getId());
 
         assertMatch(newRestaurant, created);
-        assertMatch(service.getAll(MANAGER_ID), RESTORAN_STAR,newRestaurant);
+        assertMatch(service.getAll(MANAGER_ID), RESTORAN_PEARL, RESTORAN_BLACK_PEARL_MAN,newRestaurant);
     }
 
     @Test
@@ -48,20 +48,20 @@ public class RestoranServiceTest extends AbstractServiceTest {
 
     @Test
     public void getByUserId() {
-        Restoran restoran = service.get(RESTORAN_ID + 1, ADMIN_ID);
+        Restoran restoran = service.get(RESTORAN_ID + 1, MANAGER_ID);
         assertMatch(restoran, RESTORAN_PEARL);
     }
 
     @Test
     public void delete() {
         service.delete(RESTORAN_ID);
-        assertMatch(service.getAll(), RESTORAN_PEARL, RESTORAN_STAR_1, RESTORAN_STAR_2, RESTORAN_STAR_3);
+        assertMatch(service.getAll(),RESTORAN_PEARL, RESTORAN_SUPER_STAR, RESTORAN_BLACK_PEARL_MAN_1,RESTORAN_BLACK_PEARL_MAN);
     }
 
     @Test
     public void deleteWithUserID() {
-        service.delete(RESTORAN_ID+1,ADMIN_ID);
-        assertMatch(service.getAll(), RESTORAN_STAR, RESTORAN_STAR_1, RESTORAN_STAR_2, RESTORAN_STAR_3);
+        service.delete(RESTORAN_ID,ADMIN_ID);
+        assertMatch(service.getAll(), RESTORAN_PEARL, RESTORAN_SUPER_STAR, RESTORAN_BLACK_PEARL_MAN_1,RESTORAN_BLACK_PEARL_MAN);
     }
 
     @Test
@@ -73,20 +73,20 @@ public class RestoranServiceTest extends AbstractServiceTest {
     @Test
     public void deleteNotOwn() {
         thrown.expect(NotFoundException.class);
-        service.delete(RESTORAN_ID, ADMIN_ID);
+        service.delete(RESTORAN_ID, MANAGER_ID);
     }
 
     @Test
     public void update() {
-        Restoran updated = new Restoran(RESTORAN_ID + 1,"XXX");
+        Restoran updated = new Restoran(RESTORAN_ID ,"XXX");
         service.update(updated, ADMIN_ID);
-        assertMatch(service.get(RESTORAN_ID + 1, ADMIN_ID), updated);
+        assertMatch(service.get(RESTORAN_ID, ADMIN_ID), updated);
     }
 
     @Test
     public void updateNotFound() {
         thrown.expect(NotFoundException.class);
         thrown.expectMessage("Not found entity with id=" + RESTORAN_ID);
-        service.update(RESTORAN_STAR, ADMIN_ID);
+        service.update(RESTORAN_STAR, MANAGER_ID);
     }
 }

@@ -23,7 +23,7 @@ public class UserTestData {
     public static final int USER_7_ID = START_SEQ + 9;
     public static final int USER_8_ID = START_SEQ + 10;
     public static final int USER_9_ID = START_SEQ + 11;
-    public static final int MANAGER_1_ID = START_SEQ + 12;
+    public static final int MANAGER_1_ID = START_SEQ + 6; // !!!
     public static final int MANAGER_2_ID = START_SEQ + 13;
     public static final int MANAGER_3_ID = START_SEQ + 14;
 //    public static final int MANAGER_3_ID = START_SEQ + 1;
