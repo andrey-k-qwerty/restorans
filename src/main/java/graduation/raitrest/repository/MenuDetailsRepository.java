@@ -17,6 +17,7 @@ public interface MenuDetailsRepository {
 
     MenuDetails get(int id, int managerId);
 
+    MenuDetails getFull(int id);
 
     List<MenuDetails> getAll();
 

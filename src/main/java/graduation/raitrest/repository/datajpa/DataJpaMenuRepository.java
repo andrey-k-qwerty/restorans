@@ -5,7 +5,6 @@ import graduation.raitrest.model.entities.Restoran;
 import graduation.raitrest.repository.MenuRepository;
 import graduation.raitrest.repository.datajpa.grud.CrudMenuRepository;
 import graduation.raitrest.repository.datajpa.grud.CrudRestoranRepository;
-import graduation.raitrest.repository.datajpa.grud.CrudUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

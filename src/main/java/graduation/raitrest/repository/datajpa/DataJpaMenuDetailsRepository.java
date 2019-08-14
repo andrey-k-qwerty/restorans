@@ -2,10 +2,19 @@ package graduation.raitrest.repository.datajpa;
 
 import graduation.raitrest.model.entities.MenuDetails;
 import graduation.raitrest.repository.MenuDetailsRepository;
+import graduation.raitrest.repository.datajpa.grud.CrudMenuDetailsRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public class DataJpaMenuDetailsRepositiry implements MenuDetailsRepository {
+@Repository
+public class DataJpaMenuDetailsRepository implements MenuDetailsRepository {
+    private final CrudMenuDetailsRepository crudMenuDetailsRepository;
+
+    public DataJpaMenuDetailsRepository(CrudMenuDetailsRepository crudMenuDetailsRepository) {
+        this.crudMenuDetailsRepository = crudMenuDetailsRepository;
+    }
+
     @Override
     public MenuDetails save(MenuDetails menu, int restoranID, int managerId) {
         return null;
@@ -23,12 +32,17 @@ public class DataJpaMenuDetailsRepositiry implements MenuDetailsRepository {
 
     @Override
     public MenuDetails get(int id) {
-        return null;
+        return crudMenuDetailsRepository.findById(id).orElse(null);
     }
 
     @Override
     public MenuDetails get(int id, int managerId) {
         return null;
+    }
+
+    @Override
+    public MenuDetails getFull(int id) {
+          return crudMenuDetailsRepository.getFull(id);
     }
 
     @Override
@@ -45,4 +59,6 @@ public class DataJpaMenuDetailsRepositiry implements MenuDetailsRepository {
     public List<MenuDetails> getAll(int restoranID, int managerId) {
         return null;
     }
+
+
 }

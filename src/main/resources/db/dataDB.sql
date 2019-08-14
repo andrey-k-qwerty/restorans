@@ -62,28 +62,28 @@ VALUES ('Star', (select U.ID FROM USERS U WHERE U.NAME = 'Admin')),            -
 
 INSERT INTO MENU_DETAILS(RESTORAN_ID, MANAGER_ID, DESCRIPTION, DATE_TIME)
 
-VALUES --Pearl-Admin
-       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'), (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
-        '1. meal dish first', CURRENT_DATE),
-       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'), (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
+VALUES --Star-Admin
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
+        '1. meal dish first', CURRENT_DATE), --100
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
         '2. meal dish second', CURRENT_DATE),
-       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'), (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
         '3. meal dish third', CURRENT_DATE),
-       --Star-Manager
-       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
+       --Pearl-Manager
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'), (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
         '1. meal dish first', CURRENT_DATE),
-       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'), (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
         '2. meal dish second', CURRENT_DATE),
-       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'), (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
         '3. meal dish third', CURRENT_DATE),
-       -- 'Black Pearl' - Manager_1 = 100006 !!!!!!!!!!!!!!!!!!!!!!!! ДВА ХОЗЯИНА !!!!!!!!!!!!!!!!
+       -- 'Black Pearl' - Manager_1 = 100006, Manager=100002,  !!!!!!!!!!!!!!!!!!!!!!!! ДВА ХОЗЯИНА !!!!!!!!!!!!!!!!
        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Black Pearl' and R.USER_ID =  (select U.ID FROM USERS U WHERE U.NAME = 'Manager_1')),
         (select U.ID FROM USERS U WHERE U.NAME = 'Manager_1'),
         '1. meal dish first', CURRENT_DATE),
        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Black Pearl' and R.USER_ID =  (select U.ID FROM USERS U WHERE U.NAME = 'Manager_1')),
         (select U.ID FROM USERS U WHERE U.NAME = 'Manager_1'),
         '2. meal dish second', CURRENT_DATE),
-       -- 'Super Star' - Manager_1
+       -- 'Super Star' - Admin
        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Super Star'),
         (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
         '1. meal dish first', CURRENT_DATE),
@@ -92,20 +92,20 @@ VALUES --Pearl-Admin
         '2. meal dish second', CURRENT_DATE),--,
 
        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'),
-        (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
+        (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
         '1-1. meal dish first', CURRENT_DATE - 1 day),
        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'),
-        (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
+        (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
         '2-1. meal dish second', CURRENT_DATE - 1 day),
        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'),
-        (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
+        (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
         '3-1. meal dish third', CURRENT_DATE - 1 day),
        --Star-Manager
-       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
         '1-1. meal dish first', CURRENT_DATE - 1 day),
-       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
         '2-1. meal dish second', CURRENT_DATE - 1 day),
-       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
         '3-1. meal dish third', CURRENT_DATE - 1 day),
        -- 'Black Pearl' - Manager_1 !!! ДВА ХОЗЯИНА !!!
        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Black Pearl' and R.USER_ID =  (select U.ID FROM USERS U WHERE U.NAME = 'Manager_1')),
@@ -124,33 +124,33 @@ VALUES --Pearl-Admin
 
 
        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'),
-        (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
-        '1-1. meal dish first', CURRENT_DATE - 2 day),
+        (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
+        '1-2. meal dish first', CURRENT_DATE - 2 day),
        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'),
-        (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
-        '2-1. meal dish second', CURRENT_DATE - 2 day),
+        (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
+        '2-2. meal dish second', CURRENT_DATE - 2 day),
        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'),
-        (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
-        '3-1. meal dish third', CURRENT_DATE - 2 day),
+        (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
+        '3-2. meal dish third', CURRENT_DATE - 2 day),
        --Star-Manager
-       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
-        '1-1. meal dish first', CURRENT_DATE - 2 day),
-       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
-        '2-1. meal dish second', CURRENT_DATE - 2 day),
-       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
-        '3-1. meal dish third', CURRENT_DATE - 2 day),
-       -- 'Black Pearl' - Manager_1 !!! ДВА ХОЗЯИНА !!!
-       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Black Pearl' and R.USER_ID =  (select U.ID FROM USERS U WHERE U.NAME = 'Manager_1')),
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
+        '1-2. meal dish first', CURRENT_DATE - 2 day),
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
+        '2-2. meal dish second', CURRENT_DATE - 2 day),
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
+        '3-2. meal dish third', CURRENT_DATE - 2 day),
+       -- 'Black Pearl' - Manager_1 !!! ДВА ХОЗЯИНА !!! ПОМЕНЯЛ МЕНЕДЖЕРА
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Black Pearl' and R.USER_ID =  (select U.ID FROM USERS U WHERE U.NAME = 'Manager')),
         (select U.ID FROM USERS U WHERE U.NAME = 'Manager_1'),
-        '1-1. meal dish first', CURRENT_DATE - 2 day),
-       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Black Pearl' and R.USER_ID =  (select U.ID FROM USERS U WHERE U.NAME = 'Manager_1')),
+        '1-2. meal dish first', CURRENT_DATE - 2 day),
+       ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Black Pearl' and R.USER_ID =  (select U.ID FROM USERS U WHERE U.NAME = 'Manager')),
         (select U.ID FROM USERS U WHERE U.NAME = 'Manager_1'),
-        '2-1. meal dish second', CURRENT_DATE - 2 day),
+        '2-2. meal dish second', CURRENT_DATE - 2 day),
        -- 'Super Star' - Manager_1
        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Super Star'),
         (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
-        '1-1. meal dish first', CURRENT_DATE - 2 day),
+        '1-2. meal dish first', CURRENT_DATE - 2 day),
        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Super Star'),
         (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
-        '2-1. meal dish second', CURRENT_DATE - 2 day);
+        '2-2. meal dish second', CURRENT_DATE - 2 day);
 
