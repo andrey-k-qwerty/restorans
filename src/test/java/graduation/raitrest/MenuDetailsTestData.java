@@ -99,7 +99,7 @@ public class MenuDetailsTestData {
             MENU_DETAILS_SUPER_STAR_BEFORE_YESTERDAY_1,MENU_DETAILS_SUPER_STAR_BEFORE_YESTERDAY_2);
 
     public static void assertMatch(MenuDetails actual, MenuDetails expected) {
-        assertThat(actual).isEqualToIgnoringGivenFields(expected, "dateTime", "restoran","manager");
+        assertThat(actual).isEqualToIgnoringGivenFields(expected,  "restoran","manager");
     }
 
     public static void assertMatch(Iterable<MenuDetails> actual, MenuDetails... expected) {
@@ -107,7 +107,7 @@ public class MenuDetailsTestData {
     }
 
     public static void assertMatch(Iterable<MenuDetails> actual, Iterable<MenuDetails> expected) {
-        assertThat(actual).usingElementComparatorIgnoringFields("dateTime", "restoran","manager").isEqualTo(expected);
+        assertThat(actual).usingElementComparatorIgnoringFields( "restoran","manager").isEqualTo(expected);
     }
 
     public static void assertMatchFull(MenuDetails actual, MenuDetails expected) {

@@ -26,8 +26,16 @@ public interface CrudMenuDetailsRepository extends JpaRepository<MenuDetails, In
     int delete(int id, int managerId);
 
 
-    @Query("SELECT md FROM  MenuDetails md   WHERE md.id=?1 and md.manager.id in " +
-            "(select r.id from Restoran r  where  r.id=md.restoran.id and r.user.id = ?2)")
+//    @Query("SELECT md FROM  MenuDetails md   WHERE md.id=?1 and md.manager.id in " +
+//            "(select r.id from Restoran r  where  r.id=md.restoran.id and r.user.id = ?2)")
+
+    /*
+    *  TODO Есть ошибка. Ресторан-пользователи связь многие ко многим. Нужна еще одна таблица
+    *
+    * */
+    @Query(value = "select m.* " +
+            "from MENU_DETAILS m where m.ID =?1 and m.RESTORAN_ID in (select r.ID " +
+            "    from RESTORANS r where   r.USER_ID = ?2 )",nativeQuery = true)
     MenuDetails get(int id, int managerId);
 
     @EntityGraph(attributePaths = {"restoran", "manager"})
