@@ -23,9 +23,12 @@ public class MenuDetailsService {
     public MenuDetails get(int id) throws NotFoundException {
         return checkNotFoundWithId(menuDetailsRepository.get(id), id);
     }
+    public MenuDetails get(int id,int managerId) throws NotFoundException {
+        return checkNotFoundWithId(menuDetailsRepository.get(id,managerId), id);
+    }
 
     public MenuDetails getFull(int id) throws NotFoundException {
-        return checkNotFoundWithId(menuDetailsRepository.get(id), id);
+        return checkNotFoundWithId(menuDetailsRepository.getFull(id), id);
 
     }
 

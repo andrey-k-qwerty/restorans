@@ -21,6 +21,11 @@ public class DataJpaMenuDetailsRepository implements MenuDetailsRepository {
     }
 
     @Override
+    public MenuDetails save(MenuDetails menu, int managerId) {
+        return null;
+    }
+
+    @Override
     public boolean delete(int id) {
         return false;
     }
@@ -37,22 +42,28 @@ public class DataJpaMenuDetailsRepository implements MenuDetailsRepository {
 
     @Override
     public MenuDetails get(int id, int managerId) {
-        return null;
+        return crudMenuDetailsRepository.get(id,managerId);
     }
 
     @Override
     public MenuDetails getFull(int id) {
-          return crudMenuDetailsRepository.getFull(id);
+        return crudMenuDetailsRepository.getFull(id);
+    }
+
+    @Override
+    public MenuDetails getFull(int id, int managerId) {
+        return crudMenuDetailsRepository.getFull(id, managerId);
     }
 
     @Override
     public List<MenuDetails> getAll() {
-        return null;
+        return crudMenuDetailsRepository.findAll();
     }
 
     @Override
     public List<MenuDetails> getAll(int managerId) {
         return null;
+        //    return crudMenuDetailsRepository.findAllByManger();
     }
 
     @Override

@@ -8,6 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Transactional(readOnly = true)
 public interface CrudMenuDetailsRepository extends JpaRepository<MenuDetails, Integer> {
 
@@ -20,10 +23,32 @@ public interface CrudMenuDetailsRepository extends JpaRepository<MenuDetails, In
     @Modifying
     @Query("DELETE FROM MenuDetails md WHERE md.id=?1 and md.restoran.id in" +
             " (select r.id from Restoran r  where  r.id=md.restoran.id and r.user.id = ?2)")
-    int delete( int id,int managerId);
+    int delete(int id, int managerId);
 
-    @EntityGraph(attributePaths = {"restoran","manager"})
-    @Query("SELECT u FROM User u  WHERE u.id=?1")
+
+    @Query("SELECT md FROM  MenuDetails md   WHERE md.id=?1 and md.manager.id in " +
+            "(select r.id from Restoran r  where  r.id=md.restoran.id and r.user.id = ?2)")
+    MenuDetails get(int id, int managerId);
+
+    @EntityGraph(attributePaths = {"restoran", "manager"})
+    @Query("SELECT md FROM  MenuDetails md   WHERE md.id=?1")
     MenuDetails getFull(int id);
+
+    @EntityGraph(attributePaths = {"restoran", "manager"})
+    @Query("SELECT md FROM  MenuDetails md   WHERE md.id=?1 and md.manager.id in " +
+            "(select r.id from Restoran r  where  r.id=md.restoran.id and r.user.id = ?2)")
+    MenuDetails getFull(int id, int managerId);
+
+    @Query("SELECT md FROM  MenuDetails md   WHERE  md.manager.id=?1")
+    List<MenuDetails> findAllByManger(int managerId);
+
+    @EntityGraph(attributePaths = {"restoran", "manager"})
+    @Query("SELECT md FROM  MenuDetails md    WHERE  md.manager.id=?1")
+    List<MenuDetails> findAllByMangerFull(int managerId);
+
+//    List<MenuDetails> findAllByManagerIdAndDateTimeBetween(int managerId, LocalDateTime beginDate , LocalDateTime   endDate);
+//    @Query("SELECT")
+//    List<MenuDetails> getAll(int managerId)
+
 
 }
