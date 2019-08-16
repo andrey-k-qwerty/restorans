@@ -1,11 +1,9 @@
 package graduation.raitrest.model.entities;
 
 import graduation.raitrest.model.AbstractBaseEntity;
-import graduation.raitrest.model.AbstractNamedEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
@@ -26,28 +24,28 @@ public class MenuDetails extends AbstractBaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "RESTORAN_ID", nullable = false)
     @NotNull
-    private Restoran restoran;
+    private Restaurant restaurant;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manager_id", nullable = false)
     @NotNull
     private User manager;
 
-    public MenuDetails(Integer id, String description, Date dateTime, @NotNull Restoran restoran, @NotNull User manager) {
+    public MenuDetails(Integer id, String description, Date dateTime, @NotNull Restaurant restaurant, @NotNull User manager) {
         super(id);
         this.description = description;
         this.dateTime = dateTime;
-        this.restoran = restoran;
+        this.restaurant = restaurant;
         this.manager = manager;
     }
 
     public MenuDetails() {
     }
 
-    public MenuDetails(String description, Date dateTime, @NotNull Restoran restoran, @NotNull User manager) {
+    public MenuDetails(String description, Date dateTime, @NotNull Restaurant restaurant, @NotNull User manager) {
         this.description = description;
         this.dateTime = dateTime;
-        this.restoran = restoran;
+        this.restaurant = restaurant;
         this.manager = manager;
     }
 
@@ -69,12 +67,12 @@ public class MenuDetails extends AbstractBaseEntity {
         this.dateTime = dateTime;
     }
 
-    public Restoran getRestoran() {
-        return restoran;
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
-    public void setRestoran(Restoran restoran) {
-        this.restoran = restoran;
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 
     public User getUser() {

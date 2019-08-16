@@ -24,7 +24,7 @@ public class MenuServiceTest extends AbstractServiceTest {
 //    public void getWithRestaurant() {
 //        Menu actual = service.get(MENU_ID,MANAGER_ID );
 //        assertMatch(actual, MENU_STAR);
-//        RestoranTestData.assertMatch(actual.getRestoran(),RestoranTestData.RESTORAN_STAR);
+//        RestoranTestData.assertMatch(actual.getRestaurant(),RestoranTestData.RESTAURANT_STAR);
 //    }
 //
 //    @Test
@@ -68,15 +68,15 @@ public class MenuServiceTest extends AbstractServiceTest {
 //    public void create()   {
 //        // по айди ресторана
 //        Menu newMenu = new Menu("New menu", new Date());
-//        Menu created = service.create(newMenu, RestoranTestData.RESTORAN_ID, MANAGER_ID);
+//        Menu created = service.create(newMenu, RestoranTestData.RESTAURANT_ID, MANAGER_ID);
 //        newMenu.setId(created.getId());
-//        newMenu.setRestoran(created.getRestoran());
+//        newMenu.setRestaurant(created.getRestaurant());
 //        assertThat(newMenu).isEqualToIgnoringGivenFields(created, "dateTime");
 //        assertMatch(service.getAll(MANAGER_ID),MENU_STAR,MENU_STAR_1D,MENU_STAR_2D,newMenu);
 //
 //        // по объекту ресторана
 //        Menu newMenu2 = new Menu("New menu 2", new Date());
-//        newMenu2.setRestoran(RestoranTestData.RESTORAN_STAR);
+//        newMenu2.setRestaurant(RestoranTestData.RESTAURANT_STAR);
 //        Menu created2 = service.create(newMenu2,  MANAGER_ID);
 //        newMenu2.setId(created2.getId());
 //
@@ -89,12 +89,12 @@ public class MenuServiceTest extends AbstractServiceTest {
 //    @Test
 //    public void update()  {
 //        Menu updated = new Menu(MENU_ID + 1,"New super menu", new Date());
-//        updated.setRestoran(RestoranTestData.RESTORAN_PEARL);
+//        updated.setRestaurant(RestoranTestData.RESTAURANT_PEARL);
 //        service.update(updated, ADMIN_ID);
 //        assertMatch(service.get(MENU_ID + 1, ADMIN_ID), updated);
 //
 //        updated = new Menu(MENU_ID + 1,"New super super menu", new Date());
-//        service.update(updated,RestoranTestData.RESTORAN_ID + 1, ADMIN_ID);
+//        service.update(updated,RestoranTestData.RESTAURANT_ID + 1, ADMIN_ID);
 //        assertMatch(service.get(MENU_ID + 1, ADMIN_ID), updated);
 //
 //    }

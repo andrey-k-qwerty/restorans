@@ -2,7 +2,6 @@ package graduation.raitrest.repository;
 
 
 import graduation.raitrest.model.entities.Menu;
-import graduation.raitrest.model.entities.Restoran;
 
 import java.util.List;
 

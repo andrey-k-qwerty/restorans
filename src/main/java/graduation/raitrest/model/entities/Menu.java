@@ -20,12 +20,12 @@ public class Menu extends AbstractBaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "RESTORAN_ID", nullable = false)
     @NotNull
-    private Restoran restoran;
+    private Restaurant restaurant;
 
-    public Menu(String description, Date dateTime, @NotNull Restoran restoran) {
+    public Menu(String description, Date dateTime, @NotNull Restaurant restaurant) {
         this.description = description;
         this.dateTime = dateTime;
-        this.restoran = restoran;
+        this.restaurant = restaurant;
     }
 
     public Menu(String description, Date dateTime) {
@@ -34,11 +34,11 @@ public class Menu extends AbstractBaseEntity {
 
     }
 
-    public Menu(Integer id, String description, Date dateTime, @NotNull Restoran restoran) {
+    public Menu(Integer id, String description, Date dateTime, @NotNull Restaurant restaurant) {
         super(id);
         this.description = description;
         this.dateTime = dateTime;
-        this.restoran = restoran;
+        this.restaurant = restaurant;
     }
 
     public Menu(Integer id, String description, Date dateTime) {
@@ -51,12 +51,12 @@ public class Menu extends AbstractBaseEntity {
 
     }
 
-    public Restoran getRestoran() {
-        return restoran;
+    public Restaurant getRestaurant() {
+        return restaurant;
     }
 
-    public void setRestoran(Restoran restoran) {
-        this.restoran = restoran;
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 
     public String getDescription() {

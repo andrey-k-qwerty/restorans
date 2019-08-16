@@ -2,6 +2,7 @@ package graduation.raitrest.repository.datajpa.grud;
 
 
 import graduation.raitrest.model.entities.User;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -30,4 +31,6 @@ public interface CrudUserRepository extends JpaRepository<User, Integer> {
     @Override
     @Query("SELECT distinct  u FROM User u left join FETCH u.roles")
     List<User> findAll(Sort sort);
+
+
 }

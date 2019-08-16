@@ -22,12 +22,12 @@ public interface CrudMenuDetailsRepository extends JpaRepository<MenuDetails, In
     @Transactional
     @Modifying
     @Query("DELETE FROM MenuDetails md WHERE md.id=?1 and md.restoran.id in" +
-            " (select r.id from Restoran r  where  r.id=md.restoran.id and r.user.id = ?2)")
+            " (select r.id from Restaurant r  where  r.id=md.restoran.id and r.user.id = ?2)")
     int delete(int id, int managerId);
 
 
 //    @Query("SELECT md FROM  MenuDetails md   WHERE md.id=?1 and md.manager.id in " +
-//            "(select r.id from Restoran r  where  r.id=md.restoran.id and r.user.id = ?2)")
+//            "(select r.id from Restaurant r  where  r.id=md.restoran.id and r.user.id = ?2)")
 
     /*
     *  TODO Есть ошибка. Ресторан-пользователи связь многие ко многим. Нужна еще одна таблица
@@ -44,7 +44,7 @@ public interface CrudMenuDetailsRepository extends JpaRepository<MenuDetails, In
 
     @EntityGraph(attributePaths = {"restoran", "manager"})
     @Query("SELECT md FROM  MenuDetails md   WHERE md.id=?1 and md.manager.id in " +
-            "(select r.id from Restoran r  where  r.id=md.restoran.id and r.user.id = ?2)")
+            "(select r.id from Restaurant r  where  r.id=md.restoran.id and r.user.id = ?2)")
     MenuDetails getFull(int id, int managerId);
 
     @Query("SELECT md FROM  MenuDetails md   WHERE  md.manager.id=?1")

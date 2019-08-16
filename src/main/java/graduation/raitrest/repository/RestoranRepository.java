@@ -1,13 +1,13 @@
 package graduation.raitrest.repository;
 
 
-import graduation.raitrest.model.entities.Restoran;
+import graduation.raitrest.model.entities.Restaurant;
 
 import java.util.List;
 
 public interface RestoranRepository {
     // null if not found, when updated
-   Restoran save(Restoran restoran, int userId);
+   Restaurant save(Restaurant restaurant, int userId);
 
     // false if not found
     boolean delete(int id);
@@ -15,13 +15,13 @@ public interface RestoranRepository {
     boolean delete(int id, int userId);
 
     // null if not found
-    Restoran get(int id);
+    Restaurant get(int id);
 
-    Restoran get(int id, int userId);
+    Restaurant get(int id, int userId);
 
-    Restoran getWithUser(int id);
+    Restaurant getWithUser(int id);
 
-    List<Restoran> getAll();
+    List<Restaurant> getAll();
 
-    List<Restoran> getAll(int userId);
+    List<Restaurant> getAll(int userId);
 }

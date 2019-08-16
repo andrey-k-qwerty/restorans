@@ -1,6 +1,6 @@
 package graduation.raitrest.service;
 
-import graduation.raitrest.model.entities.Restoran;
+import graduation.raitrest.model.entities.Restaurant;
 import graduation.raitrest.repository.RestoranRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,19 +20,19 @@ public class RestoranService {
         this.restoranRepository = restoranRepository;
     }
 
-    public List<Restoran> getAll() {
+    public List<Restaurant> getAll() {
         return restoranRepository.getAll();
     }
 
-    public List<Restoran> getAll(int user_id) {
+    public List<Restaurant> getAll(int user_id) {
         return restoranRepository.getAll(user_id);
     }
 
-    public Restoran get(int id) {
+    public Restaurant get(int id) {
         return checkNotFoundWithId(restoranRepository.get(id), id);
     }
 
-    public Restoran get(int id, int userId) {
+    public Restaurant get(int id, int userId) {
         return checkNotFoundWithId(restoranRepository.get(id, userId), id);
     }
 
@@ -44,14 +44,14 @@ public class RestoranService {
         checkNotFoundWithId(restoranRepository.delete(id), id);
     }
 
-    public void update(Restoran restoran, int userId) {
-        Assert.notNull(restoran, "restoran must not be null");
-        checkNotFoundWithId(restoranRepository.save(restoran, userId), restoran.getId());
+    public void update(Restaurant restaurant, int userId) {
+        Assert.notNull(restaurant, "restaurant must not be null");
+        checkNotFoundWithId(restoranRepository.save(restaurant, userId), restaurant.getId());
     }
 
-    public Restoran create(Restoran restoran, int userId) {
-        Assert.notNull(restoran, "restoran must not be null");
-        return restoranRepository.save(restoran, userId);
+    public Restaurant create(Restaurant restaurant, int userId) {
+        Assert.notNull(restaurant, "restaurant must not be null");
+        return restoranRepository.save(restaurant, userId);
     }
 
 

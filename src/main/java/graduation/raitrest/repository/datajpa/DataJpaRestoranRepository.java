@@ -1,6 +1,6 @@
 package graduation.raitrest.repository.datajpa;
 
-import graduation.raitrest.model.entities.Restoran;
+import graduation.raitrest.model.entities.Restaurant;
 import graduation.raitrest.repository.RestoranRepository;
 import graduation.raitrest.repository.datajpa.grud.CrudRestoranRepository;
 import graduation.raitrest.repository.datajpa.grud.CrudUserRepository;
@@ -19,17 +19,17 @@ public class DataJpaRestoranRepository implements RestoranRepository {
     private CrudUserRepository crudUserRepository;
 
 //    @Override
-//    public Restoran save(Restoran restoran) {
-//        return crudRestoranRepository.save(restoran);
+//    public Restaurant save(Restaurant restaurant) {
+//        return crudRestoranRepository.save(restaurant);
 //    }
 
     @Override
-    public Restoran save(Restoran restoran, int userId) {
-        if (!restoran.isNew() && get(restoran.getId(), userId) == null) {
+    public Restaurant save(Restaurant restaurant, int userId) {
+        if (!restaurant.isNew() && get(restaurant.getId(), userId) == null) {
             return null;
         }
-        restoran.setUser(crudUserRepository.getOne(userId));
-        return crudRestoranRepository.save(restoran);
+        restaurant.setUser(crudUserRepository.getOne(userId));
+        return crudRestoranRepository.save(restaurant);
     }
 
     @Override
@@ -43,27 +43,27 @@ public class DataJpaRestoranRepository implements RestoranRepository {
     }
 
     @Override
-    public Restoran get(int id) {
+    public Restaurant get(int id) {
         return crudRestoranRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Restoran get(int id, int userId) {
+    public Restaurant get(int id, int userId) {
         return crudRestoranRepository.findById(id).filter(r -> r.getUser().getId() == userId).orElse(null);
     }
 
     @Override
-    public Restoran getWithUser(int id) {
+    public Restaurant getWithUser(int id) {
         return crudRestoranRepository.getWithUser(id);
     }
 
     @Override
-    public List<Restoran> getAll() {
+    public List<Restaurant> getAll() {
         return crudRestoranRepository.findAll();
     }
 
     @Override
-    public List<Restoran> getAll(int userId) {
+    public List<Restaurant> getAll(int userId) {
         return crudRestoranRepository.findAll(userId);
     }
 }

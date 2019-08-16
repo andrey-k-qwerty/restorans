@@ -63,6 +63,12 @@ public class User extends AbstractNamedEntity {
     @org.hibernate.annotations.OrderBy(clause = "role desc")
     private Set<Role> roles;
 
+    @ManyToMany()
+    @JoinTable(
+            name="RESTAURANT_OWNER",
+            joinColumns=@JoinColumn(name="MANAGER_ID", referencedColumnName="ID"),
+            inverseJoinColumns=@JoinColumn(name="RESTAURANT_ID", referencedColumnName="ID"))
+    private List<Restaurant> restaurants;
 
     public User() {
     }
