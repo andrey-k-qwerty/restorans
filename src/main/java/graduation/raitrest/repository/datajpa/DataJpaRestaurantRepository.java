@@ -1,6 +1,7 @@
 package graduation.raitrest.repository.datajpa;
 
 import graduation.raitrest.model.entities.Restaurant;
+import graduation.raitrest.model.entities.User;
 import graduation.raitrest.repository.RestoranRepository;
 import graduation.raitrest.repository.datajpa.grud.CrudRestoranRepository;
 import graduation.raitrest.repository.datajpa.grud.CrudUserRepository;
@@ -8,9 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
-public class DataJpaRestoranRepository implements RestoranRepository {
+public class DataJpaRestaurantRepository implements RestoranRepository {
 
     @Autowired
     private CrudRestoranRepository crudRestoranRepository;
@@ -28,7 +30,7 @@ public class DataJpaRestoranRepository implements RestoranRepository {
         if (!restaurant.isNew() && get(restaurant.getId(), userId) == null) {
             return null;
         }
-        restaurant.setUser(crudUserRepository.getOne(userId));
+        restaurant.setManager(crudUserRepository.getOne(userId));
         return crudRestoranRepository.save(restaurant);
     }
 
@@ -39,7 +41,7 @@ public class DataJpaRestoranRepository implements RestoranRepository {
 
     @Override
     public boolean delete(int id, int userId) {
-        return crudRestoranRepository.delete(id,userId) !=0;
+        return crudRestoranRepository.delete(id, userId) != 0;
     }
 
     @Override
@@ -49,7 +51,8 @@ public class DataJpaRestoranRepository implements RestoranRepository {
 
     @Override
     public Restaurant get(int id, int userId) {
-        return crudRestoranRepository.findById(id).filter(r -> r.getUser().getId() == userId).orElse(null);
+
+        return crudRestoranRepository.findById(id).filter(r -> r.getManager().getId() ==  userId).orElse(null);
     }
 
     @Override

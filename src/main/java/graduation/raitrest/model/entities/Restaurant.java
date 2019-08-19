@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "RESTAURANTS")
@@ -14,20 +15,88 @@ public class Restaurant extends AbstractNamedEntity {
 
     @Column(name = "ADDRESS", nullable = false)
     @NotBlank
-    String address;
+    private String address;
 
-    @Column(name = "OWNER" )
-    String owner;
+    @Column(name = "OWNER")
+    private String owner;
 
     @Column(name = "REGISTERED", nullable = false, columnDefinition = "timestamp default now()")
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date registered = new Date();
 
-    @Column(name = "DESCRIPTION" )
-    String description;
+    @Column(name = "DESCRIPTION")
+    private String description;
 
-    @ManyToMany ( mappedBy = "restaurants" )
-    private List<User> users ;
+    //    @ManyToMany(cascade = {CascadeType.PERSIST})
+//    @JoinTable(
+//            name = "RESTAURANT_OWNER",
+//            joinColumns = @JoinColumn(name = "RESTAURANT_ID"),
+//            inverseJoinColumns = @JoinColumn(name = "MANAGER_ID")
+//    )
+//    protected Set<User> managers ;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MANAGER_ID", nullable = false)
+    @NotNull
+    private User manager;
+
+    public Restaurant(Integer id, String name, @NotBlank String address, String owner, @NotNull Date registered, String description, User manager) {
+        super(id, name);
+        this.address = address;
+        this.owner = owner;
+        this.registered = registered;
+        this.description = description;
+        this.manager = manager;
+    }
+
+    public Restaurant(String name, @NotBlank String address, String owner, @NotNull Date registered, String description, User manager) {
+        this(null, name, address, owner, registered, description, manager);
+    }
+
+
+    public Restaurant() {
+
+    }
+
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public Date getRegistered() {
+        return registered;
+    }
+
+    public void setRegistered(Date registered) {
+        this.registered = registered;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public User getManager() {
+        return manager;
+    }
+
+    public void setManager(User manager) {
+        this.manager = manager;
+    }
 }

@@ -22,21 +22,21 @@ public class MenuDetails extends AbstractBaseEntity {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "RESTORAN_ID", nullable = false)
+    @JoinColumn(name = "RESTAURANT_ID", nullable = false)
     @NotNull
     private Restaurant restaurant;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "manager_id", nullable = false)
-    @NotNull
-    private User manager;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "manager_id", nullable = false)
+//    @NotNull
+//    private User manager;
 
     public MenuDetails(Integer id, String description, Date dateTime, @NotNull Restaurant restaurant, @NotNull User manager) {
         super(id);
         this.description = description;
         this.dateTime = dateTime;
         this.restaurant = restaurant;
-        this.manager = manager;
+  //      this.manager = manager;
     }
 
     public MenuDetails() {
@@ -46,7 +46,7 @@ public class MenuDetails extends AbstractBaseEntity {
         this.description = description;
         this.dateTime = dateTime;
         this.restaurant = restaurant;
-        this.manager = manager;
+//        this.manager = manager;
     }
 
     public String getDescription() {
@@ -75,13 +75,13 @@ public class MenuDetails extends AbstractBaseEntity {
         this.restaurant = restaurant;
     }
 
-    public User getUser() {
-        return manager;
-    }
-
-    public void setUser(User user) {
-        this.manager = user;
-    }
+//    public User getUser() {
+//        return manager;
+//    }
+//
+//    public void setUser(User user) {
+//        this.manager = user;
+//    }
 
 
 }

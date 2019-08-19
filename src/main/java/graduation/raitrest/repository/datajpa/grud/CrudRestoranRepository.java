@@ -20,19 +20,19 @@ public interface CrudRestoranRepository extends JpaRepository<Restaurant, Intege
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Restaurant r WHERE r.id=:id AND r.user.id=:userId")
+    @Query("DELETE FROM Restaurant r WHERE r.id=:id AND r.manager.id=:userId")
     int delete(@Param("id") int id, @Param("userId") int userId);
 
 
     @Override
-    @Query("SELECT distinct  r FROM Restaurant r left join FETCH r.user")
+    @Query("SELECT distinct  r FROM Restaurant r left join FETCH r.manager")
     List<Restaurant> findAll();
 
 
-    @Query("SELECT distinct  r FROM Restaurant r left join FETCH r.user where r.user.id = :user_id")
+    @Query("SELECT distinct  r FROM Restaurant r left join FETCH r.manager where r.manager.id = :user_id")
     List<Restaurant> findAll(@Param("user_id") int user_id);
 
-    @EntityGraph(attributePaths = {"user"},type = EntityGraph.EntityGraphType.LOAD)
+    @EntityGraph(attributePaths = {"manager"},type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT u FROM Restaurant u WHERE u.id=?1")
     Restaurant getWithUser(int id);
 }

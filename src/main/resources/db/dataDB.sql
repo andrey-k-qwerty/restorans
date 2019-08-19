@@ -4,8 +4,8 @@ DELETE
 FROM MENU_DETAILS;
 DELETE
 FROM MENUS;
-DELETE
-FROM RESTAURANT_OWNER;
+-- DELETE
+-- FROM RESTAURANT_OWNER;
 DELETE
 FROM RESTAURANTS;
 DELETE
@@ -41,13 +41,20 @@ VALUES ('ROLE_USER', (select U.ID FROM USERS U WHERE U.NAME = 'User')),
        ('ROLE_MANAGER', (select U.ID FROM USERS U WHERE U.NAME = 'Manager_3'))
 ;
 
-INSERT INTO RESTAURANTS (NAME, ADDRESS, OWNER, REGISTERED, DESCRIPTION) VALUES
- ('Star','Адресс 1, тел 111-111-111','Директор 1',CURRENT_DATE  ,'Звезда'),
- ('Pearl','Адресс 2, тел 222-222-222','Директор 2',CURRENT_DATE  ,'Жемчужина'),
- ('Super Star','Адресс 3, тел 333-333-333','Директор 3',CURRENT_DATE  ,'Супер Звезда'),
- ('Black Pearl','Адресс 4, тел 444-444-444','Директор 4',CURRENT_DATE  ,'Черная Жемчужина');
+INSERT INTO RESTAURANTS (MANAGER_ID,NAME, ADDRESS, OWNER, REGISTERED, DESCRIPTION)
+VALUES ((select U.ID FROM USERS U WHERE U.NAME = 'Manager'),'Star', 'Адресс 1, тел 111-111-111', 'Директор 1', CURRENT_DATE, 'Звезда'),
+       ((select U.ID FROM USERS U WHERE U.NAME = 'Manager_1'),'Pearl', 'Адресс 2, тел 222-222-222', 'Директор 2', CURRENT_DATE, 'Жемчужина'),
+       ((select U.ID FROM USERS U WHERE U.NAME = 'Manager'),'Super Star', 'Адресс 3, тел 333-333-333', 'Директор 3', CURRENT_DATE, 'Супер Звезда'),
+       ((select U.ID FROM USERS U WHERE U.NAME = 'Manager_2'),'Black Pearl', 'Адресс 4, тел 444-444-444', 'Директор 4', CURRENT_DATE, 'Черная Жемчужина');
 
 
+
+-- INSERT INTO RESTAURANT_OWNER(MANAGER_ID, RESTAURANT_ID)
+-- VALUES ((select U.ID FROM USERS U WHERE U.NAME = 'Manager'), (SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Star')),
+--        ((select U.ID FROM USERS U WHERE U.NAME = 'Manager_1'), (SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Pearl')),
+--        ((select U.ID FROM USERS U WHERE U.NAME = 'Manager'), (SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star')),
+--        ((select U.ID FROM USERS U WHERE U.NAME = 'Manager_2'), (SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Black Pearl')),
+--        ((select U.ID FROM USERS U WHERE U.NAME = 'Manager_3'), (SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Black Pearl'));
 --
 -- INSERT INTO RESTORANS (NAME, USER_ID)
 -- VALUES ('Star', (select U.ID FROM USERS U WHERE U.NAME = 'Admin')),            --100007

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import static graduation.raitrest.util.ValidationUtil.checkNotFoundWithId;
 
-@Service
+//@Service
 public class MenuDetailsService {
     @Autowired
     private final MenuDetailsRepository menuDetailsRepository;

@@ -21,8 +21,8 @@ public interface CrudMenuDetailsRepository extends JpaRepository<MenuDetails, In
 
     @Transactional
     @Modifying
-    @Query("DELETE FROM MenuDetails md WHERE md.id=?1 and md.restoran.id in" +
-            " (select r.id from Restaurant r  where  r.id=md.restoran.id and r.user.id = ?2)")
+    @Query("DELETE FROM MenuDetails md WHERE md.id=?1 and md.restaurant.id in" +
+            " (select r.id from Restaurant r  where  r.id=md.restaurant.id and r.manager.id = ?2)")
     int delete(int id, int managerId);
 
 
@@ -38,7 +38,7 @@ public interface CrudMenuDetailsRepository extends JpaRepository<MenuDetails, In
             "    from RESTORANS r where   r.USER_ID = ?2 )",nativeQuery = true)
     MenuDetails get(int id, int managerId);
 
-    @EntityGraph(attributePaths = {"restoran", "manager"})
+    @EntityGraph(attributePaths = {"restaurant", "manager"})
     @Query("SELECT md FROM  MenuDetails md   WHERE md.id=?1")
     MenuDetails getFull(int id);
 

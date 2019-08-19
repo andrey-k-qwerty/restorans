@@ -11,7 +11,7 @@ import java.util.List;
 
 import static graduation.raitrest.util.ValidationUtil.checkNotFoundWithId;
 
-@Service
+//@Service
 public class MenuService {
     @Autowired
     private final MenuRepository menuRepository;

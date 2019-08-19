@@ -10,7 +10,7 @@ import static graduation.raitrest.UserTestData.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MenuDetailsTestData {
-    // TODAY
+  /*  // TODAY
     public static final int MENU_DETAILS_ID = 100;
     public static final MenuDetails MENU_DETAILS_STAR_TODAY_1 = new MenuDetails(MENU_DETAILS_ID, "1. meal dish first",
             new Date(), RESTAURANT_STAR, ADMIN);
@@ -113,5 +113,5 @@ public class MenuDetailsTestData {
     public static void assertMatchFull(MenuDetails actual, MenuDetails expected) {
         assertThat(actual).isEqualToIgnoringGivenFields(expected, "dateTime");
     }
-
+*/
 }

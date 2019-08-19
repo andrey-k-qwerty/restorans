@@ -11,6 +11,7 @@ public class MenuDetailsServiceTest extends AbstractServiceTest {
 
     @Autowired
     protected MenuDetailsService service;
+/*
 
     @Test
     public void get() {
@@ -46,5 +47,6 @@ public class MenuDetailsServiceTest extends AbstractServiceTest {
 //        menuDetails = service.getFull(MENU_DETAILS_ID);
 //        assertMatchFull(menuDetails, MENU_DETAILS_STAR_TODAY_1);
 
-    }
-}
+    }*/
+
+        }
