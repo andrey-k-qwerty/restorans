@@ -18,7 +18,7 @@ public class Menu extends AbstractBaseEntity {
     private Date dateTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "RESTORAN_ID", nullable = false)
+    @JoinColumn(name = "menus_details_id", nullable = false)
     @NotNull
     private Restaurant restaurant;
 

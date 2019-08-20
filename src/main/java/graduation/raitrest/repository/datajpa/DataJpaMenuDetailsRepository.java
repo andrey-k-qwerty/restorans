@@ -42,17 +42,17 @@ public class DataJpaMenuDetailsRepository implements MenuDetailsRepository {
 
     @Override
     public MenuDetails get(int id, int managerId) {
-        return crudMenuDetailsRepository.get(id,managerId);
+        return null;
     }
 
     @Override
     public MenuDetails getFull(int id) {
-        return crudMenuDetailsRepository.getFull(id);
+        return null;
     }
 
     @Override
     public MenuDetails getFull(int id, int managerId) {
-        return crudMenuDetailsRepository.getFull(id, managerId);
+        return null;
     }
 
     @Override

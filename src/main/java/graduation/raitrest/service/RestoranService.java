@@ -10,7 +10,7 @@ import java.util.List;
 
 import static graduation.raitrest.util.ValidationUtil.checkNotFoundWithId;
 
-//@Service
+@Service
 public class RestoranService {
 
     @Autowired
@@ -24,8 +24,8 @@ public class RestoranService {
         return restoranRepository.getAll();
     }
 
-    public List<Restaurant> getAll(int user_id) {
-        return restoranRepository.getAll(user_id);
+    public List<Restaurant> getAll(int manager_id) {
+        return restoranRepository.getAll(manager_id);
     }
 
     public Restaurant get(int id) {

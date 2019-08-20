@@ -66,8 +66,8 @@ public class User extends AbstractNamedEntity {
 //    @ManyToMany(mappedBy = "managers")
 //    protected Set<Restaurant> restaurants ;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    protected Set<Restaurant> restaurants;
+//    @OneToMany(mappedBy = "manager",fetch = FetchType.LAZY)
+//    protected Set<Restaurant> restaurants;
 
     public User() {
     }
@@ -138,5 +138,10 @@ public class User extends AbstractNamedEntity {
                 ", enabled=" + enabled +
                 ", roles=" + roles +
                 '}';
+    }
+
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

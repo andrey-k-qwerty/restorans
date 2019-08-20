@@ -36,7 +36,7 @@ public class Restaurant extends AbstractNamedEntity {
 //    )
 //    protected Set<User> managers ;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "MANAGER_ID", nullable = false)
     @NotNull
     private User manager;
@@ -99,4 +99,5 @@ public class Restaurant extends AbstractNamedEntity {
     public void setManager(User manager) {
         this.manager = manager;
     }
+
 }

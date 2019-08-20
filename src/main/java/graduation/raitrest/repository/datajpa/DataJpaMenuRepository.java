@@ -4,7 +4,7 @@ import graduation.raitrest.model.entities.Menu;
 import graduation.raitrest.model.entities.Restaurant;
 import graduation.raitrest.repository.MenuRepository;
 import graduation.raitrest.repository.datajpa.grud.CrudMenuRepository;
-import graduation.raitrest.repository.datajpa.grud.CrudRestoranRepository;
+import graduation.raitrest.repository.datajpa.grud.CrudRestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,14 +13,14 @@ import java.util.List;
 
 @Repository
 public class DataJpaMenuRepository implements MenuRepository {
-    private final CrudRestoranRepository crudRestoranRepository;
+    private final CrudRestaurantRepository crudRestaurantRepository;
     private CrudMenuRepository crudMenuRepository;
 
 
     @Autowired
-    public DataJpaMenuRepository(CrudMenuRepository crudMenuRepository, CrudRestoranRepository crudRestoranRepository) {
+    public DataJpaMenuRepository(CrudMenuRepository crudMenuRepository, CrudRestaurantRepository crudRestaurantRepository) {
         this.crudMenuRepository = crudMenuRepository;
-        this.crudRestoranRepository = crudRestoranRepository;
+        this.crudRestaurantRepository = crudRestaurantRepository;
     }
 
     @Override
@@ -29,10 +29,10 @@ public class DataJpaMenuRepository implements MenuRepository {
         if (!menu.isNew() && get(menu.getId(), userId) == null) {
             return null;
         }
-//        Restaurant restoran = crudRestoranRepository.getWithUser( menu.getRestaurant().getId());
+//        Restaurant restoran = crudRestaurantRepository.getWithUser( menu.getRestaurant().getId());
 //        if (restoran == null || restoran.getUser().getId() != userId) return null;
 
-//        Restaurant restoran = crudRestoranRepository.getOne(menu.getRestaurant().getId());
+//        Restaurant restoran = crudRestaurantRepository.getOne(menu.getRestaurant().getId());
 //        if (restoran == null) {
 //            return  null;
 //        }
@@ -44,12 +44,12 @@ public class DataJpaMenuRepository implements MenuRepository {
         if (!menu.isNew() && get(menu.getId(), userId) == null) {
             return null;
         }
-//        Restaurant rest = crudRestoranRepository.getWithUser(restoranID);
+//        Restaurant rest = crudRestaurantRepository.getWithUser(restoranID);
 //        if (rest == null || rest.getUser().getId() != userId) {
 //            return null;
 //        }
 //        menu.setRestaurant(rest);
-        Restaurant restaurant = crudRestoranRepository.getOne(restoranID);
+        Restaurant restaurant = crudRestaurantRepository.getOne(restoranID);
         if (restaurant == null) {
             return  null;
         }
@@ -79,7 +79,9 @@ public class DataJpaMenuRepository implements MenuRepository {
 //        if (menu.getRestaurant().getUser().getId() == userId)
 //            return menu;
 //        return null;
-      return   crudMenuRepository.getWithRestoran(id, userId);
+
+//      return   crudMenuRepository.getWithRestoran(id, userId);
+        return null;
     }
 
     @Override

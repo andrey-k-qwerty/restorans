@@ -1,72 +1,70 @@
 package graduation.raitrest.repository.datajpa;
 
 import graduation.raitrest.model.entities.Restaurant;
-import graduation.raitrest.model.entities.User;
 import graduation.raitrest.repository.RestoranRepository;
-import graduation.raitrest.repository.datajpa.grud.CrudRestoranRepository;
+import graduation.raitrest.repository.datajpa.grud.CrudRestaurantRepository;
 import graduation.raitrest.repository.datajpa.grud.CrudUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Set;
 
 @Repository
 public class DataJpaRestaurantRepository implements RestoranRepository {
 
     @Autowired
-    private CrudRestoranRepository crudRestoranRepository;
+    private CrudRestaurantRepository crudRestaurantRepository;
 
     @Autowired
     private CrudUserRepository crudUserRepository;
 
 //    @Override
 //    public Restaurant save(Restaurant restaurant) {
-//        return crudRestoranRepository.save(restaurant);
+//        return crudRestaurantRepository.save(restaurant);
 //    }
 
     @Override
-    public Restaurant save(Restaurant restaurant, int userId) {
-        if (!restaurant.isNew() && get(restaurant.getId(), userId) == null) {
+    public Restaurant save(Restaurant restaurant, int managerId) {
+        if (!restaurant.isNew() && get(restaurant.getId(), managerId) == null) {
             return null;
         }
-        restaurant.setManager(crudUserRepository.getOne(userId));
-        return crudRestoranRepository.save(restaurant);
+        restaurant.setManager(crudUserRepository.getOne(managerId));
+        return crudRestaurantRepository.save(restaurant);
     }
 
     @Override
     public boolean delete(int id) {
-        return crudRestoranRepository.delete(id) != 0;
+        return crudRestaurantRepository.delete(id) != 0;
     }
 
     @Override
-    public boolean delete(int id, int userId) {
-        return crudRestoranRepository.delete(id, userId) != 0;
+    public boolean delete(int id, int managerId) {
+        return crudRestaurantRepository.delete(id, managerId) != 0;
     }
 
     @Override
     public Restaurant get(int id) {
-        return crudRestoranRepository.findById(id).orElse(null);
+        return crudRestaurantRepository.findById(id).orElse(null);
     }
 
     @Override
     public Restaurant get(int id, int userId) {
 
-        return crudRestoranRepository.findById(id).filter(r -> r.getManager().getId() ==  userId).orElse(null);
+        return crudRestaurantRepository.findById(id).filter(r -> r.getManager().getId() ==  userId).orElse(null);
     }
 
     @Override
     public Restaurant getWithUser(int id) {
-        return crudRestoranRepository.getWithUser(id);
+        return crudRestaurantRepository.getWithUser(id);
     }
 
     @Override
     public List<Restaurant> getAll() {
-        return crudRestoranRepository.findAll();
+        return crudRestaurantRepository.findAll();
     }
 
     @Override
     public List<Restaurant> getAll(int userId) {
-        return crudRestoranRepository.findAll(userId);
+        return crudRestaurantRepository.findAll(userId);
     }
 }

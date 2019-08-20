@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hsqldb.Tokens.CURRENT_DATE;
 
 public class RestoranTestData {
-    public static final int RESTAURANT_ID = START_SEQ + 7;
+    public static final int RESTAURANT_ID = START_SEQ + 9;
     // У   манаджера два ресторана star и super star
     public static final Restaurant RESTAURANT_STAR = new Restaurant(RESTAURANT_ID, "Star",
             "Адресс 1, тел 111-111-111", "Директор 1", new Date(), "Звезда", MANAGER);
@@ -28,7 +28,7 @@ public class RestoranTestData {
             RESTAURANT_BLACK_PEARL_MAN);
 
     public static Restaurant getCreated() {
-        return new Restaurant(RESTAURANT_ID, "Новый ресторан",
+        return new Restaurant( "Новый ресторан",
                 "Новый Адресс , тел 111-111-111", "Новый директор", new Date(), "Новый ресторан", MANAGER);
     }
 
@@ -38,7 +38,7 @@ public class RestoranTestData {
     }
 
     public static void assertMatch(Restaurant actual, Restaurant expected) {
-        assertThat(actual).isEqualToIgnoringGivenFields(expected, "user");
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered","manager");
         //  assertThat(actual).isEqualToComparingFieldByField(expected);
     }
 
@@ -47,7 +47,7 @@ public class RestoranTestData {
     }
 
     public static void assertMatch(Iterable<Restaurant> actual, Iterable<Restaurant> expected) {
-        //  assertThat(actual).usingElementComparatorIgnoringFields("registered").isEqualTo(expected);
-        assertThat(actual).usingDefaultElementComparator().isEqualTo(expected);
+          assertThat(actual).usingElementComparatorIgnoringFields("registered","manager").isEqualTo(expected);
+       // assertThat(actual).usingDefaultElementComparator().isEqualTo(expected);
     }
 }

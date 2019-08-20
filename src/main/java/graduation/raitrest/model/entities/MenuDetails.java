@@ -19,6 +19,21 @@ public class MenuDetails extends AbstractBaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateTime;
 
+    @Basic
+    @Column(name = "TYPE_DISH")
+    private String typeDish;
+
+    @Basic
+    @Column(name = "QUANTITY")
+    private Integer quantity;
+
+    @Basic
+    @Column(name = "TYPE_QUANTITY")
+    private String typeQuantity;
+
+    @Basic
+    @Column(name = "PRICE",columnDefinition="Decimal(5,2) default '0.00'")
+    private Float price;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -26,27 +41,21 @@ public class MenuDetails extends AbstractBaseEntity {
     @NotNull
     private Restaurant restaurant;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "manager_id", nullable = false)
-//    @NotNull
-//    private User manager;
-
-    public MenuDetails(Integer id, String description, Date dateTime, @NotNull Restaurant restaurant, @NotNull User manager) {
+    public MenuDetails(Integer id, @NotNull Restaurant restaurant, String typeDish, String description,
+                       Integer quantity, String typeQuantity, Float price, Date dateTime) {
         super(id);
-        this.description = description;
-        this.dateTime = dateTime;
         this.restaurant = restaurant;
-  //      this.manager = manager;
+        this.typeDish = typeDish;
+        this.description = description;
+        this.quantity = quantity;
+        this.typeQuantity = typeQuantity;
+        this.price = price;
+        this.dateTime = dateTime;
     }
 
-    public MenuDetails() {
-    }
-
-    public MenuDetails(String description, Date dateTime, @NotNull Restaurant restaurant, @NotNull User manager) {
-        this.description = description;
-        this.dateTime = dateTime;
-        this.restaurant = restaurant;
-//        this.manager = manager;
+    public MenuDetails(@NotNull Restaurant restaurant, String typeDish, String description,
+                       Integer quantity, String typeQuantity, Float price, Date dateTime) {
+       this(null,restaurant,typeDish,description,quantity,typeQuantity,price,dateTime);
     }
 
     public String getDescription() {
@@ -57,14 +66,44 @@ public class MenuDetails extends AbstractBaseEntity {
         this.description = description;
     }
 
-
     public Date getDateTime() {
         return dateTime;
     }
 
-
     public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public String getTypeDish() {
+        return typeDish;
+    }
+
+    public void setTypeDish(String typeDish) {
+        this.typeDish = typeDish;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getTypeQuantity() {
+        return typeQuantity;
+    }
+
+    public void setTypeQuantity(String typeQuantity) {
+        this.typeQuantity = typeQuantity;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
     }
 
     public Restaurant getRestaurant() {
@@ -74,14 +113,4 @@ public class MenuDetails extends AbstractBaseEntity {
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
     }
-
-//    public User getUser() {
-//        return manager;
-//    }
-//
-//    public void setUser(User user) {
-//        this.manager = user;
-//    }
-
-
 }

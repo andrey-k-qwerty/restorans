@@ -1,33 +1,41 @@
 package graduation.raitrest.service;
 
 import graduation.raitrest.model.entities.Restaurant;
+import graduation.raitrest.util.JpaUtil;
 import graduation.raitrest.util.exception.NotFoundException;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static graduation.raitrest.RestoranTestData.*;
-import static graduation.raitrest.UserTestData.ADMIN_ID;
-import static graduation.raitrest.UserTestData.MANAGER_ID;
+import static graduation.raitrest.UserTestData.*;
 
 public class RestaurantServiceTest extends AbstractServiceTest {
     @Autowired
     protected RestoranService service;
+    @Autowired
+    protected UserService userService;
 
     @Test
     public void getAll() {
         List<Restaurant> all = service.getAll();
         assertMatch(all, restaurantList);
+
+        all = service.getAll(MANAGER_ID);
+        assertMatch(all, RESTAURANT_STAR, RESTAURANT_SUPER_STAR);
     }
 
     @Test
     public void getAllByUserID() {
-        List<Restaurant> all = service.getAll(ADMIN_ID);
+        List<Restaurant> all = service.getAll(MANAGER_ID);
         // admin have 2 restaurant
         assertMatch(all, RESTAURANT_STAR, RESTAURANT_SUPER_STAR);
-        all = service.getAll(MANAGER_ID);
-        assertMatch(all, RESTAURANT_PEARL, RESTAURANT_BLACK_PEARL_MAN);
+        all = service.getAll(MANAGER_2_ID);
+        assertMatch(all,  RESTAURANT_BLACK_PEARL_MAN);
     }
 
     @Test
@@ -37,7 +45,11 @@ public class RestaurantServiceTest extends AbstractServiceTest {
         newRestaurant.setId(created.getId());
 
         assertMatch(newRestaurant, created);
-        assertMatch(service.getAll(MANAGER_ID), RESTAURANT_PEARL, RESTAURANT_BLACK_PEARL_MAN,newRestaurant);
+        assertMatch(service.getAll(MANAGER_ID), RESTAURANT_STAR, RESTAURANT_SUPER_STAR,newRestaurant);
+
+        Restaurant restaurant = service.get(newRestaurant.getId(), MANAGER_ID);
+        assertMatch(newRestaurant, restaurant);
+
     }
 
     @Test
@@ -47,9 +59,9 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void getByUserId() {
-        Restaurant restaurant = service.get(RESTAURANT_ID + 1, MANAGER_ID);
-        assertMatch(restaurant, RESTAURANT_PEARL);
+     public void getByUserId() {
+        Restaurant restaurant = service.get(RESTAURANT_ID , MANAGER_ID);
+        assertMatch(restaurant, RESTAURANT_STAR);
     }
 
     @Test
@@ -60,33 +72,33 @@ public class RestaurantServiceTest extends AbstractServiceTest {
 
     @Test
     public void deleteWithUserID() {
-        service.delete(RESTAURANT_ID,ADMIN_ID);
+        service.delete(RESTAURANT_ID,MANAGER_ID);
         assertMatch(service.getAll(), RESTAURANT_PEARL, RESTAURANT_SUPER_STAR,  RESTAURANT_BLACK_PEARL_MAN);
     }
 
     @Test
     public void deleteNotFound()  {
         thrown.expect(NotFoundException.class);
-        service.delete(1, ADMIN_ID);
+        service.delete(1, MANAGER_ID);
     }
 
     @Test
     public void deleteNotOwn() {
         thrown.expect(NotFoundException.class);
-        service.delete(RESTAURANT_ID, MANAGER_ID);
+        service.delete(RESTAURANT_ID, MANAGER_1_ID);
     }
 
     @Test
     public void update() {
-        Restaurant updated = getCreated();
-        service.update(updated, ADMIN_ID);
-        assertMatch(service.get(RESTAURANT_ID, ADMIN_ID), updated);
+        Restaurant updated = getUpdated();
+        service.update(updated, MANAGER_ID);
+        assertMatch(service.get(RESTAURANT_ID, MANAGER_ID), updated);
     }
 
     @Test
     public void updateNotFound() {
         thrown.expect(NotFoundException.class);
         thrown.expectMessage("Not found entity with id=" + RESTAURANT_ID);
-        service.update(RESTAURANT_STAR, MANAGER_ID);
+        service.update(RESTAURANT_STAR, MANAGER_1_ID);
     }
 }

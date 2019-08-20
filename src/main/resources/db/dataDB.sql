@@ -49,132 +49,26 @@ VALUES ((select U.ID FROM USERS U WHERE U.NAME = 'Manager'),'Star', 'Адрес�
 
 
 
--- INSERT INTO RESTAURANT_OWNER(MANAGER_ID, RESTAURANT_ID)
--- VALUES ((select U.ID FROM USERS U WHERE U.NAME = 'Manager'), (SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Star')),
---        ((select U.ID FROM USERS U WHERE U.NAME = 'Manager_1'), (SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Pearl')),
---        ((select U.ID FROM USERS U WHERE U.NAME = 'Manager'), (SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star')),
---        ((select U.ID FROM USERS U WHERE U.NAME = 'Manager_2'), (SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Black Pearl')),
---        ((select U.ID FROM USERS U WHERE U.NAME = 'Manager_3'), (SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Black Pearl'));
---
--- INSERT INTO RESTORANS (NAME, USER_ID)
--- VALUES ('Star', (select U.ID FROM USERS U WHERE U.NAME = 'Admin')),            --100007
---        ('Pearl', (select U.ID FROM USERS U WHERE U.NAME = 'Manager')),         --100008
---        ('Super Star', (select U.ID FROM USERS U WHERE U.NAME = 'Admin')),      --100009 , у Админа два ресторана (Star и 'Super Star')
---        ('Black Pearl', (select U.ID FROM USERS U WHERE U.NAME = 'Manager_1')), --100010 ,
---        --100011, у ресторана 'Black Pearl' два админа (Manager_1, Manager) т.е у Manager тоже два ресторана
---        ('Black Pearl', (select U.ID FROM USERS U WHERE U.NAME = 'Manager'));
+insert INTO MENU_DETAILS(RESTAURANT_ID, TYPE_DISH, DESCRIPTION, QUANTITY,  PRICE, DATE_TIME) VALUES
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Star'),'Первое блюдо', 'Борщ' , '250 грамм', 100.00,CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Star'),'Второе блюдо', 'Картошка с мясом' , '200 грамм', 250.00,CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Star'),'Третье блюдо', 'Салат овощной' , '100 грамм', 55.00,CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Star'),'Четвертое блюдо', 'Компот' , '250 грамм', 40.00,CURRENT_DATE),
+
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Pearl'),'Первое блюдо', 'Уха' , '250 грамм', 120.00,CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Pearl'),'Второе блюдо', 'рис  с рыбой' , '200 грамм', 180.00,CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Pearl'),'Третье блюдо', 'Салат крабовый' , '100 грамм', 75.00,CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Pearl'),'Четвертое блюдо', 'Сок' , '250 грамм', 40.00,CURRENT_DATE),
+
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star'),'Первое блюдо', 'Грибной суб' , '250 грамм', 120.00,CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star'),'Второе блюдо', 'Мясное рагу' , '200 грамм', 180.00,CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star'),'Третье блюдо', 'Кокот' , '100 грамм', 75.00,CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star'),'Четвертое блюдо', 'Чай' , '250 грамм', 40.00,CURRENT_DATE),
+
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star'),'Первое блюдо', '' , '250 грамм', 120.00,CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star'),'Второе блюдо', 'рагу' , '200 грамм', 180.00,CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star'),'Третье блюдо', 'Кокот' , '100 грамм', 75.00,CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star'),'Четвертое блюдо', 'Чай' , '250 грамм', 40.00,CURRENT_DATE);
 
 
--- INSERT INTO MENUS (RESTORAN_ID, DESCRIPTION, DATE_TIME)
--- VALUES ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), 'Star_meal_dinner', CURRENT_DATE),             --100020
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'), 'Pearl_meal_dinner', CURRENT_DATE),           --100021
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star_1'), 'Star_1_meal_dinner', CURRENT_DATE),         --100022
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star_2'), 'Star_2_meal_dinner', CURRENT_DATE),         --100023
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star_3'), 'Star_3_meal_dinner', CURRENT_DATE),         --100024
---
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), 'Star_meal_lunch', CURRENT_DATE - 1 day),     --100025
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'), 'Pearl_meal_lunch', CURRENT_DATE - 1 day),   --100026
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star_1'), 'Star_1_meal_lunch', CURRENT_DATE - 1 day), --100027
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star_2'), 'Star_2_meal_lunch', CURRENT_DATE - 1 day), --100028
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star_3'), 'Star_3_meal_lunch', CURRENT_DATE - 1 day), --100029
---
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), 'Star_meal_breakfast', CURRENT_DATE - 2 day),     --100030
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'), 'Pearl_meal_breakfast', CURRENT_DATE - 2 day),   --100031
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star_1'), 'Star_1_meal_breakfast', CURRENT_DATE - 2 day), --100032
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star_2'), 'Star_2_meal_breakfast', CURRENT_DATE - 2 day), --100033
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star_3'), 'Star_3_meal_breakfast', CURRENT_DATE - 2 day); --100034
-
--- INSERT INTO MENU_DETAILS(RESTORAN_ID, MANAGER_ID, DESCRIPTION, DATE_TIME)
---
--- VALUES --Star-Admin
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
---         '1. meal dish first', CURRENT_DATE), --100
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
---         '2. meal dish second', CURRENT_DATE),
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
---         '3. meal dish third', CURRENT_DATE),
---        --Pearl-Manager
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'), (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
---         '1. meal dish first', CURRENT_DATE),
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'), (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
---         '2. meal dish second', CURRENT_DATE),
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'), (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
---         '3. meal dish third', CURRENT_DATE),
---        -- 'Black Pearl' - Manager_1 = 100006, Manager=100002,  !!!!!!!!!!!!!!!!!!!!!!!! ДВА ХОЗЯИНА !!!!!!!!!!!!!!!!
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Black Pearl' and R.USER_ID =  (select U.ID FROM USERS U WHERE U.NAME = 'Manager_1')),
---         (select U.ID FROM USERS U WHERE U.NAME = 'Manager_1'),
---         '1. meal dish first', CURRENT_DATE),
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Black Pearl' and R.USER_ID =  (select U.ID FROM USERS U WHERE U.NAME = 'Manager_1')),
---         (select U.ID FROM USERS U WHERE U.NAME = 'Manager_1'),
---         '2. meal dish second', CURRENT_DATE),
---        -- 'Super Star' - Admin
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Super Star'),
---         (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
---         '1. meal dish first', CURRENT_DATE),
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Super Star'),
---         (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
---         '2. meal dish second', CURRENT_DATE),--,
---
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'),
---         (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
---         '1-1. meal dish first', CURRENT_DATE - 1 day),
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'),
---         (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
---         '2-1. meal dish second', CURRENT_DATE - 1 day),
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'),
---         (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
---         '3-1. meal dish third', CURRENT_DATE - 1 day),
---        --Star-Manager
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
---         '1-1. meal dish first', CURRENT_DATE - 1 day),
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
---         '2-1. meal dish second', CURRENT_DATE - 1 day),
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
---         '3-1. meal dish third', CURRENT_DATE - 1 day),
---        -- 'Black Pearl' - Manager_1 !!! ДВА ХОЗЯИНА !!!
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Black Pearl' and R.USER_ID =  (select U.ID FROM USERS U WHERE U.NAME = 'Manager_1')),
---         (select U.ID FROM USERS U WHERE U.NAME = 'Manager_1'),
---         '1-1. meal dish first', CURRENT_DATE - 1 day),
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Black Pearl' and R.USER_ID =  (select U.ID FROM USERS U WHERE U.NAME = 'Manager_1')),
---         (select U.ID FROM USERS U WHERE U.NAME = 'Manager_1'),
---         '2-1. meal dish second', CURRENT_DATE - 1 day),
---        -- 'Super Star' - Manager_1
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Super Star'),
---         (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
---         '1-1. meal dish first', CURRENT_DATE - 1 day),
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Super Star'),
---         (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
---         '2-1. meal dish second', CURRENT_DATE - 1 day),
---
---
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'),
---         (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
---         '1-2. meal dish first', CURRENT_DATE - 2 day),
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'),
---         (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
---         '2-2. meal dish second', CURRENT_DATE - 2 day),
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Pearl'),
---         (select U.ID FROM USERS U WHERE U.NAME = 'Manager'),
---         '3-2. meal dish third', CURRENT_DATE - 2 day),
---        --Star-Manager
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
---         '1-2. meal dish first', CURRENT_DATE - 2 day),
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
---         '2-2. meal dish second', CURRENT_DATE - 2 day),
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Star'), (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
---         '3-2. meal dish third', CURRENT_DATE - 2 day),
---        -- 'Black Pearl' - Manager_1 !!! ДВА ХОЗЯИНА !!! ПОМЕНЯЛ МЕНЕДЖЕРА
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Black Pearl' and R.USER_ID =  (select U.ID FROM USERS U WHERE U.NAME = 'Manager')),
---         (select U.ID FROM USERS U WHERE U.NAME = 'Manager_1'),
---         '1-2. meal dish first', CURRENT_DATE - 2 day),
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Black Pearl' and R.USER_ID =  (select U.ID FROM USERS U WHERE U.NAME = 'Manager')),
---         (select U.ID FROM USERS U WHERE U.NAME = 'Manager_1'),
---         '2-2. meal dish second', CURRENT_DATE - 2 day),
---        -- 'Super Star' - Manager_1
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Super Star'),
---         (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
---         '1-2. meal dish first', CURRENT_DATE - 2 day),
---        ((SELECT R.ID FROM RESTORANS R WHERE R.NAME = 'Super Star'),
---         (select U.ID FROM USERS U WHERE U.NAME = 'Admin'),
---         '2-2. meal dish second', CURRENT_DATE - 2 day);
 
