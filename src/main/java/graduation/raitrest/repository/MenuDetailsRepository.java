@@ -2,6 +2,7 @@ package graduation.raitrest.repository;
 
 import graduation.raitrest.model.entities.MenuDetails;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface MenuDetailsRepository {
@@ -20,7 +21,7 @@ public interface MenuDetailsRepository {
 
 
     List<MenuDetails> getAll();
-    List<MenuDetails> getAllToday();
+    List<MenuDetails> getAllByDateTime(LocalDateTime startDateTime,  LocalDateTime endDateTime);
 
     List<MenuDetails> getAll(int managerId);
     List<MenuDetails> getAll(int restaurantID, int managerId);

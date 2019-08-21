@@ -5,6 +5,7 @@ import graduation.raitrest.repository.MenuDetailsRepository;
 import graduation.raitrest.repository.datajpa.grud.CrudMenuDetailsRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -16,7 +17,7 @@ public class DataJpaMenuDetailsRepository implements MenuDetailsRepository {
     }
 
     @Override
-    public MenuDetails save(MenuDetails menu, int restoranID, int managerId) {
+    public MenuDetails save(MenuDetails menu, int restaurantID, int managerId) {
         return null;
     }
 
@@ -43,10 +44,8 @@ public class DataJpaMenuDetailsRepository implements MenuDetailsRepository {
     @Override
     public MenuDetails get(int id, int managerId) {
 
-        return crudMenuDetailsRepository.getWithManager(id,managerId) ;
+        return crudMenuDetailsRepository.getWithManager(id, managerId);
     }
-
-
 
     @Override
     public List<MenuDetails> getAll() {
@@ -54,18 +53,18 @@ public class DataJpaMenuDetailsRepository implements MenuDetailsRepository {
     }
 
     @Override
-    public List<MenuDetails> getAllToday() {
-        return null;
+    public List<MenuDetails> getAllByDateTime(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        return crudMenuDetailsRepository.getAllByDateTime(startDateTime, endDateTime);
     }
+
 
     @Override
     public List<MenuDetails> getAll(int managerId) {
-
-            return crudMenuDetailsRepository.getAllWithManager(managerId);
+        return crudMenuDetailsRepository.getAllWithManager(managerId);
     }
 
     @Override
-    public List<MenuDetails> getAll(int restoranID, int managerId) {
+    public List<MenuDetails> getAll(int restaurantID, int managerId) {
         return null;
     }
 

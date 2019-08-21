@@ -4,6 +4,8 @@ import graduation.raitrest.model.entities.MenuDetails;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static graduation.raitrest.MenuDetailsTestData.*;
@@ -62,6 +64,20 @@ public class MenuDetailsServiceTest extends AbstractServiceTest {
         // all by manager_id
         allMenu = service.getAll(MANAGER_1_ID);
         assertMatch(List.of(MENU_DETAILS_PEARL_TODAY_1, MENU_DETAILS_PEARL_TODAY_2, MENU_DETAILS_PEARL_TODAY_3, MENU_DETAILS_PEARL_TODAY_4, MENU_DETAILS_PEARL_YESTERDAY_1, MENU_DETAILS_PEARL_YESTERDAY_2, MENU_DETAILS_PEARL_YESTERDAY_3), allMenu);
+
+        // all by date
+        List<MenuDetails> menuDetailsToday = List.of(MENU_DETAILS_STAR_TODAY_1,
+                MENU_DETAILS_STAR_TODAY_2, MENU_DETAILS_STAR_TODAY_3, MENU_DETAILS_STAR_TODAY_4,
+
+                MENU_DETAILS_PEARL_TODAY_1, MENU_DETAILS_PEARL_TODAY_2, MENU_DETAILS_PEARL_TODAY_3, MENU_DETAILS_PEARL_TODAY_4,
+
+                MENU_DETAILS_SUPER_STAR_TODAY_1, MENU_DETAILS_SUPER_STAR_TODAY_2, MENU_DETAILS_SUPER_STAR_TODAY_3, MENU_DETAILS_SUPER_STAR_TODAY_4,
+
+                MENU_DETAILS_BLACK_PEARL_TODAY_1, MENU_DETAILS_BLACK_PEARL_TODAY_2, MENU_DETAILS_BLACK_PEARL_TODAY_3, MENU_DETAILS_BLACK_PEARL_TODAY_4);
+        allMenu = service.getFilterByDate(LocalDate.now(),LocalDate.now().plusDays(1L));
+
+
+        assertMatch(menuDetailsToday, allMenu);
 
     }
 

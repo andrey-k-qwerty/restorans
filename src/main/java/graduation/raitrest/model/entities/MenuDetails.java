@@ -1,10 +1,13 @@
 package graduation.raitrest.model.entities;
 
 import graduation.raitrest.model.AbstractBaseEntity;
+import graduation.raitrest.util.DateTimeUtil;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -15,10 +18,12 @@ public class MenuDetails extends AbstractBaseEntity {
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @Basic
+
     @Column(name = "DATE_TIME")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateTime;
+//    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE_TIME)
+  //  @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
+    private LocalDateTime dateTime;
 
     @Basic
     @Column(name = "TYPE_DISH")
@@ -41,7 +46,7 @@ public class MenuDetails extends AbstractBaseEntity {
     private Restaurant restaurant;
 
     public MenuDetails(Integer id, @NotNull Restaurant restaurant, String typeDish, String description,
-                       String quantity, BigDecimal price, Date dateTime) {
+                       String quantity, BigDecimal price, LocalDateTime dateTime) {
         super(id);
         this.restaurant = restaurant;
         this.typeDish = typeDish;
@@ -53,7 +58,7 @@ public class MenuDetails extends AbstractBaseEntity {
     }
 
     public MenuDetails(@NotNull Restaurant restaurant, String typeDish, String description,
-                       String quantity,  BigDecimal price, Date dateTime) {
+                       String quantity,  BigDecimal price, LocalDateTime dateTime) {
        this(null,restaurant,typeDish,description,quantity,price,dateTime);
     }
 
@@ -68,11 +73,11 @@ public class MenuDetails extends AbstractBaseEntity {
         this.description = description;
     }
 
-    public Date getDateTime() {
+    public LocalDateTime getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(Date dateTime) {
+    public void setDateTime(Date LocalDateTime) {
         this.dateTime = dateTime;
     }
 
