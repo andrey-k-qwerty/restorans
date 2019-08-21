@@ -4,6 +4,7 @@ import graduation.raitrest.model.AbstractBaseEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -25,15 +26,13 @@ public class MenuDetails extends AbstractBaseEntity {
 
     @Basic
     @Column(name = "QUANTITY")
-    private Integer quantity;
+    private String quantity;
+
+
 
     @Basic
-    @Column(name = "TYPE_QUANTITY")
-    private String typeQuantity;
-
-    @Basic
-    @Column(name = "PRICE",columnDefinition="Decimal(5,2) default '0.00'")
-    private Float price;
+    @Column(name = "PRICE", precision=10, scale=2,columnDefinition="Decimal(10,2) default '0.00'")
+    private BigDecimal  price;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -42,20 +41,23 @@ public class MenuDetails extends AbstractBaseEntity {
     private Restaurant restaurant;
 
     public MenuDetails(Integer id, @NotNull Restaurant restaurant, String typeDish, String description,
-                       Integer quantity, String typeQuantity, Float price, Date dateTime) {
+                       String quantity, BigDecimal price, Date dateTime) {
         super(id);
         this.restaurant = restaurant;
         this.typeDish = typeDish;
         this.description = description;
         this.quantity = quantity;
-        this.typeQuantity = typeQuantity;
+
         this.price = price;
         this.dateTime = dateTime;
     }
 
     public MenuDetails(@NotNull Restaurant restaurant, String typeDish, String description,
-                       Integer quantity, String typeQuantity, Float price, Date dateTime) {
-       this(null,restaurant,typeDish,description,quantity,typeQuantity,price,dateTime);
+                       String quantity,  BigDecimal price, Date dateTime) {
+       this(null,restaurant,typeDish,description,quantity,price,dateTime);
+    }
+
+    public MenuDetails() {
     }
 
     public String getDescription() {
@@ -82,27 +84,21 @@ public class MenuDetails extends AbstractBaseEntity {
         this.typeDish = typeDish;
     }
 
-    public Integer getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 
-    public String getTypeQuantity() {
-        return typeQuantity;
-    }
 
-    public void setTypeQuantity(String typeQuantity) {
-        this.typeQuantity = typeQuantity;
-    }
 
-    public Float getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

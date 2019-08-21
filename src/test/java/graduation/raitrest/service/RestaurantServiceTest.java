@@ -1,13 +1,9 @@
 package graduation.raitrest.service;
 
 import graduation.raitrest.model.entities.Restaurant;
-import graduation.raitrest.util.JpaUtil;
 import graduation.raitrest.util.exception.NotFoundException;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -35,7 +31,7 @@ public class RestaurantServiceTest extends AbstractServiceTest {
         // admin have 2 restaurant
         assertMatch(all, RESTAURANT_STAR, RESTAURANT_SUPER_STAR);
         all = service.getAll(MANAGER_2_ID);
-        assertMatch(all,  RESTAURANT_BLACK_PEARL_MAN);
+        assertMatch(all, RESTAURANT_BLACK_PEARL);
     }
 
     @Test
@@ -67,13 +63,13 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     @Test
     public void delete() {
         service.delete(RESTAURANT_ID);
-        assertMatch(service.getAll(), RESTAURANT_PEARL, RESTAURANT_SUPER_STAR,  RESTAURANT_BLACK_PEARL_MAN);
+        assertMatch(service.getAll(), RESTAURANT_PEARL, RESTAURANT_SUPER_STAR, RESTAURANT_BLACK_PEARL);
     }
 
     @Test
     public void deleteWithUserID() {
         service.delete(RESTAURANT_ID,MANAGER_ID);
-        assertMatch(service.getAll(), RESTAURANT_PEARL, RESTAURANT_SUPER_STAR,  RESTAURANT_BLACK_PEARL_MAN);
+        assertMatch(service.getAll(), RESTAURANT_PEARL, RESTAURANT_SUPER_STAR, RESTAURANT_BLACK_PEARL);
     }
 
     @Test

@@ -68,9 +68,9 @@ create table menu_details
    -- menu_id          integer   not null, -- текущий менеджер
     type_dish           varchar(100),       -- тип блюда, типа горячие закуски, холодные закуски, салаты и тюд. Вынести потом в отдельную таблицу
     description         varchar(1000),      -- шашлык из свининых ребрышек
-    quantity            integer DEFAULT 0   not null, -- количество - 100 гр
-    type_quantity       varchar(20),        -- граммы штуки бутылки и т.д.
-    price               DECIMAL(5, 2)  DEFAULT 0.00 ,      -- цена
+    quantity            varchar(100) , -- количество - 100 гр
+  --  type_quantity       varchar(20),        -- граммы штуки бутылки и т.д.
+    price               DECIMAL(10, 2)  DEFAULT 0.00 ,      -- цена
     date_time           TIMESTAMP DEFAULT now() NOT NULL, -- последняя дата редактирования
     FOREIGN KEY (restaurant_id) REFERENCES RESTAURANTS (id) ON DELETE cascade
   --  FOREIGN KEY (manager_id) REFERENCES users (id) ON DELETE cascade
@@ -82,7 +82,7 @@ CREATE TABLE menus
     menus_details_id integer           not null,
  --   manager_id       integer           not null,
     description      varchar(1000),
-    amount           DECIMAL(5, 2),
+    amount           DECIMAL(10, 2),
     discount         integer DEFAULT 0 not null,
     date_time        TIMESTAMP   DEFAULT now()      NOT NULL,
     FOREIGN KEY (menus_details_id) REFERENCES menu_details (id) ON DELETE cascade

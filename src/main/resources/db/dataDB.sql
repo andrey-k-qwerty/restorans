@@ -41,34 +41,81 @@ VALUES ('ROLE_USER', (select U.ID FROM USERS U WHERE U.NAME = 'User')),
        ('ROLE_MANAGER', (select U.ID FROM USERS U WHERE U.NAME = 'Manager_3'))
 ;
 
-INSERT INTO RESTAURANTS (MANAGER_ID,NAME, ADDRESS, OWNER, REGISTERED, DESCRIPTION)
-VALUES ((select U.ID FROM USERS U WHERE U.NAME = 'Manager'),'Star', 'Адресс 1, тел 111-111-111', 'Директор 1', CURRENT_DATE, 'Звезда'),
-       ((select U.ID FROM USERS U WHERE U.NAME = 'Manager_1'),'Pearl', 'Адресс 2, тел 222-222-222', 'Директор 2', CURRENT_DATE, 'Жемчужина'),
-       ((select U.ID FROM USERS U WHERE U.NAME = 'Manager'),'Super Star', 'Адресс 3, тел 333-333-333', 'Директор 3', CURRENT_DATE, 'Супер Звезда'),
-       ((select U.ID FROM USERS U WHERE U.NAME = 'Manager_2'),'Black Pearl', 'Адресс 4, тел 444-444-444', 'Директор 4', CURRENT_DATE, 'Черная Жемчужина');
+INSERT INTO RESTAURANTS (MANAGER_ID, NAME, ADDRESS, OWNER, REGISTERED, DESCRIPTION)
+VALUES ((select U.ID FROM USERS U WHERE U.NAME = 'Manager'), 'Star', 'Адресс 1, тел 111-111-111', 'Директор 1',
+        CURRENT_DATE, 'Звезда'),
+       ((select U.ID FROM USERS U WHERE U.NAME = 'Manager_1'), 'Pearl', 'Адресс 2, тел 222-222-222', 'Директор 2',
+        CURRENT_DATE, 'Жемчужина'),
+       ((select U.ID FROM USERS U WHERE U.NAME = 'Manager'), 'Super Star', 'Адресс 3, тел 333-333-333', 'Директор 3',
+        CURRENT_DATE, 'Супер Звезда'),
+       ((select U.ID FROM USERS U WHERE U.NAME = 'Manager_2'), 'Black Pearl', 'Адресс 4, тел 444-444-444', 'Директор 4',
+        CURRENT_DATE, 'Черная Жемчужина');
 
 
 
-insert INTO MENU_DETAILS(RESTAURANT_ID, TYPE_DISH, DESCRIPTION, QUANTITY,  PRICE, DATE_TIME) VALUES
-((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Star'),'Первое блюдо', 'Борщ' , '250 грамм', 100.00,CURRENT_DATE),
-((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Star'),'Второе блюдо', 'Картошка с мясом' , '200 грамм', 250.00,CURRENT_DATE),
-((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Star'),'Третье блюдо', 'Салат овощной' , '100 грамм', 55.00,CURRENT_DATE),
-((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Star'),'Четвертое блюдо', 'Компот' , '250 грамм', 40.00,CURRENT_DATE),
+insert INTO MENU_DETAILS(RESTAURANT_ID, TYPE_DISH, DESCRIPTION, QUANTITY, PRICE, DATE_TIME)
+VALUES
+--Today
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Star'), 'Первое блюдо', 'Борщ', '250 грамм', 10.00, CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Star'), 'Второе блюдо', 'Картошка с мясом', '200 грамм', 25.00,
+ CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Star'), 'Третье блюдо', 'Салат овощной', '100 грамм', 5.50,
+ CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Star'), 'Четвертое блюдо', 'Компот', '250 грамм', 4.00, CURRENT_DATE),
 
-((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Pearl'),'Первое блюдо', 'Уха' , '250 грамм', 120.00,CURRENT_DATE),
-((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Pearl'),'Второе блюдо', 'рис  с рыбой' , '200 грамм', 180.00,CURRENT_DATE),
-((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Pearl'),'Третье блюдо', 'Салат крабовый' , '100 грамм', 75.00,CURRENT_DATE),
-((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Pearl'),'Четвертое блюдо', 'Сок' , '250 грамм', 40.00,CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Pearl'), 'Первое блюдо', 'Уха', '250 грамм', 12.00, CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Pearl'), 'Второе блюдо', 'рис  с рыбой', '200 грамм', 18.00,
+ CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Pearl'), 'Третье блюдо', 'Салат крабовый', '100 грамм', 7.50,
+ CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Pearl'), 'Четвертое блюдо', 'Сок', '250 грамм', 4.00, CURRENT_DATE),
 
-((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star'),'Первое блюдо', 'Грибной суб' , '250 грамм', 120.00,CURRENT_DATE),
-((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star'),'Второе блюдо', 'Мясное рагу' , '200 грамм', 180.00,CURRENT_DATE),
-((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star'),'Третье блюдо', 'Кокот' , '100 грамм', 75.00,CURRENT_DATE),
-((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star'),'Четвертое блюдо', 'Чай' , '250 грамм', 40.00,CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star'), 'Первое блюдо', 'Грибной суб', '250 грамм', 12.00,
+ CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star'), 'Второе блюдо', 'Мясное рагу', '200 грамм', 18.00,
+ CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star'), 'Третье блюдо', 'Кокот', '100 грамм', 7.50,
+ CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star'), 'Четвертое блюдо', 'Чай', '250 грамм', 4.00,
+ CURRENT_DATE),
 
-((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star'),'Первое блюдо', '' , '250 грамм', 120.00,CURRENT_DATE),
-((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star'),'Второе блюдо', 'рагу' , '200 грамм', 180.00,CURRENT_DATE),
-((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star'),'Третье блюдо', 'Кокот' , '100 грамм', 75.00,CURRENT_DATE),
-((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star'),'Четвертое блюдо', 'Чай' , '250 грамм', 40.00,CURRENT_DATE);
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Black Pearl'), 'Первое блюдо', 'Солянка', '250 грамм', 12.00,
+ CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Black Pearl'), 'Второе блюдо', 'Баранина', '200 грамм', 18.00,
+ CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Black Pearl'), 'Третье блюдо', 'Кокот', '100 грамм', 8.50,
+ CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Black Pearl'), 'Четвертое блюдо', 'Чай', '250 грамм', 2.00,
+ CURRENT_DATE),
+--yesterday
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Star'), 'Первое блюдо', 'Гороховый суп', '250 грамм', 6.00,
+ CURRENT_DATE - 1 day),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Star'), 'Второе блюдо', 'шашлык', '200 грамм', 28.00,
+ CURRENT_DATE - 1 day),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Star'), 'Третье блюдо', 'Вино красное', '100 грамм', 9.50,
+ CURRENT_DATE - 1 day),
+
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Pearl'), 'Первое блюдо', 'Суп с тефтелями', '250 грамм', 10.00,
+ CURRENT_DATE - 1 day),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Pearl'), 'Второе блюдо', 'Говядина', '200 грамм', 12.00,
+ CURRENT_DATE - 1 day),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Pearl'), 'Третье блюдо', 'Чай', '100 грамм', 1.50,
+ CURRENT_DATE - 1 day),
+
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star'), 'Первое блюдо', 'Лапша', '250 грамм', 7.00,
+ CURRENT_DATE - 1 day),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star'), 'Второе блюдо', 'Пельмени', '200 грамм', 10.00,
+ CURRENT_DATE - 1 day),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star'), 'Третье блюдо', 'Сок', '100 грамм', 3.50,
+ CURRENT_DATE - 1 day),
+
+
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Black Pearl'), 'Первое блюдо', 'Суп', '250 грамм', 6.00,
+ CURRENT_DATE - 1 day),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Black Pearl'), 'Второе блюдо', 'Макароны', '200 грамм', 8.00,
+ CURRENT_DATE - 1 day),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Black Pearl'), 'Третье блюдо', 'Мороженое', '100 грамм', 6.50,
+ CURRENT_DATE - 1 day);
 
 
 

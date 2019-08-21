@@ -6,9 +6,11 @@ import graduation.raitrest.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import static graduation.raitrest.util.ValidationUtil.checkNotFoundWithId;
 
-//@Service
+@Service
 public class MenuDetailsService {
     @Autowired
     private final MenuDetailsRepository menuDetailsRepository;
@@ -25,9 +27,14 @@ public class MenuDetailsService {
         return checkNotFoundWithId(menuDetailsRepository.get(id, managerId), id);
     }
 
-    public MenuDetails getFull(int id) throws NotFoundException {
-        return checkNotFoundWithId(menuDetailsRepository.getFull(id), id);
-
+    public List<MenuDetails> getAll() {
+        return menuDetailsRepository.getAll();
     }
+
+    public List<MenuDetails> getAll(int managerId) {
+        return menuDetailsRepository.getAll( managerId);
+    }
+
+
 
 }

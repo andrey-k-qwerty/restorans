@@ -42,18 +42,11 @@ public class DataJpaMenuDetailsRepository implements MenuDetailsRepository {
 
     @Override
     public MenuDetails get(int id, int managerId) {
-        return null;
+
+        return crudMenuDetailsRepository.getWithManager(id,managerId) ;
     }
 
-    @Override
-    public MenuDetails getFull(int id) {
-        return null;
-    }
 
-    @Override
-    public MenuDetails getFull(int id, int managerId) {
-        return null;
-    }
 
     @Override
     public List<MenuDetails> getAll() {
@@ -61,9 +54,14 @@ public class DataJpaMenuDetailsRepository implements MenuDetailsRepository {
     }
 
     @Override
-    public List<MenuDetails> getAll(int managerId) {
+    public List<MenuDetails> getAllToday() {
         return null;
-        //    return crudMenuDetailsRepository.findAllByManger();
+    }
+
+    @Override
+    public List<MenuDetails> getAll(int managerId) {
+
+            return crudMenuDetailsRepository.getAllWithManager(managerId);
     }
 
     @Override
