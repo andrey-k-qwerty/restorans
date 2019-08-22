@@ -95,4 +95,13 @@ public class MenuDetailsService {
         Assert.notNull(menu.getRestaurant(), "menu#restaurant must not be null");
         return menuDetailsRepository.save(menu, managerId);
     }
+
+    public void delete(int id, int managerId) {
+        checkNotFoundWithId(menuDetailsRepository.delete(id, managerId), id);
+    }
+
+    public void delete(int id) {
+        checkNotFoundWithId(menuDetailsRepository.delete(id), id);
+    }
+
 }

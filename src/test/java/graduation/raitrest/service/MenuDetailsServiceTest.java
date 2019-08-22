@@ -56,8 +56,8 @@ public class MenuDetailsServiceTest extends AbstractServiceTest {
 
 
         // по id и manager_id
-        menuDetails = service.get(MENU_DETAILS_ID, MANAGER_ID);
-        assertMatch(menuDetails, MENU_DETAILS_STAR_TODAY_1);
+        menuDetails = service.get(MENU_DETAILS_ID + 3, MANAGER_ID);
+        assertMatch(menuDetails, MENU_DETAILS_STAR_TODAY_4);
     }
 
     @Test
@@ -103,7 +103,7 @@ public class MenuDetailsServiceTest extends AbstractServiceTest {
 
     @Test
     public void create() {
-        // по айди ресторана
+
         MenuDetails newMenu = new MenuDetails(RESTAURANT_STAR,
                 "Пятое блюдо", "Хлеб", "1 кусочек", new BigDecimal("0.10"), LocalDateTime.now());
 
@@ -113,40 +113,56 @@ public class MenuDetailsServiceTest extends AbstractServiceTest {
         assertMatch(created, newMenu);
         MenuDetails menuDetailsGet = service.get(created.getId());
         assertMatch(menuDetailsGet, newMenu);
-//        assertMatch(service.getAll(MANAGER_ID),MENU_STAR,MENU_STAR_1D,MENU_STAR_2D,newMenu);
-//
-//        // по объекту ресторана
-//        Menu newMenu2 = new Menu("New menu 2", new Date());
-//        newMenu2.setRestaurant(RestoranTestData.RESTAURANT_STAR);
-//        Menu created2 = service.create(newMenu2,  MANAGER_ID);
-//        newMenu2.setId(created2.getId());
-//
-//        assertThat(newMenu2).isEqualToIgnoringGivenFields(created2, "dateTime");
-//        assertMatch(service.getAll(MANAGER_ID),MENU_STAR,MENU_STAR_1D,MENU_STAR_2D,newMenu,newMenu2);
 
 
     }
-//
+
     @Test
     public void update()  {
-        MenuDetails updated =  new MenuDetails(MENU_DETAILS_ID + 4, RESTAURANT_PEARL,
+        MenuDetails updated =  new MenuDetails(MENU_DETAILS_ID + 3, RESTAURANT_STAR,
                 "Первое блюдо", "Супер Уха", "100 грамм", new BigDecimal("25.00"),
                 LocalDateTime.now());
-       // updated.setRestaurant(RestoranTestData.RESTAURANT_PEARL);
-        service.update(updated, MANAGER_ID);
-        assertMatch(service.get(MENU_DETAILS_ID + 4, MANAGER_ID), updated);
 
-//        updated = new Menu(MENU_ID + 1,"New super super menu", new Date());
-//        service.update(updated,RestoranTestData.RESTAURANT_ID + 1, ADMIN_ID);
-//        assertMatch(service.get(MENU_ID + 1, ADMIN_ID), updated);
+
+        service.update(updated, MANAGER_ID);
+        MenuDetails actual = service.get(MENU_DETAILS_ID + 3, MANAGER_ID);
+        assertMatch(actual, updated);
+
 
     }
-//    @Test
-//    public void updateNotFound() throws Exception {
-//        thrown.expect(NotFoundException.class);
-//        thrown.expectMessage("Not found entity with id=" + MENU_ID);
-//        service.update(MENU_STAR, ADMIN_ID);
-//    }
-//
+    @Test
+    public void updateNotFound() throws Exception {
+        thrown.expect(NotFoundException.class);
+        thrown.expectMessage("Not found entity with id=" + (MENU_DETAILS_ID+3));
+        service.update(MENU_DETAILS_STAR_TODAY_4, ADMIN_ID);
+    }
+
+
+    @Test
+    public void delete() {
+        service.delete(MENU_DETAILS_ID);
+        List<MenuDetails> menuAllManager  = service.getFilterByDateByRestaurant(LocalDate.now(), LocalDate.now().plusDays(1L),RESTAURANT_ID);
+        assertMatch(menuAllManager,  MENU_DETAILS_STAR_TODAY_2, MENU_DETAILS_STAR_TODAY_3, MENU_DETAILS_STAR_TODAY_4);
+    }
+
+    @Test
+    public void deleteWithUserID() {
+        service.delete(MENU_DETAILS_ID+4,MANAGER_1_ID);
+        List<MenuDetails> menuAllManager  = service.getFilterByDateByRestaurant(LocalDate.now(), LocalDate.now().plusDays(1L),RESTAURANT_ID +1);
+        assertMatch(menuAllManager, MENU_DETAILS_PEARL_TODAY_2,MENU_DETAILS_PEARL_TODAY_3,MENU_DETAILS_PEARL_TODAY_4);
+    }
+
+    @Test
+    public void deleteNotFound()  {
+        thrown.expect(NotFoundException.class);
+        service.delete(1, MANAGER_ID);
+    }
+
+    @Test
+    public void deleteNotOwn() {
+        thrown.expect(NotFoundException.class);
+        service.delete(MENU_DETAILS_ID, MANAGER_1_ID);
+    }
+
 
 }

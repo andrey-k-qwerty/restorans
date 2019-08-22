@@ -23,10 +23,8 @@ public interface CrudMenuDetailsRepository extends JpaRepository<MenuDetails, In
 
     @Transactional
     @Modifying
-    @EntityGraph(attributePaths = {"restaurant"}, type = EntityGraph.EntityGraphType.LOAD)
-//    @Query("DELETE FROM MenuDetails md WHERE md.id=?1 and md.restaurant.id in" +
-//            " (select r.id from Restaurant r  where  r.id=md.restaurant.id and r.manager.id = ?2)")
-    @Query("DELETE FROM MenuDetails md WHERE md.id=?1 and md.restaurant.manager.id =?2")
+    @Query("DELETE FROM MenuDetails md WHERE md.id=?1 and md.restaurant.id in" +
+            " (select r.id from Restaurant r  where  r.id=md.restaurant.id and r.manager.id = ?2)")
     int delete(int id, int managerId);
 
     @Query("SELECT md FROM MenuDetails md left join fetch md.restaurant where md.restaurant.manager.id=?2 and md.id=?1")
@@ -56,5 +54,5 @@ public interface CrudMenuDetailsRepository extends JpaRepository<MenuDetails, In
     @SuppressWarnings("JpaQlInspection")
     @EntityGraph(attributePaths = {"restaurant"}, type = EntityGraph.EntityGraphType.LOAD)
     @Query("SELECT md FROM MenuDetails md WHERE md.restaurant.id=:restaurantID and md.restaurant.manager.id=:managerId  and md.dateTime BETWEEN :startDate AND :endDate ")
-    List<MenuDetails> getAllByDateTimeByRestaurantIdAndManagerId(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate, @Param("restaurantID") int restaurantID, @Param("managerId")int managerId);
+    List<MenuDetails> getAllByDateTimeByRestaurantIdAndManagerId(@Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate, @Param("restaurantID") int restaurantID, @Param("managerId") int managerId);
 }
