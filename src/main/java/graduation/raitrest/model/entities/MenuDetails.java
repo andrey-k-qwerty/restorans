@@ -21,8 +21,8 @@ public class MenuDetails extends AbstractBaseEntity {
 
     @Column(name = "DATE_TIME")
 //    @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(iso= DateTimeFormat.ISO.DATE_TIME)
-  //  @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
+ //   @DateTimeFormat(iso= DateTimeFormat.ISO.DATE_TIME)
+    @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
     private LocalDateTime dateTime;
 
     @Basic

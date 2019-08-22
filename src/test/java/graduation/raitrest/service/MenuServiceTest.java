@@ -17,8 +17,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;
 
 public class MenuServiceTest extends AbstractServiceTest {
-    @Autowired
-    protected MenuService service;
+//    @Autowired
+//    protected MenuService service;
 
 //    @Test
 //    public void getWithRestaurant() {

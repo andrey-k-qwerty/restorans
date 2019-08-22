@@ -46,8 +46,53 @@ public class MenuDetailsService {
         Assert.notNull(endDateTime, "endDateTime  must not be null");
         return menuDetailsRepository. getAllByDateTime(startDateTime, endDateTime);
     }
+    protected List<MenuDetails> getFilterByDateTimesByRestaurantIdAndManagerId(LocalDateTime startDateTime, LocalDateTime endDateTime,int restaurantID,int managerId) {
+        Assert.notNull(startDateTime, "startDateTime must not be null");
+        Assert.notNull(endDateTime, "endDateTime  must not be null");
+        return menuDetailsRepository. getAllByDateTimeByRestaurantIdAndManagerId(startDateTime, endDateTime,restaurantID,managerId);
+    }
+    protected List<MenuDetails> getFilterByDateTimesByRestaurantId(LocalDateTime startDateTime, LocalDateTime endDateTime,int restaurantID) {
+        Assert.notNull(startDateTime, "startDateTime must not be null");
+        Assert.notNull(endDateTime, "endDateTime  must not be null");
+        return menuDetailsRepository. getAllByDateTimeByRestaurantId(startDateTime, endDateTime,restaurantID);
+    }
+
+    protected List<MenuDetails> getFilterByDateTimesByManagerId(LocalDateTime startDateTime, LocalDateTime endDateTime,int managerId) {
+        Assert.notNull(startDateTime, "startDateTime must not be null");
+        Assert.notNull(endDateTime, "endDateTime  must not be null");
+        return menuDetailsRepository. getAllByDateTimeByManagerId(startDateTime, endDateTime,managerId);
+    }
+
 
     public List<MenuDetails> getFilterByDate( LocalDate startDate,  LocalDate endDate) {
         return getFilterByDateTimes(adjustStartDateTime(startDate), adjustEndDateTime(endDate));
+    }
+    public List<MenuDetails> getFilterByDateByManager( LocalDate startDate,  LocalDate endDate,int managerId) {
+        return getFilterByDateTimesByManagerId(adjustStartDateTime(startDate), adjustEndDateTime(endDate),managerId);
+    }
+
+    public List<MenuDetails> getFilterByDateByRestaurant( LocalDate startDate,  LocalDate endDate,int  restaurantID) {
+        return getFilterByDateTimesByRestaurantId(adjustStartDateTime(startDate), adjustEndDateTime(endDate),restaurantID);
+    }
+
+    public void update(MenuDetails menu, int managerId) {
+        Assert.notNull(menu, "menu must not be null");
+        Assert.notNull(menu.getRestaurant(), "menu#restaurant must not be null");
+        checkNotFoundWithId(menuDetailsRepository.save(menu, managerId), menu.getId());
+    }
+
+    public void update(MenuDetails menu, int restaurantId, int managerId) {
+        Assert.notNull(menu, "menu must not be null");
+        checkNotFoundWithId(menuDetailsRepository.save(menu,restaurantId, managerId), menu.getId());
+    }
+
+    public MenuDetails create(MenuDetails menu, int restaurantId, int managerId) {
+        Assert.notNull(menu, "menu must not be null");
+        return menuDetailsRepository.save(menu,restaurantId, managerId);
+    }
+    public MenuDetails create(MenuDetails menu,  int managerId) {
+        Assert.notNull(menu, "menu must not be null");
+        Assert.notNull(menu.getRestaurant(), "menu#restaurant must not be null");
+        return menuDetailsRepository.save(menu, managerId);
     }
 }

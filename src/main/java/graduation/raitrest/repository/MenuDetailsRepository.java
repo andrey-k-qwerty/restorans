@@ -22,6 +22,9 @@ public interface MenuDetailsRepository {
 
     List<MenuDetails> getAll();
     List<MenuDetails> getAllByDateTime(LocalDateTime startDateTime,  LocalDateTime endDateTime);
+    List<MenuDetails> getAllByDateTimeByRestaurantId(LocalDateTime startDateTime,  LocalDateTime endDateTime,int restaurantID);
+    List<MenuDetails> getAllByDateTimeByManagerId(LocalDateTime startDateTime,  LocalDateTime endDateTime,int managerID);
+    List<MenuDetails> getAllByDateTimeByRestaurantIdAndManagerId(LocalDateTime startDateTime,  LocalDateTime endDateTime,int restaurantID,int managerId);
 
     List<MenuDetails> getAll(int managerId);
     List<MenuDetails> getAll(int restaurantID, int managerId);
