@@ -1,5 +1,5 @@
 DELETE
-from RATING;
+from VOTES;
 DELETE
 FROM MENU_DETAILS;
 DELETE
@@ -56,9 +56,9 @@ VALUES ((select U.ID FROM USERS U WHERE U.NAME = 'Manager'), 'Star', 'Адрес
 insert INTO MENU_DETAILS(RESTAURANT_ID, TYPE_DISH, DESCRIPTION, QUANTITY, PRICE, DATE_TIME)
 VALUES
 --Today
-((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Star'), 'Первое блюдо', 'Борщ', '250 грамм', 10.00, CURRENT_DATE),
+((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Star'), 'Первое блюдо', 'Борщ', '250 грамм', 10.00, CURRENT_DATE),--100
 ((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Star'), 'Второе блюдо', 'Картошка с мясом', '200 грамм', 25.00,
- CURRENT_DATE),
+ CURRENT_DATE),--101
 ((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Star'), 'Третье блюдо', 'Салат овощной', '100 грамм', 5.50,
  CURRENT_DATE),
 ((SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Star'), 'Четвертое блюдо', 'Компот', '250 грамм', 4.00, CURRENT_DATE),
@@ -118,4 +118,14 @@ VALUES
  CURRENT_DATE - 1 day);
 
 
-
+INSERT INTO votes(USER_ID, RESTAURANT_ID, DATE_TIME) VALUES
+        -- вчерашнее голосование  по одному голосу за ресторан
+((select U.ID FROM USERS U WHERE U.NAME = 'User'),(SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Star'),CURRENT_DATE - 1 day),
+((select U.ID FROM USERS U WHERE U.NAME = 'User_1'),(SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Pearl'),CURRENT_DATE - 1 day ),
+((select U.ID FROM USERS U WHERE U.NAME = 'User_2'),(SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star'),CURRENT_DATE - 1 day),
+((select U.ID FROM USERS U WHERE U.NAME = 'User_3'),(SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Black Pearl'),CURRENT_DATE - 1 day ),
+     -- сегодняшнее голосование 1 голоса Star, Pearl -2, Super Star -1
+        ((select U.ID FROM USERS U WHERE U.NAME = 'User'),(SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Pearl'),CURRENT_DATE),
+        ((select U.ID FROM USERS U WHERE U.NAME = 'User_1'),(SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Super Star'),CURRENT_DATE),
+        ((select U.ID FROM USERS U WHERE U.NAME = 'User_2'),(SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Pearl'),CURRENT_DATE),
+        ((select U.ID FROM USERS U WHERE U.NAME = 'User_3'),(SELECT R.ID FROM RESTAURANTS R WHERE R.NAME = 'Star'),CURRENT_DATE);
