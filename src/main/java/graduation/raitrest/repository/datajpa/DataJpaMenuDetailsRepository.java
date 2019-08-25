@@ -5,7 +5,9 @@ import graduation.raitrest.model.entities.Restaurant;
 import graduation.raitrest.repository.MenuDetailsRepository;
 import graduation.raitrest.repository.datajpa.grud.CrudMenuDetailsRepository;
 import graduation.raitrest.repository.datajpa.grud.CrudRestaurantRepository;
+import graduation.raitrest.repository.datajpa.grud.CrudUserRepository;
 import jdk.jfr.Timestamp;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,10 +18,12 @@ import java.util.List;
 public class DataJpaMenuDetailsRepository implements MenuDetailsRepository {
     private final CrudMenuDetailsRepository crudMenuDetailsRepository;
     private final CrudRestaurantRepository crudRestaurantRepository;
+    private final CrudUserRepository crudUserRepository;
 
-    public DataJpaMenuDetailsRepository(CrudMenuDetailsRepository crudMenuDetailsRepository, CrudRestaurantRepository crudRestaurantRepository) {
+    public DataJpaMenuDetailsRepository(CrudMenuDetailsRepository crudMenuDetailsRepository, CrudRestaurantRepository crudRestaurantRepository, CrudUserRepository crudUserRepository) {
         this.crudMenuDetailsRepository = crudMenuDetailsRepository;
         this.crudRestaurantRepository = crudRestaurantRepository;
+        this.crudUserRepository = crudUserRepository;
     }
 
     @Override
@@ -28,13 +32,8 @@ public class DataJpaMenuDetailsRepository implements MenuDetailsRepository {
          if (!MenuDetail.isNew() && get(MenuDetail.getId(), managerId) == null) {
             return null;
         }
-//        Restaurant rest = crudRestaurantRepository.getWithUser(restoranID);
-//        if (rest == null || rest.getUser().getId() != userId) {
-//            return null;
-//        }
-//        MenuDetail.setRestaurant(rest);
         Restaurant restaurant = crudRestaurantRepository.getOne(restaurantID);
-        if (restaurant == null) {
+        if (restaurant == null && restaurant.getManager().getId() != managerId ) {
             return  null;
         }
         MenuDetail.setRestaurant(restaurant);
@@ -47,6 +46,7 @@ public class DataJpaMenuDetailsRepository implements MenuDetailsRepository {
         if (!MenuDetail.isNew() && get(MenuDetail.getId(), managerId) == null) {
             return null;
         }
+        if (MenuDetail.getRestaurant() == null) return null;
         return crudMenuDetailsRepository.save(MenuDetail);
     }
 

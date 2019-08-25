@@ -26,21 +26,15 @@ public class DataJpaMenuRepository implements MenuRepository {
     @Override
     @Transactional
     public Menu save(Menu menu, int userId) {
-        if (!menu.isNew() && get(menu.getId(), userId) == null) {
+        if (!menu.isNew() && get(menu.getId(), userId) == null ) {
             return null;
         }
-//        Restaurant restoran = crudRestaurantRepository.getWithUser( menu.getRestaurant().getId());
-//        if (restoran == null || restoran.getUser().getId() != userId) return null;
 
-//        Restaurant restoran = crudRestaurantRepository.getOne(menu.getRestaurant().getId());
-//        if (restoran == null) {
-//            return  null;
-//        }
         return crudMenuRepository.save(menu);
     }
 
     @Override
-    public Menu save(Menu menu, int restoranID, int userId) {
+    public Menu save(Menu menu, int restaurantID, int userId) {
         if (!menu.isNew() && get(menu.getId(), userId) == null) {
             return null;
         }
@@ -49,7 +43,7 @@ public class DataJpaMenuRepository implements MenuRepository {
 //            return null;
 //        }
 //        menu.setRestaurant(rest);
-        Restaurant restaurant = crudRestaurantRepository.getOne(restoranID);
+        Restaurant restaurant = crudRestaurantRepository.getOne(restaurantID);
         if (restaurant == null) {
             return  null;
         }

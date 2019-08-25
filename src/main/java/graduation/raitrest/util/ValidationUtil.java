@@ -4,10 +4,16 @@ package graduation.raitrest.util;
 import graduation.raitrest.model.AbstractBaseEntity;
 import graduation.raitrest.util.exception.NotFoundException;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 public class ValidationUtil {
 
     private ValidationUtil() {
     }
+    public static final LocalTime MAX_TIME = LocalTime.of(11,00);
+    public static final LocalDateTime MAX_DATE_TIME = LocalDateTime.of(LocalDate.now(),MAX_TIME);
 
     public static <T> T checkNotFoundWithId(T object, int id) {
         return checkNotFound(object, "id=" + id);
@@ -51,5 +57,10 @@ public class ValidationUtil {
             result = cause;
         }
         return result;
+    }
+    public static void checkDateTime(LocalDateTime dateTime) {
+        if (dateTime.isAfter(MAX_DATE_TIME)) {
+            throw new IllegalArgumentException("Time must be before " + MAX_TIME);
+        }
     }
 }
