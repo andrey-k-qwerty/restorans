@@ -3,6 +3,7 @@ package graduation.raitrest.service;
 import graduation.raitrest.RestoranTestData;
 import graduation.raitrest.model.entities.Vote;
 import graduation.raitrest.model.to.Rating;
+import graduation.raitrest.util.exception.NotFoundException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,5 +97,23 @@ public class VoteServiceTest extends AbstractServiceTest {
 
 
     }
+
+    @Test
+    public void delete()  {
+        Vote  vote = voteService.getCurrentVoise(USER_2_ID);
+        Assert.assertNotNull(vote);;
+        voteService.delete(VOTES_ID + 6, USER_2_ID);
+        vote = voteService.getCurrentVoise(USER_2_ID);
+        Assert.assertNull(vote);
+
+
+    }
+
+    @Test
+    public void deleteNotFound()  {
+        thrown.expect(NotFoundException.class);
+        voteService.delete(1, MANAGER_ID);
+    }
+
 
 }

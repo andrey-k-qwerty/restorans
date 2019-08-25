@@ -99,5 +99,15 @@ public class VoteService {
         checkDateTime(vote.getDateTime());
         checkNotFoundWithId(voteRepository.save(vote, userId),vote.getId());
     }
+    public void delete(int id, int userId) {
+
+        checkNotFoundWithId(voteRepository.delete(id, userId), id);
+    }
+
+    public void delete(int id) {
+
+        checkNotFoundWithId(voteRepository.delete(id), id);
+    }
+
 
 }
