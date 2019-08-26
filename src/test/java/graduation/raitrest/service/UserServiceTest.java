@@ -4,8 +4,9 @@ import graduation.raitrest.model.entities.Role;
 import graduation.raitrest.model.entities.User;
 import graduation.raitrest.util.JpaUtil;
 import graduation.raitrest.util.exception.NotFoundException;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.dao.DataAccessException;
@@ -15,6 +16,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static graduation.raitrest.UserTestData.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class UserServiceTest extends AbstractServiceTest {
@@ -26,14 +28,14 @@ public class UserServiceTest extends AbstractServiceTest {
     @Autowired
     private CacheManager cacheManager;
 
-    @Before
-    public void setUp() throws Exception {
+    @BeforeEach
+     void setUp() throws Exception {
         cacheManager.getCache("users").clear();
         jpaUtil.clear2ndLevelHibernateCache();
     }
 
     @Test
-    public void create() throws Exception {
+     void create() throws Exception {
         User newUser = new User(null, "New", "new@gmail.com", "newPass", false, new Date(), Collections.singleton(Role.ROLE_USER));
         User created = service.create(newUser);
         newUser.setId(created.getId());
@@ -45,13 +47,14 @@ public class UserServiceTest extends AbstractServiceTest {
         assertMatch(service.getAll(), collect);
     }
 
-    @Test(expected = DataAccessException.class)
-    public void duplicateMailCreate() throws Exception {
-        service.create(new User(null, "Duplicate", "user@yandex.ru", "newPass", Role.ROLE_USER));
+    @Test
+     void duplicateMailCreate() throws Exception {
+        assertThrows(DataAccessException.class, () ->
+        service.create(new User(null, "Duplicate", "user@yandex.ru", "newPass", Role.ROLE_USER)));
     }
 
     @Test
-    public void delete() throws Exception {
+     void delete() throws Exception {
         service.delete(USER_ID);
         List<User> collect = listUsers.stream()
                 .filter(user -> user.getId() != USER_ID)
@@ -59,13 +62,14 @@ public class UserServiceTest extends AbstractServiceTest {
         assertMatch(service.getAll(), collect);
     }
 
-    @Test(expected = NotFoundException.class)
-    public void deletedNotFound() throws Exception {
-        service.delete(1);
+    @Test
+     void deletedNotFound() throws Exception {
+        assertThrows(NotFoundException.class, () ->
+        service.delete(1));
     }
 
     @Test
-    public void get() throws Exception {
+     void get() throws Exception {
         User user = service.get(USER_ID);
         assertMatch(user, USER);
         User admin = service.get(ADMIN_ID);
@@ -77,19 +81,20 @@ public class UserServiceTest extends AbstractServiceTest {
 
     }
 
-    @Test(expected = NotFoundException.class)
-    public void getNotFound() throws Exception {
-        service.get(1);
+    @Test
+     void getNotFound() throws Exception {
+        assertThrows(NotFoundException.class, () ->
+        service.get(1));
     }
 
     @Test
-    public void getByEmail() throws Exception {
+     void getByEmail() throws Exception {
         User user = service.getByEmail("user@yandex.ru");
         assertMatch(user, USER);
     }
 
     @Test
-    public void update() throws Exception {
+     void update() throws Exception {
         User updated = new User(USER);
         updated.setName("UpdatedName");
 
@@ -110,7 +115,7 @@ public class UserServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void getAll() throws Exception {
+     void getAll()  {
         List<User> all = service.getAll();
         List<User> collect = listUsers.stream().sorted(Comparator.comparing(User::getName)).collect(Collectors.toList());
         assertMatch(all, collect);

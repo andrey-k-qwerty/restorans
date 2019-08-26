@@ -3,7 +3,7 @@ package graduation.raitrest.service;
 import graduation.raitrest.RestoranTestData;
 import graduation.raitrest.model.entities.MenuDetails;
 import graduation.raitrest.util.exception.NotFoundException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
@@ -11,19 +11,23 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static graduation.raitrest.MenuDetailsTestData.assertMatch;
 import static graduation.raitrest.MenuDetailsTestData.*;
-import static graduation.raitrest.RestoranTestData.*;
+import static graduation.raitrest.RestoranTestData.RESTAURANT_ID;
+import static graduation.raitrest.RestoranTestData.RESTAURANT_STAR;
 import static graduation.raitrest.UserTestData.*;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class MenuDetailsServiceTest extends AbstractServiceTest {
+
+class MenuDetailsServiceTest extends AbstractServiceTest {
 
     @Autowired
     protected MenuDetailsService service;
 
 
     @Test
-    public void get() {
+     void get() {
         // просто по  id
         MenuDetails menuDetails = service.get(MENU_DETAILS_ID + 2);
         assertMatch(menuDetails, MENU_DETAILS_STAR_TODAY_3);
@@ -61,7 +65,7 @@ public class MenuDetailsServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void getAll() {
+     void getAll() {
         //all
         List<MenuDetails> allMenu = service.getAll();
         assertMatch(MENU_DETAILS_LIST, allMenu);
@@ -90,19 +94,17 @@ public class MenuDetailsServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void getNotFound() throws Exception {
-        thrown.expect(NotFoundException.class);
-        service.get(1, MANAGER_ID);
+     void getNotFound() {
+         assertThrows(NotFoundException.class, () ->   service.get(1, MANAGER_ID));
     }
 
     @Test
-    public void getNotOwn() throws Exception {
-        thrown.expect(NotFoundException.class);
-        service.get(MENU_DETAILS_ID, MANAGER_1_ID);
+     void getNotOwn()  {
+        assertThrows(NotFoundException.class, () -> service.get(MENU_DETAILS_ID, MANAGER_1_ID));
     }
 
     @Test
-    public void create() {
+     void create() {
 
         MenuDetails newMenu = new MenuDetails(RESTAURANT_STAR,
                 "Пятое блюдо", "Хлеб", "1 кусочек", new BigDecimal("0.10"), LocalDateTime.now());
@@ -118,7 +120,7 @@ public class MenuDetailsServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void update()  {
+     void update()  {
         MenuDetails updated =  new MenuDetails(MENU_DETAILS_ID + 3, RESTAURANT_STAR,
                 "Первое блюдо", "Супер Уха", "100 грамм", new BigDecimal("25.00"),
                 LocalDateTime.now());
@@ -132,14 +134,13 @@ public class MenuDetailsServiceTest extends AbstractServiceTest {
     }
     @Test
     public void updateNotFound() throws Exception {
-        thrown.expect(NotFoundException.class);
-        thrown.expectMessage("Not found entity with id=" + (MENU_DETAILS_ID+3));
-        service.update(MENU_DETAILS_STAR_TODAY_4, ADMIN_ID);
+        NotFoundException e =  assertThrows(NotFoundException.class, () -> service.update(MENU_DETAILS_STAR_TODAY_4, ADMIN_ID));
+        assertEquals(e.getMessage(), "Not found entity with id=" + (MENU_DETAILS_ID+3));
     }
 
 
     @Test
-    public void delete() {
+     void delete() {
         service.delete(MENU_DETAILS_ID);
         List<MenuDetails> menuAllManager  = service.getFilterByDateByRestaurant(LocalDate.now(), LocalDate.now().plusDays(1L),RESTAURANT_ID);
         assertMatch(menuAllManager,  MENU_DETAILS_STAR_TODAY_2, MENU_DETAILS_STAR_TODAY_3, MENU_DETAILS_STAR_TODAY_4);
@@ -154,14 +155,13 @@ public class MenuDetailsServiceTest extends AbstractServiceTest {
 
     @Test
     public void deleteNotFound()  {
-        thrown.expect(NotFoundException.class);
-        service.delete(1, MANAGER_ID);
+
+        assertThrows(NotFoundException.class, () ->   service.delete(1, MANAGER_ID));
     }
 
     @Test
     public void deleteNotOwn() {
-        thrown.expect(NotFoundException.class);
-        service.delete(MENU_DETAILS_ID, MANAGER_1_ID);
+         assertThrows(NotFoundException.class, () ->  service.delete(MENU_DETAILS_ID, MANAGER_1_ID));
     }
 
 

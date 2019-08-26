@@ -3,9 +3,9 @@ package graduation.raitrest;
 import graduation.raitrest.model.entities.Role;
 import graduation.raitrest.model.entities.User;
 import graduation.raitrest.web.user.AdminRestController;
-import org.junit.runner.RunWith;
+
 import org.springframework.context.support.GenericXmlApplicationContext;
-import org.springframework.test.context.junit4.SpringRunner;
+
 
 import java.util.Arrays;
 

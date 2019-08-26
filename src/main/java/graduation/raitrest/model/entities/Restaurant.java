@@ -100,4 +100,16 @@ public class Restaurant extends AbstractNamedEntity {
         this.manager = manager;
     }
 
+    @Override
+    public String toString() {
+        return "Restaurant{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", owner='" + owner + '\'' +
+                ", registered=" + registered +
+                ", description='" + description + '\'' +
+                ", managerId=" + manager.getId() +
+                '}';
+    }
 }

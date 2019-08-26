@@ -114,4 +114,6 @@ public class MenuDetails extends AbstractBaseEntity {
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
     }
+
+
 }
