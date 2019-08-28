@@ -14,14 +14,16 @@ public class SpringMain {
         // java 7 automatic resource management
         try (GenericXmlApplicationContext appCtx = new GenericXmlApplicationContext()) {
          //   appCtx.getEnvironment().setActiveProfiles(Profiles.getActiveDbProfile(), Profiles.REPOSITORY_IMPLEMENTATION);
-            appCtx.load("spring/inmemory.xml","spring/spring-app.xml");
+         //   appCtx.load("classpath:spring/inmemory.xml","classpath:spring/spring-app.xml");
+            appCtx.load("classpath:spring/inmemory.xml");
             appCtx.refresh();
 
             System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
             AdminRestController adminUserController = appCtx.getBean(AdminRestController.class);
             System.out.println(adminUserController.getAll());
-            adminUserController.create(new User(null, "userName", "email@mail.ru", "password", Role.ROLE_ADMIN));
-            System.out.println();
+//            adminUserController.create(new User(null, "userName", "email@mail.ru", "password", Role.ROLE_ADMIN));
+
+            System.out.println(adminUserController.getAll());
 
 //            MealRestController mealController = appCtx.getBean(MealRestController.class);
 //            List<MealTo> filteredMealsWithExcess =
