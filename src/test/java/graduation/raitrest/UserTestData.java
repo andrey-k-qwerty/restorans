@@ -2,11 +2,14 @@ package graduation.raitrest;
 
 import graduation.raitrest.model.entities.Role;
 import graduation.raitrest.model.entities.User;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static graduation.raitrest.TestUtil.readFromJsonMvcResult;
+import static graduation.raitrest.TestUtil.readListFromJsonMvcResult;
 import static graduation.raitrest.model.AbstractBaseEntity.START_SEQ;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -59,5 +62,17 @@ public class UserTestData {
 
     public static void assertMatch(Iterable<User> actual, Iterable<User> expected) {
         assertThat(actual).usingElementComparatorIgnoringFields("registered","restaurants").isEqualTo(expected);
+    }
+    public static ResultMatcher contentJson(User... expected) {
+        return result -> assertMatch(readListFromJsonMvcResult(result, User.class), List.of(expected));
+    }
+
+    public static ResultMatcher contentJson(Iterable<User> expected) {
+        return result -> assertMatch(readListFromJsonMvcResult(result, User.class),expected);
+    }
+
+
+    public static ResultMatcher contentJson(User expected) {
+        return result -> assertMatch(readFromJsonMvcResult(result, User.class), expected);
     }
 }
