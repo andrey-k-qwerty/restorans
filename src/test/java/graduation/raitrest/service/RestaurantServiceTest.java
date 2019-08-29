@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class RestaurantServiceTest extends AbstractServiceTest {
     @Autowired
-    protected RestoranService service;
+    protected RestaurantService service;
     @Autowired
     protected UserService userService;
 

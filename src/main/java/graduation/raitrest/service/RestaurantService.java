@@ -11,12 +11,12 @@ import java.util.List;
 import static graduation.raitrest.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
-public class RestoranService {
+public class RestaurantService {
 
     @Autowired
     private final RestoranRepository restoranRepository;
 
-    public RestoranService(RestoranRepository restoranRepository) {
+    public RestaurantService(RestoranRepository restoranRepository) {
         this.restoranRepository = restoranRepository;
     }
 
