@@ -28,7 +28,7 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     }
 
     @Test
-     void getAllByUserID() {
+     void getAllByManagerID() {
         List<Restaurant> all = service.getAll(MANAGER_ID);
         // admin have 2 restaurant
         assertMatch(all, RESTAURANT_STAR, RESTAURANT_SUPER_STAR);

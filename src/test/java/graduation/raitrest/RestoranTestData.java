@@ -1,10 +1,12 @@
 package graduation.raitrest;
 
 import graduation.raitrest.model.entities.Restaurant;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.util.Date;
 import java.util.List;
 
+import static graduation.raitrest.TestUtil.readListFromJsonMvcResult;
 import static graduation.raitrest.UserTestData.*;
 import static graduation.raitrest.model.AbstractBaseEntity.START_SEQ;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,7 +35,7 @@ public class RestoranTestData {
 
     public static Restaurant getUpdated() {
         return new Restaurant(RESTAURANT_ID, "Super Super Star",
-                "Адресс 1, тел 111-111-111", "Директор 1", new Date(), "Звезда", MANAGER);
+                "Адресс 1, тел 121-121-121", "Директор 1", new Date(), "Звезда", MANAGER);
     }
 
     public static void assertMatch(Restaurant actual, Restaurant expected) {
@@ -48,5 +50,12 @@ public class RestoranTestData {
     public static void assertMatch(Iterable<Restaurant> actual, Iterable<Restaurant> expected) {
           assertThat(actual).usingElementComparatorIgnoringFields("registered","manager").isEqualTo(expected);
        // assertThat(actual).usingDefaultElementComparator().isEqualTo(expected);
+    }
+    public static ResultMatcher contentJson(Restaurant... expected) {
+        return contentJson(List.of(expected));
+    }
+
+    public static ResultMatcher contentJson(Iterable<Restaurant> expected) {
+        return result -> assertThat(readListFromJsonMvcResult(result, Restaurant.class)).isEqualTo(expected);
     }
 }

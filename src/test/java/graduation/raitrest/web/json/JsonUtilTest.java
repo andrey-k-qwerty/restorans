@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class JsonUtilTest {
     @Test
-    void testReadWriteValue() throws Exception {
+    void readWriteValue() throws Exception {
         String json = JsonUtil.writeValue(RESTAURANT_STAR);
         System.out.println(json);
         Restaurant restaurant = JsonUtil.readValue(json, Restaurant.class);
@@ -18,7 +18,7 @@ class JsonUtilTest {
     }
 
     @Test
-    void testReadWriteValues() throws Exception {
+    void readWriteValues() throws Exception {
         String json = JsonUtil.writeValue(restaurantList);
         System.out.println(json);
         List<Restaurant> meals = JsonUtil.readValues(json, Restaurant.class);

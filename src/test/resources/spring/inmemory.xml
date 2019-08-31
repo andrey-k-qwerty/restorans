@@ -17,7 +17,7 @@
     </bean>
 
     <context:component-scan base-package="graduation.raitrest.**.repository.inmemory"/>
-    <context:component-scan base-package="graduation.raitrest.**.web"/>
+    <context:component-scan base-package="graduation.raitrest.**.web.user"/>
 <!--    <context:component-scan base-package="graduation.**.repository.datajpa"/>-->
     <!--<mvc:resources mapping="/resources/**" location="/resources/"/>-->
 </beans>

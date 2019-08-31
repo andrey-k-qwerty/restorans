@@ -31,7 +31,7 @@ public class RootController {
 
     @GetMapping("/users")
     @ResponseBody
-    public String users(Model model) {
+    public String getUsers(Model model) {
      //   model.addAttribute("users", service.getAll());
     //    return "users";
         return service.getAll().toString();
