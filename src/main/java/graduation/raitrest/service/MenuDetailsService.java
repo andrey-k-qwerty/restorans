@@ -1,9 +1,11 @@
 package graduation.raitrest.service;
 
 import graduation.raitrest.model.entities.MenuDetails;
+import graduation.raitrest.model.to.MenuDetailTo;
 import graduation.raitrest.repository.MenuDetailsRepository;
 import graduation.raitrest.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -14,6 +16,7 @@ import java.util.List;
 
 import static graduation.raitrest.util.DateTimeUtil.adjustEndDateTime;
 import static graduation.raitrest.util.DateTimeUtil.adjustStartDateTime;
+import static graduation.raitrest.util.Util.menuDetail_2_MenuDetailTo;
 import static graduation.raitrest.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
@@ -33,13 +36,15 @@ public class MenuDetailsService {
         return checkNotFoundWithId(menuDetailsRepository.get(id, managerId), id);
     }
 
-    public List<MenuDetails> getAll() {
-        return menuDetailsRepository.getAll();
+    public List<MenuDetailTo> getAll() {
+        return menuDetail_2_MenuDetailTo(menuDetailsRepository.getAll());
     }
 
     public List<MenuDetails> getAll(int managerId) {
         return menuDetailsRepository.getAll( managerId);
     }
+
+
 
     protected List<MenuDetails> getFilterByDateTimes(LocalDateTime startDateTime, LocalDateTime endDateTime) {
         Assert.notNull(startDateTime, "startDateTime must not be null");
@@ -74,6 +79,7 @@ public class MenuDetailsService {
     public List<MenuDetails> getFilterByDateByRestaurant( LocalDate startDate,  LocalDate endDate,int  restaurantID) {
         return getFilterByDateTimesByRestaurantId(adjustStartDateTime(startDate), adjustEndDateTime(endDate),restaurantID);
     }
+
 
     public void update(MenuDetails menu, int managerId) {
         Assert.notNull(menu, "menu must not be null");

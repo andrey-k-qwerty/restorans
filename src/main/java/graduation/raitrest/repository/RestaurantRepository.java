@@ -5,7 +5,7 @@ import graduation.raitrest.model.entities.Restaurant;
 
 import java.util.List;
 
-public interface RestoranRepository {
+public interface RestaurantRepository {
     // null if not found, when updated
    Restaurant save(Restaurant restaurant, int userId);
 

@@ -1,7 +1,7 @@
 package graduation.raitrest.service;
 
 import graduation.raitrest.model.entities.Restaurant;
-import graduation.raitrest.repository.RestoranRepository;
+import graduation.raitrest.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -14,44 +14,44 @@ import static graduation.raitrest.util.ValidationUtil.checkNotFoundWithId;
 public class RestaurantService {
 
     @Autowired
-    private final RestoranRepository restoranRepository;
+    private final RestaurantRepository restaurantRepository;
 
-    public RestaurantService(RestoranRepository restoranRepository) {
-        this.restoranRepository = restoranRepository;
+    public RestaurantService(RestaurantRepository restaurantRepository) {
+        this.restaurantRepository = restaurantRepository;
     }
 
     public List<Restaurant> getAll() {
-        return restoranRepository.getAll();
+        return restaurantRepository.getAll();
     }
 
     public List<Restaurant> getAll(int manager_id) {
-        return restoranRepository.getAll(manager_id);
+        return restaurantRepository.getAll(manager_id);
     }
 
     public Restaurant get(int id) {
-        return checkNotFoundWithId(restoranRepository.get(id), id);
+        return checkNotFoundWithId(restaurantRepository.get(id), id);
     }
 
     public Restaurant get(int id, int userId) {
-        return checkNotFoundWithId(restoranRepository.get(id, userId), id);
+        return checkNotFoundWithId(restaurantRepository.get(id, userId), id);
     }
 
     public void delete(int id, int userId) {
-        checkNotFoundWithId(restoranRepository.delete(id, userId), id);
+        checkNotFoundWithId(restaurantRepository.delete(id, userId), id);
     }
 
     public void delete(int id) {
-        checkNotFoundWithId(restoranRepository.delete(id), id);
+        checkNotFoundWithId(restaurantRepository.delete(id), id);
     }
 
     public void update(Restaurant restaurant, int userId) {
         Assert.notNull(restaurant, "restaurant must not be null");
-        checkNotFoundWithId(restoranRepository.save(restaurant, userId), restaurant.getId());
+        checkNotFoundWithId(restaurantRepository.save(restaurant, userId), restaurant.getId());
     }
 
     public Restaurant create(Restaurant restaurant, int userId) {
         Assert.notNull(restaurant, "restaurant must not be null");
-        return restoranRepository.save(restaurant, userId);
+        return restaurantRepository.save(restaurant, userId);
     }
 
 

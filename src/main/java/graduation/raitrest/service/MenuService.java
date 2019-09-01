@@ -2,9 +2,8 @@ package graduation.raitrest.service;
 
 import graduation.raitrest.model.entities.Menu;
 import graduation.raitrest.repository.MenuRepository;
-import graduation.raitrest.repository.RestoranRepository;
+import graduation.raitrest.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.List;
@@ -17,11 +16,11 @@ public class MenuService {
     private final MenuRepository menuRepository;
 
     @Autowired
-    private final RestoranRepository restoranRepository;
+    private final RestaurantRepository restaurantRepository;
 
-    public MenuService(MenuRepository menuRepository, RestoranRepository restoranRepository) {
+    public MenuService(MenuRepository menuRepository, RestaurantRepository restaurantRepository) {
         this.menuRepository = menuRepository;
-        this.restoranRepository = restoranRepository;
+        this.restaurantRepository = restaurantRepository;
     }
 
     public Menu get(int id, int userId) {

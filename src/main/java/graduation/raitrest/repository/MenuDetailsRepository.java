@@ -1,6 +1,7 @@
 package graduation.raitrest.repository;
 
 import graduation.raitrest.model.entities.MenuDetails;
+import graduation.raitrest.model.to.MenuDetailTo;
 
 import java.time.LocalDateTime;
 import java.util.List;

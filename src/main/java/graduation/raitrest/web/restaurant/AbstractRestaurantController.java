@@ -42,10 +42,10 @@ public class AbstractRestaurantController {
     }
 
     public Restaurant create(Restaurant restaurant) {
-        int userId = SecurityUtil.authUserId();
+        int managerId = SecurityUtil.authUserId();
         checkNew(restaurant);
-        log.info("create {} for user {}", restaurant, userId);
-        return service.create(restaurant, userId);
+        log.info("create {} for user {}", restaurant, managerId);
+        return service.create(restaurant, managerId);
     }
 
     public void update(Restaurant restaurant, int id) {

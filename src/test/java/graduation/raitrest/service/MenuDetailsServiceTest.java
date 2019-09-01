@@ -2,6 +2,7 @@ package graduation.raitrest.service;
 
 import graduation.raitrest.RestoranTestData;
 import graduation.raitrest.model.entities.MenuDetails;
+import graduation.raitrest.model.to.MenuDetailTo;
 import graduation.raitrest.util.exception.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import static graduation.raitrest.MenuDetailsTestData.*;
 import static graduation.raitrest.RestoranTestData.RESTAURANT_ID;
 import static graduation.raitrest.RestoranTestData.RESTAURANT_STAR;
 import static graduation.raitrest.UserTestData.*;
+import static graduation.raitrest.util.Util.menuDetail_2_MenuDetailTo;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -67,12 +70,12 @@ class MenuDetailsServiceTest extends AbstractServiceTest {
     @Test
      void getAll() {
         //all
-        List<MenuDetails> allMenu = service.getAll();
-        assertMatch(MENU_DETAILS_LIST, allMenu);
 
+        List<MenuDetailTo> menuDetailToList = service.getAll();
+        assertThat(menuDetailToList).usingElementComparatorIgnoringFields("dateTime").isEqualTo(menuDetail_2_MenuDetailTo(MENU_DETAILS_LIST));
 
         // all by manager_id
-        allMenu = service.getAll(MANAGER_1_ID);
+        List<MenuDetails> allMenu= service.getAll(MANAGER_1_ID);
         assertMatch(List.of(MENU_DETAILS_PEARL_TODAY_1, MENU_DETAILS_PEARL_TODAY_2, MENU_DETAILS_PEARL_TODAY_3, MENU_DETAILS_PEARL_TODAY_4, MENU_DETAILS_PEARL_YESTERDAY_1, MENU_DETAILS_PEARL_YESTERDAY_2, MENU_DETAILS_PEARL_YESTERDAY_3), allMenu);
 
         // all by date

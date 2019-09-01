@@ -1,6 +1,8 @@
 package graduation.raitrest;
 
 import graduation.raitrest.model.entities.MenuDetails;
+import graduation.raitrest.model.to.MenuDetailTo;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -9,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import static graduation.raitrest.RestoranTestData.*;
+import static graduation.raitrest.TestUtil.readListFromJsonMvcResult;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MenuDetailsTestData {
@@ -148,12 +151,25 @@ public class MenuDetailsTestData {
         assertMatch(actual, List.of(expected));
     }
 
+
     public static void assertMatch(Iterable<MenuDetails> actual, Iterable<MenuDetails> expected) {
         assertThat(actual).usingElementComparatorIgnoringFields("restaurant", "dateTime").isEqualTo(expected);
     }
 
-    public static void assertMatchFull(MenuDetails actual, MenuDetails expected) {
-        assertThat(actual).isEqualToIgnoringGivenFields(expected, "dateTime");
+
+
+    public static ResultMatcher contentJson(MenuDetails... expected) {
+        return contentJson(List.of(expected));
     }
+
+    public static ResultMatcher contentJson(Iterable<MenuDetails> expected) {
+        return result -> assertThat(readListFromJsonMvcResult(result, MenuDetails.class)).isEqualTo(expected);
+    }
+
+    public static ResultMatcher contentJsonTo(Iterable<MenuDetailTo> expected) {
+        return result -> assertThat(readListFromJsonMvcResult(result, MenuDetailTo.class)).isEqualTo(expected);
+    }
+
+
 
 }

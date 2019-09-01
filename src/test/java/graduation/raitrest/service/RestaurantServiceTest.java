@@ -22,9 +22,11 @@ public class RestaurantServiceTest extends AbstractServiceTest {
      void getAll() {
         List<Restaurant> all = service.getAll();
         assertMatch(all, restaurantList);
-
+        // manager
         all = service.getAll(MANAGER_ID);
         assertMatch(all, RESTAURANT_STAR, RESTAURANT_SUPER_STAR);
+        // user
+
     }
 
     @Test

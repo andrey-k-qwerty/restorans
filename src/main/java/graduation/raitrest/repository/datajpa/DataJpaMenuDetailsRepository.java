@@ -33,7 +33,7 @@ public class DataJpaMenuDetailsRepository implements MenuDetailsRepository {
             return null;
         }
         Restaurant restaurant = crudRestaurantRepository.getOne(restaurantID);
-        if (restaurant == null && restaurant.getManager().getId() != managerId ) {
+        if (restaurant == null || restaurant.getManager().getId() != managerId ) {
             return  null;
         }
         MenuDetail.setRestaurant(restaurant);

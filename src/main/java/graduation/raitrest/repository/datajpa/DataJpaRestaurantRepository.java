@@ -1,7 +1,7 @@
 package graduation.raitrest.repository.datajpa;
 
 import graduation.raitrest.model.entities.Restaurant;
-import graduation.raitrest.repository.RestoranRepository;
+import graduation.raitrest.repository.RestaurantRepository;
 import graduation.raitrest.repository.datajpa.grud.CrudRestaurantRepository;
 import graduation.raitrest.repository.datajpa.grud.CrudUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class DataJpaRestaurantRepository implements RestoranRepository {
+public class DataJpaRestaurantRepository implements RestaurantRepository {
 
     @Autowired
     private CrudRestaurantRepository crudRestaurantRepository;

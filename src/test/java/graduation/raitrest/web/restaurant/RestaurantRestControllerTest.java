@@ -19,6 +19,7 @@ import static graduation.raitrest.RestoranTestData.*;
 import static graduation.raitrest.TestUtil.readFromJson;
 import static graduation.raitrest.TestUtil.readFromJsonMvcResult;
 import static graduation.raitrest.UserTestData.MANAGER_ID;
+import static graduation.raitrest.UserTestData.USER_ID;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -32,6 +33,8 @@ class RestaurantRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getAll() throws Exception {
+        // Прежде установим манаджера ресторана
+        SecurityUtil.setAuthUserId(USER_ID);
         mockMvc.perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isOk())
                 .andDo(print())
