@@ -72,8 +72,8 @@ class MenuDetailsServiceTest extends AbstractServiceTest {
         //all
 
         List<MenuDetailTo> menuDetailToList = service.getAll();
-        assertThat(menuDetailToList).usingElementComparatorIgnoringFields("dateTime").isEqualTo(menuDetail_2_MenuDetailTo(MENU_DETAILS_LIST));
-
+      //  assertThat(menuDetailToList).usingElementComparatorIgnoringFields("dateTime").isEqualTo(menuDetail_2_MenuDetailTo(MENU_DETAILS_LIST));
+        assertMatchTo(menuDetailToList,menuDetail_2_MenuDetailTo(MENU_DETAILS_LIST));
         // all by manager_id
         List<MenuDetails> allMenu= service.getAll(MANAGER_1_ID);
         assertMatch(List.of(MENU_DETAILS_PEARL_TODAY_1, MENU_DETAILS_PEARL_TODAY_2, MENU_DETAILS_PEARL_TODAY_3, MENU_DETAILS_PEARL_TODAY_4, MENU_DETAILS_PEARL_YESTERDAY_1, MENU_DETAILS_PEARL_YESTERDAY_2, MENU_DETAILS_PEARL_YESTERDAY_3), allMenu);

@@ -157,7 +157,13 @@ public class MenuDetailsTestData {
     }
 
 
+    public static void assertMatchTo(MenuDetailTo actual, MenuDetailTo expected) {
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "restaurant", "dateTime");
+    }
 
+    public static void assertMatchTo(Iterable<MenuDetailTo> actual, Iterable<MenuDetailTo> expected) {
+        assertThat(actual).usingElementComparatorIgnoringFields("restaurant", "dateTime").isEqualTo(expected);
+    }
     public static ResultMatcher contentJson(MenuDetails... expected) {
         return contentJson(List.of(expected));
     }

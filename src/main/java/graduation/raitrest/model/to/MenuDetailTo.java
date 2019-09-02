@@ -111,6 +111,6 @@ public class MenuDetailTo extends BaseTo{
 
     @Override
     public int hashCode() {
-        return Objects.hash(description, dateTime, typeDish, quantity, price, restaurantID);
+        return Objects.hash(id, description, dateTime, typeDish, quantity, price, restaurantID);
     }
 }
