@@ -18,7 +18,7 @@ public class RestaurantRestController extends AbstractRestaurantController {
     @Override
     @GetMapping
     public List<Restaurant> getAll() {
-        log.info("getAll");
+        log.info("getAllByUser");
         return super.getAll();
     }
 

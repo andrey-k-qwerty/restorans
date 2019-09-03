@@ -32,7 +32,7 @@ public class RootController {
     @GetMapping("/users")
     @ResponseBody
     public String getUsers(Model model) {
-     //   model.addAttribute("users", service.getAll());
+     //   model.addAttribute("users", service.getAllByUser());
     //    return "users";
         return service.getAll().toString();
     }

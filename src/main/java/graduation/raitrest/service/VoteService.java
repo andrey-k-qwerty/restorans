@@ -41,7 +41,7 @@ public class VoteService {
         return voteRepository.getRating(startDateTime, endDateTime);
     }
 
-    public List<Rating> getCurrentRating() {
+    public List<Rating> getTodayRating() {
         //  return getRating(LocalDateTime.of(LocalDate.now(), LocalTime.MIN),LocalDateTime.of(LocalDate.now(), LocalTime.MAX));
         return getRating(adjustStartDateTime(LocalDate.now()), adjustEndDateTime(LocalDate.now()));
     }
@@ -77,7 +77,7 @@ public class VoteService {
         return filterByDateTime(adjustStartDateTime(startDate), adjustEndDateTime(endDate));
     }
 
-    public Vote getCurrentVoise(int userID) {
+    public Vote getTodayVote(int userID) {
         List<Vote> votes = filterByDate(LocalDate.now(), LocalDate.now(), userID);
         return   DataAccessUtils.singleResult(votes);
     }

@@ -35,7 +35,7 @@ public class AbstractMenuDetailController {
 
     public List<MenuDetailTo> getAll() {
         int userId = SecurityUtil.authUserId();
-        log.info("getAll for user {}", userId);
+        log.info("getAllByUser for user {}", userId);
         return service.getAll();
     }
     public List<MenuDetails> getAllCurrentDay() {

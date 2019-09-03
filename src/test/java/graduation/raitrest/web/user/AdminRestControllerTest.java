@@ -89,7 +89,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
         List<User> collect = listUsers.stream().collect(Collectors.toList());
         collect.add(expected);
         collect.sort(Comparator.comparing(User::getName));
-     //   assertMatch(service.getAll(), collect);
+     //   assertMatch(service.getAllByUser(), collect);
         assertMatch(userService.getAll(), collect);
     }
 

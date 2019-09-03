@@ -33,17 +33,17 @@ public class AbstractVoteController {
         service.delete(id, userId);
     }
 
-    public List<Vote> getAll() {
+    public List<Vote> getAllByUser() {
         int userId = SecurityUtil.authUserId();
-        log.info("getAll votes for user {}", userId);
+        log.info("getAllByUser votes for user {}", userId);
         return service.getAll(userId);
     }
 
-    public Vote create(Vote vote) {
+    public Vote create(Vote vote,int restaurantID) {
         int userId = SecurityUtil.authUserId();
         checkNew(vote);
-        log.info("create {} for user {}", vote, userId);
-        return service.create(vote, userId);
+        log.info("create {} for user {} , restaurant {}", vote, userId,restaurantID);
+        return service.create(vote,restaurantID, userId);
     }
 
     public void update(Vote vote, int id) {
@@ -66,13 +66,13 @@ public class AbstractVoteController {
 
     }
 
-    public List<Rating> getCurrentDayRatingRestaurants() {
+    public List<Rating> getTodayRatingRestaurants() {
         int userId = SecurityUtil.authUserId();
         log.info("getBetween dates({} - {}) time({} - {}) for user {}");
         // рейтиг ресторанов смотреть можно всем, поєтому просто проверяем  зарегистрированный ли пользователь в системе
         //  пока так
         if (userId != 0)
-            return service.getCurrentRating();
+            return service.getTodayRating();
         else
             return null;
 

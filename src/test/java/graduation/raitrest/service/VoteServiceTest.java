@@ -33,10 +33,10 @@ public class VoteServiceTest extends AbstractServiceTest {
         vote = voteService.get(VOTES_ID + 4, USER_ID);
         assertMatch(vote, VOTES_1_TODAY);
 
-        vote = voteService.getCurrentVoise(USER_1_ID);
+        vote = voteService.getTodayVote(USER_1_ID);
         assertMatch(vote, VOTES_2_TODAY);
 
-        vote = voteService.getCurrentVoise(USER_3_ID);
+        vote = voteService.getTodayVote(USER_3_ID);
 
         Assertions.assertNull(vote);
 
@@ -45,7 +45,7 @@ public class VoteServiceTest extends AbstractServiceTest {
 
     @Test
      void getRating() {
-        List<Rating> currentRating = voteService.getCurrentRating();
+        List<Rating> currentRating = voteService.getTodayRating();
         Assertions.assertEquals(2, currentRating.size());
 
         currentRating = voteService.getAllRating();
@@ -75,6 +75,17 @@ public class VoteServiceTest extends AbstractServiceTest {
         newVote.setId(id);
         assertMatch(newVote, voteService.get(id));
     }
+    @Test
+    void createWrongTime() {
+        Vote newVote = new Vote();
+        newVote.setDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(11, 20)));
+        assertThrows(IllegalArgumentException.class ,() ->
+                voteService.create(newVote, RESTAURANT_ID, USER_3_ID));
+//        Vote voteCreate = voteService.create(newVote, RESTAURANT_ID, USER_3_ID);
+//        Integer id = voteCreate.getId();
+//        newVote.setId(id);
+//        assertMatch(newVote, voteService.get(id));
+    }
 
     @Test
      void createWithRestaurant() {
@@ -94,7 +105,7 @@ public class VoteServiceTest extends AbstractServiceTest {
         voteService.update(voteUpdate , USER_1_ID);
         assertMatch(voteUpdate, voteService.get(voteUpdate.getId()));
       //  RestoranTestData.assertMatch(voteUpdate.getRestaurant(), voteService.get(voteUpdate.getId()).getRestaurant());
-        List<Rating> currentRating = voteService.getCurrentRating();
+        List<Rating> currentRating = voteService.getTodayRating();
         Assertions.assertEquals(1, currentRating.size());
 
 
@@ -102,10 +113,10 @@ public class VoteServiceTest extends AbstractServiceTest {
 
     @Test
      void delete()  {
-        Vote  vote = voteService.getCurrentVoise(USER_2_ID);
+        Vote  vote = voteService.getTodayVote(USER_2_ID);
         Assertions.assertNotNull(vote);;
         voteService.delete(VOTES_ID + 6, USER_2_ID);
-        vote = voteService.getCurrentVoise(USER_2_ID);
+        vote = voteService.getTodayVote(USER_2_ID);
         Assertions.assertNull(vote);
 
 

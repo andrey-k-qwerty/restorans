@@ -32,12 +32,12 @@ public class AbstractRestaurantController {
 
     public List<Restaurant> getAll() {
         int userId = SecurityUtil.authUserId();
-        log.info("getAll restaurants  for user {}", userId);
+        log.info("getAllByUser restaurants  for user {}", userId);
         return service.getAll();
     }
     public List<Restaurant> getAll(int manager) {
         int userId = SecurityUtil.authUserId();
-        log.info("getAll restaurants by manager  for user {}", userId);
+        log.info("getAllByUser restaurants by manager  for user {}", userId);
         return service.getAll(manager);
     }
 

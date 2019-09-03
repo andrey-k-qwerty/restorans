@@ -1,5 +1,7 @@
 package graduation.raitrest.model.to;
 
+import java.util.Objects;
+
 public class Rating {
     private Integer restaurantId;
     private String restaurantName;
@@ -9,6 +11,10 @@ public class Rating {
         this.restaurantId = restaurantId;
         this.restaurantName = restaurantName;
         this.countVotes = countVotes;
+    }
+
+    public Rating() {
+
     }
 
     public Integer getRestaurantId() {
@@ -42,5 +48,20 @@ public class Rating {
                 ", restaurantName='" + restaurantName + '\'' +
                 ", countVotes=" + countVotes +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Rating rating = (Rating) o;
+        return Objects.equals(restaurantId, rating.restaurantId) &&
+                Objects.equals(restaurantName, rating.restaurantName) &&
+                Objects.equals(countVotes, rating.countVotes);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(restaurantId, restaurantName, countVotes);
     }
 }

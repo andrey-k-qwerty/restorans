@@ -32,8 +32,8 @@ public class VoteRestController extends AbstractVoteController {
 
     @Override
     @GetMapping
-    public List<Vote> getAll() {
-        return super.getAll();
+    public List<Vote> getAllByUser() {
+        return super.getAllByUser();
     }
 
     @Override
@@ -46,8 +46,8 @@ public class VoteRestController extends AbstractVoteController {
 
     @Override
     @GetMapping("/rating")
-    public List<Rating> getCurrentDayRatingRestaurants() {
-        return super.getCurrentDayRatingRestaurants();
+    public List<Rating> getTodayRatingRestaurants() {
+        return super.getTodayRatingRestaurants();
     }
 
     @Override
@@ -57,9 +57,9 @@ public class VoteRestController extends AbstractVoteController {
         super.update(vote, id);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Vote> createWithLocation( @RequestBody Vote vote) {
-        Vote created = super.create(vote);
+    @PostMapping(value = "/{restaurantID}",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Vote> createWithLocation( @RequestBody Vote vote, @PathVariable int restaurantID) {
+        Vote created = super.create(vote, restaurantID);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
