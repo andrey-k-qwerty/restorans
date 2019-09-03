@@ -5,6 +5,7 @@ import graduation.raitrest.model.to.Rating;
 import graduation.raitrest.service.VoteService;
 import graduation.raitrest.web.AbstractControllerTest;
 import graduation.raitrest.web.SecurityUtil;
+import graduation.raitrest.web.converter.DateTimeFormatters;
 import graduation.raitrest.web.json.JsonUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -91,6 +93,17 @@ class VoteRestControllerTest extends AbstractControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(matcher);
 
+    }
+    @Test
+    void filter() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL +  "rating/all")
+//                .param("startDate", "2019-09-03")
+//                .param("endDate", "2019-09-03"))
+                .param("startDate",LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE))
+                .param("endDate", LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE)))
+                .andExpect(status().isOk()).andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(contentJsonTo(service.getTodayRating()));
     }
 
     @Test
