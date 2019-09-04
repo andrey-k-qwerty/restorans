@@ -1,7 +1,14 @@
 package graduation.raitrest.model.entities;
 
-public enum Role {
+import org.springframework.security.core.GrantedAuthority;
+
+public enum Role implements GrantedAuthority {
     ROLE_USER,
     ROLE_ADMIN,
-    ROLE_MANAGER
+    ROLE_MANAGER;
+
+    @Override
+    public String getAuthority() {
+        return name();
+    }
 }

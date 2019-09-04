@@ -51,7 +51,8 @@ class ProfileRestControllerTest extends AbstractControllerTest {
     @Test
     void update() throws Exception {
 
-        SecurityUtil.setAuthUserId(USER_ID);
+   //     SecurityUtil.setAuthUserId(USER_ID);
+
         UserTo updatedTo = new UserTo(null, "newName", "newemail@ya.ru", "newPassword");
         mockMvc.perform(put(REST_URL).contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updatedTo)))

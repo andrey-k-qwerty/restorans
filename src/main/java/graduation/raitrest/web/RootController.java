@@ -16,31 +16,22 @@ public class RootController {
     @Autowired
     private UserService service;
 
-//    @GetMapping("/index")
-//    public String root() {
-//        return "index";
-//    }
-    @GetMapping("/")
-    public String root2() {
-        return "index";
-    }
+
+
     @GetMapping()
     public String root() {
         return "index";
     }
 
-    @GetMapping("/users")
-    @ResponseBody
-    public String getUsers(Model model) {
-     //   model.addAttribute("users", service.getAllByUser());
-    //    return "users";
-        return service.getAll().toString();
+    @GetMapping(value = "/login")
+    public String login() {
+        return "login";
     }
 
     @PostMapping("/users")
     public String setUser(HttpServletRequest request) {
         int userId = Integer.parseInt(request.getParameter("userId"));
         SecurityUtil.setAuthUserId(userId);
-        return "redirect:meals";
+        return "redirect:index";
     }
 }
