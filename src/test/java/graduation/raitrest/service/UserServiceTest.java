@@ -16,7 +16,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static graduation.raitrest.UserTestData.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class UserServiceTest extends AbstractServiceTest {
@@ -121,7 +121,13 @@ public class UserServiceTest extends AbstractServiceTest {
         assertMatch(all, collect);
     }
 
-
+    @Test
+    void enable() {
+        service.enable(USER_ID, false);
+        assertFalse(service.get(USER_ID).isEnabled());
+        service.enable(USER_ID, true);
+        assertTrue(service.get(USER_ID).isEnabled());
+    }
 
 
     @Test

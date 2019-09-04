@@ -8,16 +8,16 @@
 # Get all users
 GET http://localhost:8080/restaurant/rest/admin/users
 Accept: application/json
-
+Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu
 ###
 
 # Get user by ID 100001
 GET http://localhost:8080/restaurant/rest/admin/users/100001
 Accept: application/json
-
+Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu
 ###
 
-POST http://localhost:8080/restaurant/rest/admin/users
+GET http://localhost:8080/restaurant/rest/admin/users
 Content-Type: application/json
-
+Authorization: Basic bWFuYWdlckB5YW5kZXgucnU6bWFuYWdlcg==
 ###

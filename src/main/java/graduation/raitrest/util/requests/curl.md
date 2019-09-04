@@ -7,11 +7,11 @@
 #### get Users 100001
 `curl -v http://localhost:8080/restaurant/rest/admin/users/100001`
 
-#### get All Meals
-`curl -v http://localhost:8080/restaurant/rest/profile/meals`
+#### get All Restaurants
+`curl -v http://localhost:8080/restaurant/rest/profile/restaurant`
 
 #### get Meals 100003
-`curl -v http://localhost:8080/restaurant/rest/profile/meals/100003`
+`curl -v http://localhost:8080/restaurant/rest/profile/rest/100003`
 
 #### filter Meals
 `curl -v "http://localhost:8080/restaurant/rest/profile/meals/filter?startDate=2015-05-30&startTime=07:00:00&endDate=2015-05-31&endTime=11:00:00"`

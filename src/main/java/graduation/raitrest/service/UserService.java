@@ -1,12 +1,15 @@
 package graduation.raitrest.service;
 
 import graduation.raitrest.model.entities.User;
+import graduation.raitrest.model.to.UserTo;
 import graduation.raitrest.repository.UserRepository;
+import graduation.raitrest.util.UserUtil;
 import graduation.raitrest.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 
@@ -52,8 +55,24 @@ public class UserService {
     }
 
     @CacheEvict(value = "users", allEntries = true)
-    public void update(User user) throws NotFoundException {
+    public void update(User user) {
         Assert.notNull(user, "user must not be null");
-        checkNotFoundWithId(repository.save(user), user.getId());
+//      checkNotFoundWithId : check works only for JDBC, disabled
+        repository.save(user);
+    }
+
+    @CacheEvict(value = "users", allEntries = true)
+    @Transactional
+    public void update(UserTo userTo) {
+        User user = get(userTo.id());
+        repository.save(UserUtil.updateFromTo(user, userTo));
+    }
+
+    @CacheEvict(value = "users", allEntries = true)
+    @Transactional
+    public void enable(int id, boolean enabled) {
+        User user = get(id);
+        user.setEnabled(enabled);
+        repository.save(user);  // !! need only for JDBC implementation
     }
 }

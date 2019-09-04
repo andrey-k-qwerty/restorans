@@ -2,6 +2,8 @@ package graduation.raitrest.web.user;
 
 import graduation.raitrest.model.entities.Role;
 import graduation.raitrest.model.entities.User;
+import graduation.raitrest.model.to.UserTo;
+import graduation.raitrest.util.UserUtil;
 import graduation.raitrest.web.AbstractControllerTest;
 import graduation.raitrest.web.SecurityUtil;
 import graduation.raitrest.web.json.JsonUtil;
@@ -25,7 +27,7 @@ class ProfileRestControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-        // Прежде установим манаджера ресторана
+
         SecurityUtil.setAuthUserId(USER_ID);
         mockMvc.perform(MockMvcRequestBuilders.get(REST_URL))
                 .andExpect(status().isOk())
@@ -35,7 +37,7 @@ class ProfileRestControllerTest extends AbstractControllerTest {
 
     @Test
     void delete() throws Exception {
-        // Прежде установим манаджера ресторана
+
         SecurityUtil.setAuthUserId(USER_ID);
         List<User> usersList = listUsers.stream()
                 .filter(user -> user.getId() != USER_ID)
@@ -48,14 +50,14 @@ class ProfileRestControllerTest extends AbstractControllerTest {
 
     @Test
     void update() throws Exception {
-        // Прежде установим манаджера ресторана
+
         SecurityUtil.setAuthUserId(USER_ID);
-        User updated = new User(USER_ID, "newName", "newemail@ya.ru", "newPassword", Role.ROLE_USER);
-        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL).contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(updated)))
+        UserTo updatedTo = new UserTo(null, "newName", "newemail@ya.ru", "newPassword");
+        mockMvc.perform(put(REST_URL).contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(updatedTo)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
-        assertMatch(userService.getByEmail("newemail@ya.ru"), updated);
+        assertMatch(userService.getByEmail("newemail@ya.ru"), UserUtil.updateFromTo(new User(USER), updatedTo));
     }
 }
