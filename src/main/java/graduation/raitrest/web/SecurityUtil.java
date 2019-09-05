@@ -1,7 +1,11 @@
 package graduation.raitrest.web;
 
 
+import graduation.raitrest.AuthorizedUser;
 import graduation.raitrest.model.AbstractBaseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 public class SecurityUtil {
 
@@ -11,7 +15,11 @@ public class SecurityUtil {
     }
 
     public static int authUserId() {
-        return id;
+       // return id;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof AuthorizedUser)
+           return  ((AuthorizedUser)principal).getId();
+       return id; // return 0;
     }
 
     public static void setAuthUserId(int id) {

@@ -9,6 +9,9 @@ import org.springframework.context.support.GenericXmlApplicationContext;
 
 import java.util.Arrays;
 
+import static graduation.raitrest.TestUtil.mockAuthorize;
+import static graduation.raitrest.UserTestData.USER;
+
 public class SpringMain {
     public static void main(String[] args) {
         // java 7 automatic resource management
@@ -17,7 +20,7 @@ public class SpringMain {
          //   appCtx.load("classpath:spring/inmemory.xml","classpath:spring/spring-app.xml");
             appCtx.load("classpath:spring/inmemory.xml");
             appCtx.refresh();
-
+            mockAuthorize(USER);
             System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
             AdminRestController adminUserController = appCtx.getBean(AdminRestController.class);
             System.out.println(adminUserController.getAll());

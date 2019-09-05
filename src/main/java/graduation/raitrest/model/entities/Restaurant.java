@@ -1,6 +1,7 @@
 package graduation.raitrest.model.entities;
 
 import graduation.raitrest.model.AbstractNamedEntity;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -22,7 +23,8 @@ public class Restaurant extends AbstractNamedEntity {
 
     @Column(name = "REGISTERED", nullable = false, columnDefinition = "timestamp default now()")
     @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
+  //  @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private Date registered = new Date();
 
     @Column(name = "DESCRIPTION")

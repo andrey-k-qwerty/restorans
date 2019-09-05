@@ -23,8 +23,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static graduation.raitrest.RestoranTestData.*;
-import static graduation.raitrest.TestUtil.readFromJson;
-import static graduation.raitrest.TestUtil.readFromJsonMvcResult;
+import static graduation.raitrest.TestUtil.*;
 import static graduation.raitrest.UserTestData.*;
 import static graduation.raitrest.UserTestData.USER_1_ID;
 import static graduation.raitrest.VotesTestData.*;
@@ -42,8 +41,8 @@ class VoteRestControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-        SecurityUtil.setAuthUserId(USER_ID);
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + VOTES_ID))
+
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + VOTES_ID).with(userHttpBasic(USER)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -53,13 +52,12 @@ class VoteRestControllerTest extends AbstractControllerTest {
 
     @Test
     void delete() throws Exception {
-        SecurityUtil.setAuthUserId(USER_2_ID);
 
         // проверяем что голос есть
         Vote  vote = service.getTodayVote(USER_2_ID);
         Assertions.assertNotNull(vote);;
         // удаляем
-        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + (VOTES_ID + 6)))
+        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + (VOTES_ID + 6)).with(userHttpBasic(USER_2)))
                 .andExpect(status().isNoContent());
         // проверяенм что голоса нет
         vote = service.getTodayVote(USER_2_ID);
@@ -74,7 +72,7 @@ class VoteRestControllerTest extends AbstractControllerTest {
                 .sorted((o1, o2) -> o2.getDateTime().toLocalDate().compareTo(o1.getDateTime().toLocalDate()))
                 .collect(Collectors.toList());
 
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL))
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL).with(userHttpBasic(USER)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -87,7 +85,7 @@ class VoteRestControllerTest extends AbstractControllerTest {
     void getRatingRestaurants() throws Exception {
 
         ResultMatcher matcher = contentJsonTo(service.getAllRating());
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "rating/all"))
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "rating/all").with(userHttpBasic(USER_3)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -100,7 +98,8 @@ class VoteRestControllerTest extends AbstractControllerTest {
 //                .param("startDate", "2019-09-03")
 //                .param("endDate", "2019-09-03"))
                 .param("startDate",LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE))
-                .param("endDate", LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE)))
+                .param("endDate", LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE)).with(userHttpBasic(USER_1)))
+
                 .andExpect(status().isOk()).andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(contentJsonTo(service.getTodayRating()));
@@ -108,7 +107,7 @@ class VoteRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getCurrentDayRatingRestaurants() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "rating"))
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "rating").with(userHttpBasic(USER)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -117,12 +116,12 @@ class VoteRestControllerTest extends AbstractControllerTest {
 
     @Test
     void update() throws Exception {
-        SecurityUtil.setAuthUserId(USER_1_ID);
+
         Vote voteUpdate = service.get(VOTES_ID + 5, USER_1_ID);
         voteUpdate.setRestaurant(RESTAURANT_PEARL);
 
         mockMvc.perform(MockMvcRequestBuilders.put(
-                REST_URL + (VOTES_ID + 5)).contentType(MediaType.APPLICATION_JSON)
+                REST_URL + (VOTES_ID + 5)).contentType(MediaType.APPLICATION_JSON).with(userHttpBasic(USER_1))
                 .content(JsonUtil.writeValue(voteUpdate)))
                 .andExpect(status().isNoContent());
 
@@ -132,11 +131,11 @@ class VoteRestControllerTest extends AbstractControllerTest {
 
     @Test
     void createWithLocation() throws Exception {
-        // USER_3, RESTAURANT_STAR
-        SecurityUtil.setAuthUserId(USER_3_ID);
+
         Vote newVote =new Vote(LocalDateTime.of(LocalDate.now(), LocalTime.of(9, 20)), null, null);
 
         ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL + RESTAURANT_ID )
+                .with(userHttpBasic(USER_3))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newVote)))
                 .andDo(print());

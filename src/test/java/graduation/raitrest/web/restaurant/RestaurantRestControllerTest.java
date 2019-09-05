@@ -16,10 +16,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.List;
 
 import static graduation.raitrest.RestoranTestData.*;
-import static graduation.raitrest.TestUtil.readFromJson;
-import static graduation.raitrest.TestUtil.readFromJsonMvcResult;
-import static graduation.raitrest.UserTestData.MANAGER_ID;
-import static graduation.raitrest.UserTestData.USER_ID;
+import static graduation.raitrest.TestUtil.*;
+import static graduation.raitrest.UserTestData.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -33,9 +31,8 @@ class RestaurantRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getAll() throws Exception {
-        // Прежде установим манаджера ресторана
-        SecurityUtil.setAuthUserId(USER_ID);
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL))
+
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL).with(userHttpBasic(USER)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -45,10 +42,7 @@ class RestaurantRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getAllByManager() throws Exception {
-        // Прежде установим манаджера ресторана
-        SecurityUtil.setAuthUserId(MANAGER_ID);
-
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "manager/" + MANAGER_ID))
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "manager/" + MANAGER_ID).with(userHttpBasic(MANAGER)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -58,11 +52,7 @@ class RestaurantRestControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-        // Прежде установим манаджера ресторана
-        SecurityUtil.setAuthUserId(MANAGER_ID);
-
-
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT_ID))
+         mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT_ID).with(userHttpBasic(MANAGER)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -72,11 +62,8 @@ class RestaurantRestControllerTest extends AbstractControllerTest {
 
     @Test
     void delete() throws Exception {
-        // Прежде установим манаджера ресторана
-        SecurityUtil.setAuthUserId(MANAGER_ID);
 
-
-        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + RESTAURANT_ID))
+        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + RESTAURANT_ID).with(userHttpBasic(MANAGER)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
@@ -85,11 +72,11 @@ class RestaurantRestControllerTest extends AbstractControllerTest {
 
     @Test
     void update() throws Exception {
-        // Прежде установим манаджера ресторана
-        SecurityUtil.setAuthUserId(MANAGER_ID);
 
         Restaurant updated = getUpdated();
-        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + RESTAURANT_ID).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + RESTAURANT_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(MANAGER))
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isNoContent());
 
@@ -99,12 +86,11 @@ class RestaurantRestControllerTest extends AbstractControllerTest {
 
     @Test
     void createWithLocation() throws Exception {
-        // Прежде установим манаджера ресторана
-        SecurityUtil.setAuthUserId(MANAGER_ID);
 
         Restaurant newRestaurant = getCreated();
         ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(MANAGER))
                 .content(JsonUtil.writeValue(newRestaurant)));
 
         Restaurant returned = readFromJson(action, Restaurant.class);

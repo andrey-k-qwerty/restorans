@@ -21,10 +21,8 @@ import java.util.List;
 import static graduation.raitrest.MenuDetailsTestData.*;
 import static graduation.raitrest.RestoranTestData.RESTAURANT_ID;
 import static graduation.raitrest.RestoranTestData.RESTAURANT_STAR;
-import static graduation.raitrest.TestUtil.readFromJson;
-import static graduation.raitrest.TestUtil.readFromJsonMvcResult;
-import static graduation.raitrest.UserTestData.MANAGER_ID;
-import static graduation.raitrest.UserTestData.USER_ID;
+import static graduation.raitrest.TestUtil.*;
+import static graduation.raitrest.UserTestData.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -39,9 +37,7 @@ class MenuDetailRestControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-        SecurityUtil.setAuthUserId(MANAGER_ID);
-
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + MENU_DETAILS_ID))
+            mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + MENU_DETAILS_ID) .with(userHttpBasic(MANAGER)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -50,8 +46,8 @@ class MenuDetailRestControllerTest extends AbstractControllerTest {
 
     @Test
     void delete() throws Exception {
-        SecurityUtil.setAuthUserId(MANAGER_ID);
-        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + MENU_DETAILS_ID))
+
+        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + MENU_DETAILS_ID).with(userHttpBasic(MANAGER)))
                 .andExpect(status().isNoContent());
 
         List<MenuDetails> menuAllManager = service.getFilterByDateByRestaurant(LocalDate.now(), LocalDate.now().plusDays(1L), RESTAURANT_ID);
@@ -63,7 +59,7 @@ class MenuDetailRestControllerTest extends AbstractControllerTest {
 
         List<MenuDetailTo> allMenu = service.getAll();
 
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "all"))
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "all").with(userHttpBasic(USER)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -75,7 +71,7 @@ class MenuDetailRestControllerTest extends AbstractControllerTest {
     void getAllCurrentDay() throws Exception {
         List<MenuDetails> allMenu = service.getFilterByDate(LocalDate.now(), LocalDate.now().plusDays(1L));
 
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL))
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL).with(userHttpBasic(USER)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -85,11 +81,11 @@ class MenuDetailRestControllerTest extends AbstractControllerTest {
 
     @Test
     void createWithLocation() throws Exception {
-        SecurityUtil.setAuthUserId(MANAGER_ID);
+
         MenuDetails newMenu = new MenuDetails(null,// RESTAURANT_STAR
                 "Пятое блюдо", "Хлеб", "1 кусочек", new BigDecimal("0.10"), LocalDateTime.now());
 
-        ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL + RESTAURANT_ID)
+        ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL + RESTAURANT_ID).with(userHttpBasic(MANAGER))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newMenu)))
                 .andDo(print());
@@ -98,12 +94,7 @@ class MenuDetailRestControllerTest extends AbstractControllerTest {
         MenuDetails created =  readFromJson(action, MenuDetails.class);
         newMenu.setId(created.getId());
 
- //       newMenu.setRestaurant(created.getRestaurant());
         assertMatch(created, newMenu);
-//        MenuDetails menuDetailsGet = service.get(created.getId());
-//        assertMatch(menuDetailsGet, newMenu);
-
-
     }
 
     @Test
@@ -114,6 +105,7 @@ class MenuDetailRestControllerTest extends AbstractControllerTest {
                 LocalDateTime.now());
 
         mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + (MENU_DETAILS_ID + 3)).contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(MANAGER))
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isNoContent());
 
