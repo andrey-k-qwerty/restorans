@@ -2,7 +2,6 @@ package graduation.raitrest.web.menu;
 
 import graduation.raitrest.model.entities.MenuDetails;
 import graduation.raitrest.model.to.MenuDetailTo;
-import graduation.raitrest.web.SecurityUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +11,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-import static graduation.raitrest.util.ValidationUtil.checkNew;
-
 @RestController
-@RequestMapping(value = MenuDetailRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class MenuDetailRestController extends AbstractMenuDetailController {
+@RequestMapping(value = ManagerMenuDetailRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class ManagerMenuDetailRestController extends AbstractMenuDetailController {
     public static final String REST_URL = "/rest/profile/menu";
 
     @Override
@@ -32,7 +29,7 @@ public class MenuDetailRestController extends AbstractMenuDetailController {
         super.delete(id);
     }
 
-    @Override
+   /* @Override
     @GetMapping("/all")
     public List<MenuDetailTo> getAll() {
         return super.getAll();
@@ -43,7 +40,7 @@ public class MenuDetailRestController extends AbstractMenuDetailController {
     public List<MenuDetails> getAllCurrentDay() {
         return super.getAllCurrentDay();
     }
-
+*/
     @PostMapping(value = "/{restaurantID}",consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MenuDetails> createWithLocation(@RequestBody MenuDetails menuDetails, @PathVariable int restaurantID) {
         MenuDetails created = super.create(menuDetails,restaurantID);

@@ -3,42 +3,28 @@ package graduation.raitrest.web.restaurant;
 import graduation.raitrest.model.entities.Restaurant;
 import graduation.raitrest.service.RestaurantService;
 import graduation.raitrest.web.AbstractControllerTest;
-import graduation.raitrest.web.SecurityUtil;
 import graduation.raitrest.web.json.JsonUtil;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.List;
-
 import static graduation.raitrest.RestoranTestData.*;
 import static graduation.raitrest.TestUtil.*;
 import static graduation.raitrest.UserTestData.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static graduation.raitrest.util.Util.restaurant_2_RestaurantTo;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class RestaurantRestControllerTest extends AbstractControllerTest {
-    private static final String REST_URL = RestaurantRestController.REST_URL + '/';
+class ManagerRestaurantRestControllerTest extends AbstractControllerTest {
+    private static final String REST_URL = ManagerRestaurantRestController.REST_URL + '/';
 
     @Autowired
     private RestaurantService service;
 
-    @Test
-    void getAll() throws Exception {
 
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL).with(userHttpBasic(USER)))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(service.getAll()));
-
-    }
 
     @Test
     void getAllByManager() throws Exception {
@@ -59,6 +45,11 @@ class RestaurantRestControllerTest extends AbstractControllerTest {
                 .andExpect(result -> assertMatch(readFromJsonMvcResult(result, Restaurant.class), RESTAURANT_STAR));
 
     }
+    @Test
+    void getUnauth() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT_ID))
+                .andExpect(status().isUnauthorized());
+    }
 
     @Test
     void delete() throws Exception {
@@ -67,7 +58,9 @@ class RestaurantRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
-        assertMatch(service.getAll(), RESTAURANT_PEARL, RESTAURANT_SUPER_STAR, RESTAURANT_BLACK_PEARL);
+        assertMatchTo(service.getAll(), restaurant_2_RestaurantTo(RESTAURANT_PEARL),
+                restaurant_2_RestaurantTo(RESTAURANT_SUPER_STAR),
+                restaurant_2_RestaurantTo(RESTAURANT_BLACK_PEARL));
     }
 
     @Test
@@ -100,4 +93,6 @@ class RestaurantRestControllerTest extends AbstractControllerTest {
         assertMatch(service.getAll(MANAGER_ID), RESTAURANT_STAR, RESTAURANT_SUPER_STAR,newRestaurant);
 
     }
+
+
 }

@@ -1,6 +1,7 @@
 package graduation.raitrest.service;
 
 import graduation.raitrest.model.entities.Restaurant;
+import graduation.raitrest.model.to.RestaurantTo;
 import graduation.raitrest.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,8 @@ import org.springframework.util.Assert;
 
 import java.util.List;
 
+import static graduation.raitrest.util.Util.menuDetail_2_MenuDetailTo;
+import static graduation.raitrest.util.Util.restaurant_2_RestaurantTo;
 import static graduation.raitrest.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
@@ -20,8 +23,8 @@ public class RestaurantService {
         this.restaurantRepository = restaurantRepository;
     }
 
-    public List<Restaurant> getAll() {
-        return restaurantRepository.getAll();
+    public List<RestaurantTo> getAll() {
+        return restaurant_2_RestaurantTo(restaurantRepository.getAll());
     }
 
     public List<Restaurant> getAll(int manager_id) {

@@ -1,6 +1,7 @@
 package graduation.raitrest.web.restaurant;
 
 import graduation.raitrest.model.entities.Restaurant;
+import graduation.raitrest.model.to.RestaurantTo;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,16 +12,10 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = RestaurantRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class RestaurantRestController extends AbstractRestaurantController {
-    public static final String REST_URL = "/rest/profile/restaurant";
+@RequestMapping(value = ManagerRestaurantRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class ManagerRestaurantRestController extends AbstractRestaurantController {
+    public static final String REST_URL = "/rest/manager/restaurant";
 
-    @Override
-    @GetMapping
-    public List<Restaurant> getAll() {
-        log.info("getAllByUser");
-        return super.getAll();
-    }
 
 
     @GetMapping(value = "/manager/{id}")

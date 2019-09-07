@@ -1,6 +1,7 @@
 package graduation.raitrest.web.restaurant;
 
 import graduation.raitrest.model.entities.Restaurant;
+import graduation.raitrest.model.to.RestaurantTo;
 import graduation.raitrest.service.RestaurantService;
 import graduation.raitrest.web.SecurityUtil;
 import org.slf4j.Logger;
@@ -30,7 +31,7 @@ public class AbstractRestaurantController {
         service.delete(id, userId);
     }
 
-    public List<Restaurant> getAll() {
+    public List<RestaurantTo> getAll() {
         int userId = SecurityUtil.authUserId();
         log.info("getAllByUser restaurants  for user {}", userId);
         return service.getAll();

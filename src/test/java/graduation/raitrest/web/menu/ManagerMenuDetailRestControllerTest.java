@@ -1,6 +1,5 @@
 package graduation.raitrest.web.menu;
 
-import graduation.raitrest.RestoranTestData;
 import graduation.raitrest.model.entities.MenuDetails;
 import graduation.raitrest.model.to.MenuDetailTo;
 import graduation.raitrest.service.MenuDetailsService;
@@ -23,14 +22,13 @@ import static graduation.raitrest.RestoranTestData.RESTAURANT_ID;
 import static graduation.raitrest.RestoranTestData.RESTAURANT_STAR;
 import static graduation.raitrest.TestUtil.*;
 import static graduation.raitrest.UserTestData.*;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class MenuDetailRestControllerTest extends AbstractControllerTest {
+class ManagerMenuDetailRestControllerTest extends AbstractControllerTest {
 
-    private static final String REST_URL = MenuDetailRestController.REST_URL + '/';
+    private static final String REST_URL = ManagerMenuDetailRestController.REST_URL + '/';
 
     @Autowired
     private MenuDetailsService service;
@@ -43,6 +41,11 @@ class MenuDetailRestControllerTest extends AbstractControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(result -> assertMatch(readFromJsonMvcResult(result, MenuDetails.class), MENU_DETAILS_STAR_TODAY_1));
     }
+    @Test
+    void getUnauth() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + MENU_DETAILS_ID))
+                .andExpect(status().isUnauthorized());
+    }
 
     @Test
     void delete() throws Exception {
@@ -54,7 +57,7 @@ class MenuDetailRestControllerTest extends AbstractControllerTest {
         assertMatch(menuAllManager, MENU_DETAILS_STAR_TODAY_2, MENU_DETAILS_STAR_TODAY_3, MENU_DETAILS_STAR_TODAY_4);
     }
 
-    @Test
+ /*   @Test
     void getAll() throws Exception {
 
         List<MenuDetailTo> allMenu = service.getAll();
@@ -77,7 +80,7 @@ class MenuDetailRestControllerTest extends AbstractControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(contentJson(allMenu));
 
-    }
+    }*/
 
     @Test
     void createWithLocation() throws Exception {

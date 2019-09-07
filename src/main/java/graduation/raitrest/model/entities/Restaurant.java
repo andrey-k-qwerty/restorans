@@ -1,5 +1,6 @@
 package graduation.raitrest.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import graduation.raitrest.model.AbstractNamedEntity;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -38,7 +39,7 @@ public class Restaurant extends AbstractNamedEntity {
 //    )
 //    protected Set<User> managers ;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MANAGER_ID", nullable = false)
     @NotNull
     private User manager;

@@ -1,6 +1,7 @@
 package graduation.raitrest;
 
 import graduation.raitrest.model.entities.Restaurant;
+import graduation.raitrest.model.to.RestaurantTo;
 import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.util.Date;
@@ -54,8 +55,29 @@ public class RestoranTestData {
     public static ResultMatcher contentJson(Restaurant... expected) {
         return contentJson(List.of(expected));
     }
+    public static ResultMatcher contentJsonTo(RestaurantTo... expected) {
+        return contentJsonTo(List.of(expected));
+    }
+
 
     public static ResultMatcher contentJson(Iterable<Restaurant> expected) {
         return result -> assertThat(readListFromJsonMvcResult(result, Restaurant.class)).isEqualTo(expected);
+    }
+    public static ResultMatcher contentJsonTo(Iterable<RestaurantTo> expected) {
+        return result -> assertThat(readListFromJsonMvcResult(result, RestaurantTo.class)).isEqualTo(expected);
+    }
+
+
+    public static void assertMatchTo(RestaurantTo actual, RestaurantTo expected) {
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered");
+        //  assertThat(actual).isEqualToComparingFieldByField(expected);
+    }
+
+    public static void assertMatchTo(Iterable<RestaurantTo> actual, RestaurantTo... expected) {
+        assertMatchTo(actual, List.of(expected));
+    }
+    public static void assertMatchTo(Iterable<RestaurantTo> actual, Iterable<RestaurantTo> expected) {
+        assertThat(actual).usingElementComparatorIgnoringFields("registered").isEqualTo(expected);
+        // assertThat(actual).usingDefaultElementComparator().isEqualTo(expected);
     }
 }
