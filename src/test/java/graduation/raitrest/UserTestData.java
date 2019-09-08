@@ -2,6 +2,7 @@ package graduation.raitrest;
 
 import graduation.raitrest.model.entities.Role;
 import graduation.raitrest.model.entities.User;
+import graduation.raitrest.web.json.JsonUtil;
 import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.util.List;
@@ -53,7 +54,7 @@ public class UserTestData {
 
 
     public static void assertMatch(User actual, User expected) {
-        assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered","restaurants");
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered","restaurants","password");
     }
 
     public static void assertMatch(Iterable<User> actual, User... expected) {
@@ -61,7 +62,7 @@ public class UserTestData {
     }
 
     public static void assertMatch(Iterable<User> actual, Iterable<User> expected) {
-        assertThat(actual).usingElementComparatorIgnoringFields("registered","restaurants").isEqualTo(expected);
+        assertThat(actual).usingElementComparatorIgnoringFields("registered","restaurants","password").isEqualTo(expected);
     }
     public static ResultMatcher contentJson(User... expected) {
         return result -> assertMatch(readListFromJsonMvcResult(result, User.class), List.of(expected));
@@ -74,5 +75,8 @@ public class UserTestData {
 
     public static ResultMatcher contentJson(User expected) {
         return result -> assertMatch(readFromJsonMvcResult(result, User.class), expected);
+    }
+    public static String jsonWithPassword(User user, String passw) {
+        return JsonUtil.writeAdditionProps(user, "password", passw);
     }
 }

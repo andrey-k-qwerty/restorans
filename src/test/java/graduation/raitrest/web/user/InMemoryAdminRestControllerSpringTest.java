@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 //ются через спринг апп
 //@ContextConfiguration({"classpath:spring/spring-app.xml", "classpath:spring/inmemory.xml"})
 //@SpringJUnitConfig(locations = {"classpath:spring/spring-app.xml", "classpath:spring/inmemory.xml"})
-@SpringJUnitConfig(locations = { "classpath:spring/inmemory.xml"})
+@SpringJUnitConfig(locations = {"classpath:spring/spring-security.xml","classpath:spring/inmemory.xml"})
  class InMemoryAdminRestControllerSpringTest {
 
     @Autowired

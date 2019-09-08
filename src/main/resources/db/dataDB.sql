@@ -17,15 +17,15 @@ FROM USERS;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 ALTER SEQUENCE extra_seq RESTART WITH 100;
 INSERT INTO users (name, email, password)
-VALUES ('User', 'user@yandex.ru', 'password'),           --100000
-       ('Admin', 'admin@gmail.com', 'admin'),            --100001
-       ('Manager', 'manager@yandex.ru', 'manager'),      --100002
-       ('User_1', 'user_1@yandex.ru', 'password1'),      --100003
-       ('User_2', 'user_2@yandex.ru', 'password2'),      --100004
-       ('User_3', 'user_3@yandex.ru', 'password3'),      --100005
-       ('Manager_1', 'manager_1@yandex.ru', '1password'),--100006
-       ('Manager_2', 'manager_2@yandex.ru', '2password'),--100007
-       ('Manager_3', 'manager_3@yandex.ru', '3password');--100008
+VALUES ('User', 'user@yandex.ru', '{noop}password'),           --100000
+       ('Admin', 'admin@gmail.com', '{noop}admin'),            --100001
+       ('Manager', 'manager@yandex.ru', '{noop}manager'),      --100002
+       ('User_1', 'user_1@yandex.ru', '{noop}password1'),      --100003
+       ('User_2', 'user_2@yandex.ru', '{noop}password2'),      --100004
+       ('User_3', 'user_3@yandex.ru', '{noop}password3'),      --100005
+       ('Manager_1', 'manager_1@yandex.ru', '{noop}1password'),--100006
+       ('Manager_2', 'manager_2@yandex.ru', '{noop}2password'),--100007
+       ('Manager_3', 'manager_3@yandex.ru', '{noop}3password');--100008
 
 
 INSERT INTO user_roles (role, user_id)
