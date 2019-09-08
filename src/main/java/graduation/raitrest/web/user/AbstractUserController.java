@@ -3,11 +3,13 @@ package graduation.raitrest.web.user;
 import graduation.raitrest.model.entities.User;
 import graduation.raitrest.model.to.UserTo;
 import graduation.raitrest.service.UserService;
+import graduation.raitrest.util.UserUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static graduation.raitrest.util.ValidationUtil.assureIdConsistent;
+import static graduation.raitrest.util.ValidationUtil.checkNew;
 
 
 public abstract class AbstractUserController {
@@ -24,6 +26,15 @@ public abstract class AbstractUserController {
     public void delete(int id) {
         log.info("delete {}", id);
         service.delete(id);
+    }
+    public User create(User user) {
+        log.info("create {}", user);
+        checkNew(user);
+        return service.create(user);
+    }
+
+    public User create(UserTo userTo) {
+        return create(UserUtil.createNewFromTo(userTo));
     }
 
     public void update(User user, int id) {

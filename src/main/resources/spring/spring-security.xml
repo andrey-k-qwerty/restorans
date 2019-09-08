@@ -11,6 +11,7 @@
         <http-basic/>
         <intercept-url pattern="/rest/admin/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/rest/manager/**" access="hasRole('ROLE_MANAGER')"/>
+        <intercept-url pattern="/rest/profile/register" access="isAnonymous()"/>
         <intercept-url pattern="/**" access="isAuthenticated()"/>
 <!--        -->
         <csrf disabled="true"/>
@@ -22,6 +23,7 @@
         <intercept-url pattern="/index.html" access="permitAll()"/>
         <intercept-url pattern="/**/admin/**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/**/manager/**" access="hasRole('ROLE_MANAGER')"/>
+        <intercept-url pattern="/rest/profile/register" access="isAnonymous()"/>
         <intercept-url pattern="/**" access="isAuthenticated()"/>
         <form-login/>
         <logout/>

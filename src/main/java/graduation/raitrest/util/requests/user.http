@@ -8,16 +8,28 @@
 # Get all users
 GET http://localhost:8080/restaurant/rest/admin/users
 Accept: application/json
-Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu
+Authorization: Basic admin@gmail.com admin
 ###
 
 # Get user by ID 100001
 GET http://localhost:8080/restaurant/rest/admin/users/100001
 Accept: application/json
-Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu
+Authorization: Basic admin@gmail.com admin
 ###
 
-GET http://localhost:8080/restaurant/rest/admin/users
+
+
+
+GET http://localhost:8080/restaurant/rest/profile/register
 Content-Type: application/json
-Authorization: Basic bWFuYWdlckB5YW5kZXgucnU6bWFuYWdlcg==
+
 ###
+# curl -v -X POST -d '{}' -H 'Content-Type: application/json' http://localhost:8080/topjava/rest/admin/users --user admin@gmail.com:admin
+POST http://localhost:8080/topjava/rest/admin/users
+Authorization: Basic admin@gmail.com admin
+Content-Type: application/json
+
+{}
+
+###
+

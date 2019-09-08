@@ -46,6 +46,14 @@ class ManagerRestaurantRestControllerTest extends AbstractControllerTest {
 
     }
     @Test
+    void getNotFound() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT_ID)
+                .with(userHttpBasic(MANAGER_1)))
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+
+    @Test
     void getUnauth() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + RESTAURANT_ID))
                 .andExpect(status().isUnauthorized());
@@ -62,6 +70,14 @@ class ManagerRestaurantRestControllerTest extends AbstractControllerTest {
                 restaurant_2_RestaurantTo(RESTAURANT_SUPER_STAR),
                 restaurant_2_RestaurantTo(RESTAURANT_BLACK_PEARL));
     }
+    @Test
+    void deleteNotFound() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + RESTAURANT_ID)
+                .with(userHttpBasic(MANAGER_2)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
+    }
+
 
     @Test
     void update() throws Exception {

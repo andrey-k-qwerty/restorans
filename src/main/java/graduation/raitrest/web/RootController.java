@@ -28,10 +28,11 @@ public class RootController {
         return "login";
     }
 
-    @PostMapping("/users")
+    @PostMapping("/user")
     public String setUser(HttpServletRequest request) {
-        int userId = Integer.parseInt(request.getParameter("userId"));
-        SecurityUtil.setAuthUserId(userId);
+        String user = request.getParameter("email");
+//        SecurityUtil.setAuthUserId(userId);
+        service.loadUserByUsername(user);
         return "redirect:index";
     }
 }

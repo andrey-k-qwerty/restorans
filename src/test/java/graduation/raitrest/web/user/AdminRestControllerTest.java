@@ -42,6 +42,13 @@ class AdminRestControllerTest extends AbstractControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(contentJson(MANAGER));
     }
+    @Test
+    void getNotFound() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + 1)
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isUnprocessableEntity())
+                .andDo(print());
+    }
 
     @Test
     void getByEmail() throws Exception {
@@ -63,6 +70,13 @@ class AdminRestControllerTest extends AbstractControllerTest {
                 .sorted(Comparator.comparing(User::getName)).collect(Collectors.toList());
 
         assertMatch(userService.getAll(), collect);
+    }
+    @Test
+    void deleteNotFound() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + 1)
+                .with(userHttpBasic(ADMIN)))
+                .andExpect(status().isUnprocessableEntity())
+                .andDo(print());
     }
 
     @Test

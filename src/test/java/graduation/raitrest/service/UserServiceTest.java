@@ -3,8 +3,8 @@ package graduation.raitrest.service;
 import graduation.raitrest.model.entities.Role;
 import graduation.raitrest.model.entities.User;
 import graduation.raitrest.util.JpaUtil;
-import graduation.raitrest.util.exception.NotFoundException;
 
+import graduation.raitrest.util.exception.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

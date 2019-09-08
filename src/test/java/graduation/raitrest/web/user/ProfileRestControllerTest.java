@@ -9,12 +9,14 @@ import graduation.raitrest.web.SecurityUtil;
 import graduation.raitrest.web.json.JsonUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static graduation.raitrest.TestUtil.readFromJson;
 import static graduation.raitrest.TestUtil.userHttpBasic;
 import static graduation.raitrest.UserTestData.*;
 import static graduation.raitrest.web.user.ProfileRestController.REST_URL;
@@ -33,6 +35,11 @@ class ProfileRestControllerTest extends AbstractControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(contentJson(USER));
     }
+    @Test
+    void getUnAuth() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL))
+                .andExpect(status().isUnauthorized());
+    }
 
     @Test
     void delete() throws Exception {
@@ -44,6 +51,23 @@ class ProfileRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isNoContent())
                 .andDo(print());
         assertMatch(userService.getAll(), usersList);
+    }
+    @Test
+    void register() throws Exception {
+        UserTo createdTo = new UserTo(null, "newName", "newemail@ya.ru", "newPassword");
+
+        ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL + "/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(createdTo)))
+                .andDo(print())
+                .andExpect(status().isCreated());
+        User returned = readFromJson(action, User.class);
+
+        User created = UserUtil.createNewFromTo(createdTo);
+        created.setId(returned.getId());
+
+        assertMatch(returned, created);
+        assertMatch(userService.getByEmail("newemail@ya.ru"), created);
     }
 
     @Test

@@ -42,6 +42,14 @@ class ManagerMenuDetailRestControllerTest extends AbstractControllerTest {
                 .andExpect(result -> assertMatch(readFromJsonMvcResult(result, MenuDetails.class), MENU_DETAILS_STAR_TODAY_1));
     }
     @Test
+    void getNotFound() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + MENU_DETAILS_ID)
+                .with(userHttpBasic(MANAGER_1)))
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+
+    @Test
     void getUnauth() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + MENU_DETAILS_ID))
                 .andExpect(status().isUnauthorized());
@@ -56,6 +64,14 @@ class ManagerMenuDetailRestControllerTest extends AbstractControllerTest {
         List<MenuDetails> menuAllManager = service.getFilterByDateByRestaurant(LocalDate.now(), LocalDate.now().plusDays(1L), RESTAURANT_ID);
         assertMatch(menuAllManager, MENU_DETAILS_STAR_TODAY_2, MENU_DETAILS_STAR_TODAY_3, MENU_DETAILS_STAR_TODAY_4);
     }
+    @Test
+    void deleteNotFound() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + MENU_DETAILS_ID)
+                .with(userHttpBasic(MANAGER_2)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
+    }
+
 
  /*   @Test
     void getAll() throws Exception {
@@ -102,7 +118,7 @@ class ManagerMenuDetailRestControllerTest extends AbstractControllerTest {
 
     @Test
     void update() throws Exception {
-        SecurityUtil.setAuthUserId(MANAGER_ID);
+
         MenuDetails updated = new MenuDetails(MENU_DETAILS_ID + 3, RESTAURANT_STAR,
                 "Первое блюдо", "Супер Уха", "100 грамм", new BigDecimal("25.00"),
                 LocalDateTime.now());

@@ -49,6 +49,13 @@ class VoteRestControllerTest extends AbstractControllerTest {
                 .andExpect(result -> assertMatch(readFromJsonMvcResult(result, Vote.class), VOTES_1_YESTERDAY));
 
     }
+    @Test
+    void getNotFound() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + VOTES_ID)
+                .with(userHttpBasic(USER_1)))
+                .andExpect(status().isUnprocessableEntity());
+    }
+
 
     @Test
     void getUnauth() throws Exception {
@@ -69,10 +76,17 @@ class VoteRestControllerTest extends AbstractControllerTest {
         vote = service.getTodayVote(USER_2_ID);
         Assertions.assertNull(vote);
     }
+    @Test
+    void deleteNotFound() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + VOTES_ID)
+                .with(userHttpBasic(USER_2)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
+    }
 
     @Test
     void getAllByUser() throws Exception {
-        SecurityUtil.setAuthUserId(USER_ID);
+
 
         List<Vote>  collect = VOTE_LIST.stream().filter(vote -> vote.getUser().getId() == USER_ID)
                 .sorted((o1, o2) -> o2.getDateTime().toLocalDate().compareTo(o1.getDateTime().toLocalDate()))
