@@ -15,6 +15,8 @@ import static graduation.raitrest.util.ValidationUtil.checkNew;
 public abstract class AbstractUserController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
+
+
     @Autowired
     protected UserService service;
 

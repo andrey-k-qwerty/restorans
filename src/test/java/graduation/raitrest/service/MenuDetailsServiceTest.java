@@ -32,38 +32,38 @@ class MenuDetailsServiceTest extends AbstractServiceTest {
     @Test
      void get() {
         // просто по  id
-        MenuDetails menuDetails = service.get(MENU_DETAILS_ID + 2);
+        MenuDetails menuDetails = service.get(MENU_DETAILS_STAR_TODAY_3.getId());
         assertMatch(menuDetails, MENU_DETAILS_STAR_TODAY_3);
         //---
-        menuDetails = service.get(MENU_DETAILS_ID + 1);
+        menuDetails = service.get(MENU_DETAILS_STAR_TODAY_2.getId());
         assertMatch(menuDetails, MENU_DETAILS_STAR_TODAY_2);
-        menuDetails = service.get(MENU_DETAILS_ID);
+        menuDetails = service.get(MENU_DETAILS_STAR_TODAY_1.getId());
         assertMatch(menuDetails, MENU_DETAILS_STAR_TODAY_1);
-        menuDetails = service.get(MENU_DETAILS_ID + 3);
+        menuDetails = service.get(MENU_DETAILS_STAR_TODAY_4.getId());
         assertMatch(menuDetails, MENU_DETAILS_STAR_TODAY_4);
 
 
-        menuDetails = service.get(MENU_DETAILS_ID + 4);
+        menuDetails = service.get(MENU_DETAILS_PEARL_TODAY_1.getId());
         assertMatch(menuDetails, MENU_DETAILS_PEARL_TODAY_1);
-        menuDetails = service.get(MENU_DETAILS_ID + 5);
+        menuDetails = service.get(MENU_DETAILS_PEARL_TODAY_2.getId());
         assertMatch(menuDetails, MENU_DETAILS_PEARL_TODAY_2);
-        menuDetails = service.get(MENU_DETAILS_ID + 6);
+        menuDetails = service.get(MENU_DETAILS_PEARL_TODAY_3.getId());
         assertMatch(menuDetails, MENU_DETAILS_PEARL_TODAY_3);
-        menuDetails = service.get(MENU_DETAILS_ID + 7);
+        menuDetails = service.get(MENU_DETAILS_PEARL_TODAY_4.getId());
         assertMatch(menuDetails, MENU_DETAILS_PEARL_TODAY_4);
 
-        menuDetails = service.get(MENU_DETAILS_ID + 8);
+        menuDetails = service.get(MENU_DETAILS_SUPER_STAR_TODAY_1.getId());
         assertMatch(menuDetails, MENU_DETAILS_SUPER_STAR_TODAY_1);
-        menuDetails = service.get(MENU_DETAILS_ID + 9);
+        menuDetails = service.get(MENU_DETAILS_SUPER_STAR_TODAY_2.getId());
         assertMatch(menuDetails, MENU_DETAILS_SUPER_STAR_TODAY_2);
-        menuDetails = service.get(MENU_DETAILS_ID + 10);
+        menuDetails = service.get(MENU_DETAILS_SUPER_STAR_TODAY_3.getId());
         assertMatch(menuDetails, MENU_DETAILS_SUPER_STAR_TODAY_3);
-        menuDetails = service.get(MENU_DETAILS_ID + 11);
+        menuDetails = service.get(MENU_DETAILS_SUPER_STAR_TODAY_4.getId());
         assertMatch(menuDetails, MENU_DETAILS_SUPER_STAR_TODAY_4);
 
 
         // по id и manager_id
-        menuDetails = service.get(MENU_DETAILS_ID + 3, MANAGER_ID);
+        menuDetails = service.get(MENU_DETAILS_STAR_TODAY_4.getId(), MANAGER_ID);
         assertMatch(menuDetails, MENU_DETAILS_STAR_TODAY_4);
     }
 
@@ -138,7 +138,7 @@ class MenuDetailsServiceTest extends AbstractServiceTest {
     @Test
     public void updateNotFound() throws Exception {
         NotFoundException e =  assertThrows(NotFoundException.class, () -> service.update(MENU_DETAILS_STAR_TODAY_4, ADMIN_ID));
-        assertEquals(e.getMessage(), "Not found entity with id=" + (MENU_DETAILS_ID+3));
+        assertEquals(e.getMessage(), "Not found entity with id=" + (MENU_DETAILS_STAR_TODAY_4.getId()));
     }
 
 

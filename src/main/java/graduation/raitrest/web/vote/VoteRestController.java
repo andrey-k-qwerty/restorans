@@ -61,7 +61,7 @@ public class VoteRestController extends AbstractVoteController {
         // when updating set current time
         vote.setDateTime(LocalDateTime.now());
 
-        super.update(vote,voteTo.getRestaurantID(), id);
+        super.update(vote,voteTo.getRestaurantID(), id); // voteTo.id().
     }
 
     @PostMapping(/*value = "/{restaurantID}",*/consumes = MediaType.APPLICATION_JSON_VALUE)

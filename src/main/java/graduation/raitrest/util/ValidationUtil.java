@@ -18,8 +18,9 @@ public class ValidationUtil {
 
     private ValidationUtil() {
     }
-    public static final LocalTime MAX_TIME = LocalTime.of(11,00);
-    public static final LocalDateTime MAX_DATE_TIME = LocalDateTime.of(LocalDate.now(),MAX_TIME);
+
+    public static final LocalTime MAX_TIME = LocalTime.of(11, 00);
+    public static final LocalDateTime MAX_DATE_TIME = LocalDateTime.of(LocalDate.now(), MAX_TIME);
 
     public static <T> T checkNotFoundWithId(T object, int id) {
         return checkNotFound(object, "id=" + id);
@@ -54,6 +55,7 @@ public class ValidationUtil {
             throw new IllegalRequestDataException(bean + " must be with id=" + id);
         }
     }
+
     //  http://stackoverflow.com/a/28565320/548473
     public static Throwable getRootCause(Throwable t) {
         Throwable result = t;
@@ -64,11 +66,18 @@ public class ValidationUtil {
         }
         return result;
     }
+
+    public static String getMessage(Throwable e) {
+     //   return e.getLocalizedMessage() != null ? e.getLocalizedMessage() : e.getClass().getName();
+        return  e.getClass().getName();
+    }
+
     public static void checkDateTime(LocalDateTime dateTime) {
         if (dateTime.isAfter(MAX_DATE_TIME)) {
             throw new IllegalArgumentException("Time must be before " + MAX_TIME);
         }
     }
+
     public static ResponseEntity<String> getErrorResponse(BindingResult result) {
         StringJoiner joiner = new StringJoiner("<br>");
         result.getFieldErrors().forEach(
