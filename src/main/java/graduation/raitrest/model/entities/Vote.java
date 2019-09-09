@@ -12,7 +12,7 @@ import java.util.Date;
 public class Vote extends AbstractBaseEntity {
 
     @Column(name = "DATE_TIME")
-    private LocalDateTime dateTime;
+    private LocalDateTime dateTime = LocalDateTime.now();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", nullable = false)
@@ -60,14 +60,14 @@ public class Vote extends AbstractBaseEntity {
         this.restaurant = restaurant;
     }
 
-    public Vote(Integer id, LocalDateTime dateTime, @NotNull User user, @NotNull Restaurant restaurant) {
+    public Vote(Integer id, LocalDateTime dateTime, User user,  Restaurant restaurant) {
         super(id);
         this.dateTime = dateTime;
         this.user = user;
         this.restaurant = restaurant;
     }
 
-    public Vote(LocalDateTime dateTime, @NotNull User user, @NotNull Restaurant restaurant) {
+    public Vote(LocalDateTime dateTime,  User user,  Restaurant restaurant) {
         this(null,dateTime,user,restaurant);
     }
 

@@ -30,7 +30,7 @@ class JsonUtilTest {
         assertMatch(meals, restaurantList);
     }
     @Test
-    void testWriteOnlyAccess() throws Exception {
+    void writeOnlyAccess() throws Exception {
         String json = JsonUtil.writeValue(UserTestData.USER);
         System.out.println(json);
         assertThat(json, not(containsString("password")));

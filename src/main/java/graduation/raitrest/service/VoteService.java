@@ -99,6 +99,12 @@ public class VoteService {
         checkDateTime(vote.getDateTime());
         checkNotFoundWithId(voteRepository.save(vote, userId),vote.getId());
     }
+
+    public void update(Vote vote,int restaurantID, int userId) {
+        Assert.notNull(vote, "vote must not be null");
+        checkDateTime(vote.getDateTime());
+        checkNotFoundWithId(voteRepository.save(vote,restaurantID, userId),vote.getId());
+    }
     public void delete(int id, int userId) {
 
         checkNotFoundWithId(voteRepository.delete(id, userId), id);

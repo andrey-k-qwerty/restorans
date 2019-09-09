@@ -3,6 +3,7 @@ package graduation.raitrest;
 import graduation.raitrest.model.entities.Restaurant;
 import graduation.raitrest.model.entities.Vote;
 import graduation.raitrest.model.to.Rating;
+import graduation.raitrest.model.to.VoteTo;
 import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ import java.util.List;
 import static graduation.raitrest.RestoranTestData.*;
 import static graduation.raitrest.TestUtil.readListFromJsonMvcResult;
 import static graduation.raitrest.UserTestData.*;
+import static graduation.raitrest.util.ValidationUtil.MAX_DATE_TIME;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class VotesTestData {
@@ -60,5 +62,24 @@ public class VotesTestData {
 
     public static ResultMatcher contentJsonTo(Iterable<Rating> expected) {
         return result -> assertThat(readListFromJsonMvcResult(result, Rating.class)).isEqualTo(expected);
+    }
+
+    public static void assertMatchTo(VoteTo actual, VoteTo expected) {
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "dateTime", "user", "restaurant"); //,"user","restaurant"
+    }
+
+
+    public static boolean checkDateTimeIsAfter(LocalDateTime dateTime) {
+//        if (dateTime.isAfter(MAX_DATE_TIME)) {
+//            throw new IllegalArgumentException("Time must be before " + MAX_TIME);
+//        }
+        return dateTime.isAfter(MAX_DATE_TIME);
+    }
+
+    public static boolean checkDateTimeIsBefore(LocalDateTime dateTime) {
+//        if (dateTime.isAfter(MAX_DATE_TIME)) {
+//            throw new IllegalArgumentException("Time must be before " + MAX_TIME);
+//        }
+        return dateTime.isBefore(MAX_DATE_TIME);
     }
 }

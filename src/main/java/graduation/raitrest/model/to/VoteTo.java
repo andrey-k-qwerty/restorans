@@ -1,11 +1,27 @@
 package graduation.raitrest.model.to;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public class VoteTo extends BaseTo {
-    private LocalDateTime dateTime;
+
+    private LocalDateTime dateTime = LocalDateTime.now();
+
+    @NotNull
     private Integer RestaurantID;
 
+    private Integer UserID;
+
+    public VoteTo() {
+    }
+
+    public VoteTo(Integer id, Integer restaurantID) {
+        super(id);
+        RestaurantID = restaurantID;
+    }
+    public VoteTo( Integer restaurantID) {
+       this(null,restaurantID);
+    }
 
     public LocalDateTime getDateTime() {
         return dateTime;

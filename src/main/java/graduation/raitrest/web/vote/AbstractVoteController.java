@@ -2,6 +2,7 @@ package graduation.raitrest.web.vote;
 
 import graduation.raitrest.model.entities.Vote;
 import graduation.raitrest.model.to.Rating;
+import graduation.raitrest.model.to.VoteTo;
 import graduation.raitrest.service.VoteService;
 import graduation.raitrest.web.SecurityUtil;
 import org.slf4j.Logger;
@@ -45,12 +46,26 @@ public class AbstractVoteController {
         log.info("create {} for user {} , restaurant {}", vote, userId,restaurantID);
         return service.create(vote,restaurantID, userId);
     }
+    public Vote create(VoteTo voteTo) {
+        int userId = SecurityUtil.authUserId();
+        checkNew(voteTo);
+        log.info("create {} for user {} , restaurant {}", voteTo, userId,voteTo.getRestaurantID());
+        Vote newVote = new Vote();
+        return service.create(newVote,voteTo.getRestaurantID(), userId);
+    }
+
 
     public void update(Vote vote, int id) {
         int userId = SecurityUtil.authUserId();
         assureIdConsistent(vote, id);
         log.info("update {} for user {}", vote, userId);
         service.update(vote, userId);
+    }
+    public void update(Vote vote, int resaurantID, int id) {
+        int userId = SecurityUtil.authUserId();
+        assureIdConsistent(vote, id);
+        log.info("update {} for user {}", vote, userId);
+        service.update(vote, resaurantID,userId);
     }
 
     public List<Rating> getRatingRestaurants(LocalDate startDate, LocalDate endDate) {

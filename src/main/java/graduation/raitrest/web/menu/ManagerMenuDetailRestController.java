@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class ManagerMenuDetailRestController extends AbstractMenuDetailControlle
     }
 */
     @PostMapping(value = "/{restaurantID}",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MenuDetails> createWithLocation(@RequestBody MenuDetails menuDetails, @PathVariable int restaurantID) {
+    public ResponseEntity<MenuDetails> createWithLocation(@Valid @RequestBody MenuDetails menuDetails, @PathVariable int restaurantID) {
         MenuDetails created = super.create(menuDetails,restaurantID);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -55,7 +56,7 @@ public class ManagerMenuDetailRestController extends AbstractMenuDetailControlle
     @Override
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void update(@RequestBody MenuDetails menuDetails, @PathVariable int id) {
+    public void update(@Valid @RequestBody MenuDetails menuDetails, @PathVariable int id) {
         super.update(menuDetails, id);
     }
 

@@ -4,6 +4,7 @@ import graduation.raitrest.model.entities.Vote;
 import graduation.raitrest.model.to.Rating;
 import graduation.raitrest.util.exception.NotFoundException;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,6 +25,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class VoteServiceTest extends AbstractServiceTest {
     @Autowired
     public VoteService voteService;
+
+    //  Assumptions.assumeTrue(LocalTime.now().before, "Validation time");
 
     @Test
      void get() {
@@ -69,23 +72,44 @@ public class VoteServiceTest extends AbstractServiceTest {
     @Test
      void create() {
         Vote newVote = new Vote();
+        // For test set time before 11.00
         newVote.setDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(9, 20)));
         Vote voteCreate = voteService.create(newVote, RESTAURANT_ID, USER_3_ID);
         Integer id = voteCreate.getId();
         newVote.setId(id);
         assertMatch(newVote, voteService.get(id));
     }
+
     @Test
-    void createWrongTime() {
+    void createWithTime() {
+        Assumptions.assumeTrue(checkDateTimeIsBefore(LocalDateTime.now()), "Validation time");
         Vote newVote = new Vote();
+        Vote voteCreate = voteService.create(newVote, RESTAURANT_ID, USER_3_ID);
+        Integer id = voteCreate.getId();
+        newVote.setId(id);
+        assertMatch(newVote, voteService.get(id));
+    }
+
+
+    @Test
+    void createWrongTimeWithSetTime() {
+    //    Assumptions.assumeTrue(checkDateTimeIsBefore(LocalDateTime.now()), "Validation time");
+        Vote newVote = new Vote();
+        // For test set time after 11.00
         newVote.setDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(11, 20)));
         assertThrows(IllegalArgumentException.class ,() ->
                 voteService.create(newVote, RESTAURANT_ID, USER_3_ID));
-//        Vote voteCreate = voteService.create(newVote, RESTAURANT_ID, USER_3_ID);
-//        Integer id = voteCreate.getId();
-//        newVote.setId(id);
-//        assertMatch(newVote, voteService.get(id));
+
     }
+    @Test
+    void createWrongTimeWithoutSetTime() {
+        Assumptions.assumeTrue(checkDateTimeIsAfter(LocalDateTime.now()), "Validation time");
+        Vote newVote = new Vote();
+        assertThrows(IllegalArgumentException.class ,() ->
+                voteService.create(newVote, RESTAURANT_ID, USER_3_ID));
+
+    }
+
 
     @Test
      void createWithRestaurant() {
