@@ -22,6 +22,7 @@ import static graduation.raitrest.RestoranTestData.RESTAURANT_ID;
 import static graduation.raitrest.RestoranTestData.RESTAURANT_STAR;
 import static graduation.raitrest.TestUtil.*;
 import static graduation.raitrest.UserTestData.*;
+import static graduation.raitrest.util.Util.menuDetail_2_MenuDetailTo;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -39,7 +40,7 @@ class ManagerMenuDetailRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(result -> assertMatch(readFromJsonMvcResult(result, MenuDetails.class), MENU_DETAILS_STAR_TODAY_1));
+                .andExpect(result -> assertMatchTo(readFromJsonMvcResult(result, MenuDetailTo.class), menuDetail_2_MenuDetailTo(MENU_DETAILS_STAR_TODAY_1)));
     }
     @Test
     void getNotFound() throws Exception {
@@ -101,35 +102,35 @@ class ManagerMenuDetailRestControllerTest extends AbstractControllerTest {
     @Test
     void createWithLocation() throws Exception {
 
-        MenuDetails newMenu = new MenuDetails(null,// RESTAURANT_STAR
-                "Пятое блюдо", "Хлеб", "1 кусочек", new BigDecimal("0.10"), LocalDateTime.now());
+        MenuDetailTo newMenu = menuDetail_2_MenuDetailTo(new MenuDetails( RESTAURANT_STAR,
+                "Пятое блюдо", "Хлеб", "1 кусочек", new BigDecimal("0.10"), LocalDateTime.now()));
 
-        ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL + RESTAURANT_ID).with(userHttpBasic(MANAGER))
+        ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL).with(userHttpBasic(MANAGER))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newMenu)))
                 .andDo(print());
 
 
-        MenuDetails created =  readFromJson(action, MenuDetails.class);
+        MenuDetailTo created =  readFromJson(action, MenuDetailTo.class);
         newMenu.setId(created.getId());
 
-        assertMatch(created, newMenu);
+        assertMatchTo(created, newMenu);
     }
 
     @Test
     void update() throws Exception {
 
-        MenuDetails updated = new MenuDetails(MENU_DETAILS_ID + 3, RESTAURANT_STAR,
+        MenuDetailTo updated = menuDetail_2_MenuDetailTo(new MenuDetails(MENU_DETAILS_STAR_TODAY_4.id(), RESTAURANT_STAR,
                 "Первое блюдо", "Супер Уха", "100 грамм", new BigDecimal("25.00"),
-                LocalDateTime.now());
+                LocalDateTime.now()));
 
-        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + (MENU_DETAILS_ID + 3)).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(MockMvcRequestBuilders.put(REST_URL/* + (MENU_DETAILS_ID + 3)*/).contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(MANAGER))
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isNoContent());
 
-        MenuDetails actual = service.get(MENU_DETAILS_ID + 3, MANAGER_ID);
-        assertMatch(actual, updated);
+        MenuDetailTo actual = menuDetail_2_MenuDetailTo(service.get(MENU_DETAILS_STAR_TODAY_4.id(), MANAGER_ID));
+        assertMatchTo(actual, updated);
 
     }
 }

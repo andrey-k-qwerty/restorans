@@ -1,5 +1,7 @@
 package graduation.raitrest.service;
 
+import graduation.raitrest.TimingExtension;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.test.context.jdbc.Sql;
@@ -16,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 })
 //@ExtendWith(TimingExtension.class)
 @Sql(scripts = "classpath:db/dataDB.sql", config = @SqlConfig(encoding = "UTF-8"))
+@ExtendWith(TimingExtension.class)
 abstract public class AbstractServiceTest {
 
     @Autowired

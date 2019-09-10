@@ -65,6 +65,7 @@ public class ExceptionInfoHandler {
                     .findAny();
             if (entry.isPresent()) {
                 return logAndGetErrorInfo(req, e, false, VALIDATION_ERROR, messageUtil.getMessage(entry.get().getValue()));
+              //  return logAndGetErrorInfo(req, e, false, VALIDATION_ERROR, rootMsg);
             }
         }
         return logAndGetErrorInfo(req, e, true, DATA_ERROR);

@@ -10,17 +10,21 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
+
+import static graduation.raitrest.util.Util.menuDetail_2_MenuDetailTo;
 
 @RestController
 @RequestMapping(value = ManagerMenuDetailRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class ManagerMenuDetailRestController extends AbstractMenuDetailController {
-    public static final String REST_URL = "/rest/profile/menu";
+    public static final String REST_URL = "/rest/manager/menu";
 
-    @Override
+//    @Override
     @GetMapping("/{id}")
-    public MenuDetails get(@PathVariable int id) {
-        return super.get(id);
+    public MenuDetailTo getTo(@PathVariable int id) {
+        return menuDetail_2_MenuDetailTo(super.get(id));
     }
 
     @Override
@@ -42,23 +46,42 @@ public class ManagerMenuDetailRestController extends AbstractMenuDetailControlle
         return super.getAllCurrentDay();
     }
 */
-    @PostMapping(value = "/{restaurantID}",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<MenuDetails> createWithLocation(@Valid @RequestBody MenuDetails menuDetails, @PathVariable int restaurantID) {
-        MenuDetails created = super.create(menuDetails,restaurantID);
+    @PostMapping(/*value = "/{restaurantID}",*/consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<MenuDetailTo> createWithLocation(@Valid @RequestBody MenuDetailTo menuDetailsTo /*,@PathVariable int restaurantID*/) {
+        MenuDetails created = new MenuDetails(null,
+                menuDetailsTo.getTypeDish(),
+                menuDetailsTo.getDescription(),
+                menuDetailsTo.getQuantity() ,
+                menuDetailsTo.getPrice(),
+                LocalDateTime.now() // menuDetailsTo.getDateTime()
+
+        );
+
+         created = super.create(created,menuDetailsTo.getRestaurantID());
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
 
-        return ResponseEntity.created(uriOfNewResource).body(created);
+        return ResponseEntity.created(uriOfNewResource).body( menuDetail_2_MenuDetailTo(created));
     }
 
-    @Override
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+
+    @PutMapping(/*value = "/{id}",*/ consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void update(@Valid @RequestBody MenuDetails menuDetails, @PathVariable int id) {
-        super.update(menuDetails, id);
+    public void update(@Valid @RequestBody MenuDetailTo menuDetailsTo/*, @PathVariable int id*/) {
+        MenuDetails menuDetails = super.get(menuDetailsTo.id());
+        menuDetails.setTypeDish(menuDetailsTo.getTypeDish());
+        menuDetails.setDescription(menuDetailsTo.getDescription());
+        menuDetails.setQuantity(menuDetailsTo.getQuantity());
+        menuDetails.setPrice(menuDetailsTo.getPrice());
+        // date update
+        menuDetails.setDateTime(new Date());
+        // user and restaurant do not touch
+
+        super.update(menuDetails, menuDetailsTo.id());
     }
+
 
 
 

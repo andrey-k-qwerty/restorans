@@ -20,12 +20,18 @@ import static graduation.raitrest.util.ValidationUtil.checkNew;
 public class AbstractVoteController {
     private final Logger log = LoggerFactory.getLogger(getClass());
     @Autowired
-    private VoteService service;
+    protected VoteService service;
 
     public Vote get(int id) {
         int userId = SecurityUtil.authUserId();
         log.info("get vote {} for user {}", id, userId);
         return service.get(id, userId);
+    }
+
+    public Vote getTodayByUserID() {
+        int userId = SecurityUtil.authUserId();
+        log.info("getTodayByUserID for user {}", userId);
+        return service.getTodayVote(userId);
     }
 
     public void delete(int id) {
@@ -40,18 +46,19 @@ public class AbstractVoteController {
         return service.getAll(userId);
     }
 
-    public Vote create(Vote vote,int restaurantID) {
+    public Vote create(Vote vote, int restaurantID) {
         int userId = SecurityUtil.authUserId();
         checkNew(vote);
-        log.info("create {} for user {} , restaurant {}", vote, userId,restaurantID);
-        return service.create(vote,restaurantID, userId);
+        log.info("create {} for user {} , restaurant {}", vote, userId, restaurantID);
+        return service.create(vote, restaurantID, userId);
     }
+
     public Vote create(VoteTo voteTo) {
         int userId = SecurityUtil.authUserId();
         checkNew(voteTo);
-        log.info("create {} for user {} , restaurant {}", voteTo, userId,voteTo.getRestaurantID());
+        log.info("create {} for user {} , restaurant {}", voteTo, userId, voteTo.getRestaurantID());
         Vote newVote = new Vote();
-        return service.create(newVote,voteTo.getRestaurantID(), userId);
+        return service.create(newVote, voteTo.getRestaurantID(), userId);
     }
 
 
@@ -61,35 +68,25 @@ public class AbstractVoteController {
         log.info("update {} for user {}", vote, userId);
         service.update(vote, userId);
     }
+
     public void update(Vote vote, int resaurantID, int id) {
         int userId = SecurityUtil.authUserId();
         assureIdConsistent(vote, id);
         log.info("update {} for user {}", vote, userId);
-        service.update(vote, resaurantID,userId);
+        service.update(vote, resaurantID, userId);
     }
 
     public List<Rating> getRatingRestaurants(LocalDate startDate, LocalDate endDate) {
         int userId = SecurityUtil.authUserId();
         log.info("getBetween dates({} - {}) time({} - {}) for user {}", startDate, endDate, userId);
-        // рейтиг ресторанов смотреть можно всем, поєтому просто проверяем  зарегистрированный ли пользователь в системе
-        //  пока так
-        if (userId != 0)
-            return service.getRating(adjustStartDateTime(startDate), adjustEndDateTime(endDate));
-        else
-            return null;
-
+        return service.getRating(adjustStartDateTime(startDate), adjustEndDateTime(endDate));
 
     }
 
     public List<Rating> getTodayRatingRestaurants() {
         int userId = SecurityUtil.authUserId();
         log.info("getBetween dates({} - {}) time({} - {}) for user {}");
-        // рейтиг ресторанов смотреть можно всем, поєтому просто проверяем  зарегистрированный ли пользователь в системе
-        //  пока так
-        if (userId != 0)
-            return service.getTodayRating();
-        else
-            return null;
+        return service.getTodayRating();
 
 
     }

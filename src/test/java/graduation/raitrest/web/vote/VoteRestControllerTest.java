@@ -21,8 +21,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static graduation.raitrest.RestoranTestData.RESTAURANT_ID;
-import static graduation.raitrest.RestoranTestData.RESTAURANT_PEARL;
+import static graduation.raitrest.RestoranTestData.*;
 import static graduation.raitrest.TestUtil.*;
 import static graduation.raitrest.UserTestData.*;
 import static graduation.raitrest.VotesTestData.assertMatch;
@@ -104,39 +103,10 @@ class VoteRestControllerTest extends AbstractControllerTest {
 
     }
 
-    @Test
-    void getRatingRestaurants() throws Exception {
 
-        ResultMatcher matcher = contentJsonTo(service.getAllRating());
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "rating/all").with(userHttpBasic(USER_3)))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(matcher);
 
-    }
 
-    @Test
-    void filter() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "rating/all")
-//                .param("startDate", "2019-09-03")
-//                .param("endDate", "2019-09-03"))
-                .param("startDate", LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE))
-                .param("endDate", LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE)).with(userHttpBasic(USER_1)))
 
-                .andExpect(status().isOk()).andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJsonTo(service.getTodayRating()));
-    }
-
-    @Test
-    void getCurrentDayRatingRestaurants() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "rating").with(userHttpBasic(USER)))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJsonTo(service.getTodayRating()));
-    }
 
     @Test
     void update() throws Exception {
@@ -160,9 +130,9 @@ class VoteRestControllerTest extends AbstractControllerTest {
 
 
     @Test
-    void createWithoutSetTime() throws Exception {
-        Assumptions.assumeTrue(checkDateTimeIsBefore(LocalDateTime.now()), "Validation time");
-        VoteTo newVote = new VoteTo(RESTAURANT_ID);
+    void createByVote() throws Exception {
+        Assumptions.assumeTrue(checkDateTimeIsBefore(LocalDateTime.now()), "Validation time, run before 11.00");
+        VoteTo newVote = new VoteTo(RESTAURANT_STAR.id());
 
         ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
                 .with(userHttpBasic(USER_3))
@@ -171,6 +141,77 @@ class VoteRestControllerTest extends AbstractControllerTest {
                 .andDo(print());
 
         VoteTo returned = readFromJson(action, VoteTo.class);
+        newVote.setId(returned.getId());
+        assertMatchTo(returned, newVote);
+
+    }
+
+    @Test
+    void createByRestaurantID() throws Exception {
+        Assumptions.assumeTrue(checkDateTimeIsBefore(LocalDateTime.now()), "Validation time, run before 11.00");
+        VoteTo newVote = new VoteTo();
+
+        ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL + "restaurant/" + RESTAURANT_STAR.id())
+                .with(userHttpBasic(USER_3))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print());
+
+        VoteTo returned = readFromJson(action, VoteTo.class);
+        newVote.setRestaurantID(RESTAURANT_STAR.id());
+        newVote.setId(returned.getId());
+        assertMatchTo(returned, newVote);
+
+    }
+
+    @Test
+    void createDuplicateByVote() throws Exception {
+        Assumptions.assumeTrue(checkDateTimeIsBefore(LocalDateTime.now()), "Validation time, run before 11.00");
+        VoteTo newVote = new VoteTo(RESTAURANT_STAR.id());
+
+        ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
+                .with(userHttpBasic(USER_3))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(newVote)))
+                .andDo(print());
+
+        VoteTo returned = readFromJson(action, VoteTo.class);
+        newVote.setId(returned.getId());
+        assertMatchTo(returned, newVote);
+
+         newVote = new VoteTo(RESTAURANT_SUPER_STAR.id());
+         action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
+                .with(userHttpBasic(USER_3))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(newVote)))
+                .andDo(print());
+                 //.andExpect(status().isUnprocessableEntity());
+        returned = readFromJson(action, VoteTo.class);
+        newVote.setId(returned.getId());
+        assertMatchTo(returned, newVote);
+
+    }
+    @Test
+    void createDuplicateByRestaurantID() throws Exception {
+        Assumptions.assumeTrue(checkDateTimeIsBefore(LocalDateTime.now()), "Validation time, run before 11.00");
+        VoteTo newVote = new VoteTo();
+
+        ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL + "restaurant/" + RESTAURANT_STAR.id())
+                .with(userHttpBasic(USER_3))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print());
+
+        VoteTo returned = readFromJson(action, VoteTo.class);
+        newVote.setRestaurantID(RESTAURANT_STAR.id());
+        newVote.setId(returned.getId());
+        assertMatchTo(returned, newVote);
+
+        action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL + "restaurant/" + RESTAURANT_SUPER_STAR.id())
+                .with(userHttpBasic(USER_3))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print());
+
+        returned = readFromJson(action, VoteTo.class);
+        newVote.setRestaurantID(RESTAURANT_SUPER_STAR.id());
         newVote.setId(returned.getId());
         assertMatchTo(returned, newVote);
 

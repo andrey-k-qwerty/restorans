@@ -42,6 +42,7 @@ class ProfileRestControllerTest extends AbstractControllerTest {
     @Test
     void getUnAuth() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get(REST_URL))
+                .andDo(print())
                 .andExpect(status().isUnauthorized());
     }
 
@@ -106,9 +107,10 @@ class ProfileRestControllerTest extends AbstractControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.put(REST_URL).contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(USER))
                 .content(JsonUtil.writeValue(updatedTo)))
+                .andDo(print())
                 .andExpect(status().isConflict())
                 .andExpect(errorType(VALIDATION_ERROR))
                 .andExpect(detailMessage(EXCEPTION_DUPLICATE_EMAIL))
-                .andDo(print());
+               ;
     }
 }

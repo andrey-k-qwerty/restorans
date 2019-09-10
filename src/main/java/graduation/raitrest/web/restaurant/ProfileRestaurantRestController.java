@@ -1,9 +1,11 @@
 package graduation.raitrest.web.restaurant;
 
+import graduation.raitrest.AuthorizedUser;
 import graduation.raitrest.model.entities.Restaurant;
 import graduation.raitrest.model.to.RestaurantTo;
 import graduation.raitrest.web.SecurityUtil;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,24 +21,17 @@ public class ProfileRestaurantRestController extends AbstractRestaurantControlle
 
     public static final String REST_URL = "/rest/profile/restaurant";
 
-    @Override
+    //@Override
     @GetMapping
-    public List<RestaurantTo> getAll() {
-        log.info("getAllRestaurants");
+    public List<RestaurantTo> getAll(@AuthenticationPrincipal AuthorizedUser authUser) {
+        log.info("getAllRestaurants for user {}",authUser.getId());
         return super.getAll();
     }
 
 
     @GetMapping("/{id}")
-    public RestaurantTo getTo(@PathVariable int id) {
-        int userId = SecurityUtil.authUserId();
-        // надо проверить только что пользователь зарегистрирован
-        if (userId == 0) {
-            log.info("User not register.");
-            // тут ексепшин
-            return null;
-        }
-        log.info("get restaurant {} for user {}", id, userId);
+    public RestaurantTo getTo(@PathVariable int id,@AuthenticationPrincipal AuthorizedUser authUser) {
+              log.info("get restaurant {} for user {}", id, authUser.getId());
 
         return  restaurant_2_RestaurantTo(service.get(id));
     }

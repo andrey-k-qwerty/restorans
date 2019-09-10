@@ -14,6 +14,7 @@ import java.util.List;
 
 import static graduation.raitrest.MenuDetailsTestData.contentJson;
 import static graduation.raitrest.MenuDetailsTestData.contentJsonTo;
+import static graduation.raitrest.RestoranTestData.RESTAURANT_STAR;
 import static graduation.raitrest.TestUtil.userHttpBasic;
 import static graduation.raitrest.UserTestData.USER;
 import static graduation.raitrest.util.Util.menuDetail_2_MenuDetailTo;
@@ -50,6 +51,17 @@ class ProfileMenuDetailRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(contentJsonTo(menuDetail_2_MenuDetailTo(allMenu)));
+
+    }
+    @Test
+    void getTodayByRestaurantID() throws Exception {
+        List<MenuDetails> allMenu = service.getFilterByDateByRestaurant(LocalDate.now(), LocalDate.now(),RESTAURANT_STAR.id());
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + "restaurant/" + RESTAURANT_STAR.id() ).with(userHttpBasic(USER)))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(contentJsonTo(menuDetail_2_MenuDetailTo(allMenu)));
+
 
     }
 }

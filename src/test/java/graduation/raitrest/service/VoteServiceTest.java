@@ -93,7 +93,7 @@ public class VoteServiceTest extends AbstractServiceTest {
 
     @Test
     void createWrongTimeWithSetTime() {
-    //    Assumptions.assumeTrue(checkDateTimeIsBefore(LocalDateTime.now()), "Validation time");
+        Assumptions.assumeTrue(checkDateTimeIsAfter(LocalDateTime.now()), "Validation time");
         Vote newVote = new Vote();
         // For test set time after 11.00
         newVote.setDateTime(LocalDateTime.of(LocalDate.now(), LocalTime.of(11, 20)));

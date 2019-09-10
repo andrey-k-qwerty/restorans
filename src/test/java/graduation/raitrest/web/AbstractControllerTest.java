@@ -1,11 +1,13 @@
 package graduation.raitrest.web;
 
 //import org.junit.jupiter.api.BeforeEach;
+import graduation.raitrest.TimingExtension;
 import graduation.raitrest.service.UserService;
 import graduation.raitrest.util.JpaUtil;
 
 import graduation.raitrest.util.exception.ErrorType;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 //import org.springframework.test.context.ActiveProfiles;
@@ -33,6 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 //@ExtendWith(SpringExtension.class)
 @Transactional
 //@ActiveProfiles(resolver = AllActiveProfileResolver.class)
+@ExtendWith(TimingExtension.class)
 abstract public class AbstractControllerTest {
 
     private static final CharacterEncodingFilter CHARACTER_ENCODING_FILTER = new CharacterEncodingFilter();

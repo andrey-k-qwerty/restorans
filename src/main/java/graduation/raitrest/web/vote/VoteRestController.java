@@ -3,6 +3,7 @@ package graduation.raitrest.web.vote;
 import graduation.raitrest.model.entities.Vote;
 import graduation.raitrest.model.to.Rating;
 import graduation.raitrest.model.to.VoteTo;
+import graduation.raitrest.util.exception.IllegalRequestDataException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -39,41 +40,64 @@ public class VoteRestController extends AbstractVoteController {
         return super.getAllByUser();
     }
 
-    @Override
-    @GetMapping("/rating/all")
-    public List<Rating> getRatingRestaurants(
-            @RequestParam(required = false) LocalDate startDate,
-            @RequestParam(required = false) LocalDate endDate) {
-        return super.getRatingRestaurants(startDate, endDate);
-    }
-
-    @Override
-    @GetMapping("/rating")
-    public List<Rating> getTodayRatingRestaurants() {
-        return super.getTodayRatingRestaurants();
-    }
-
-
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void update(@Valid @RequestBody VoteTo voteTo,@PathVariable int id) {
+    public void update(@Valid @RequestBody VoteTo voteTo, @PathVariable int id) {
         Vote vote = super.get(id);
         // when updating set current time
         vote.setDateTime(LocalDateTime.now());
 
-        super.update(vote,voteTo.getRestaurantID(), id); // voteTo.id().
+        super.update(vote, voteTo.getRestaurantID(), id); // voteTo.id().
     }
+/*
+    If user votes again the same day:
+    If it is before 11:00 we asume that he changed his mind.
+    If it is after 11:00 then it is too late, vote can't be changed
 
-    @PostMapping(/*value = "/{restaurantID}",*/consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<VoteTo> createWithLocation(@Valid @RequestBody VoteTo voteTo) {
-        Vote created = super.create(voteTo);
+
+
+    */
+
+    // by vote
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<VoteTo> createByVote(@Valid @RequestBody VoteTo voteTo) {
+        Vote created = getTodayByUserID();
+        if (created != null) {
+            update(created, voteTo.getRestaurantID(), created.getId());
+        } else {
+            created = super.create(voteTo);
+        }
+        voteTo.setId(created.getId());
+        voteTo.setDateTime(created.getDateTime());
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
 
+
+        return ResponseEntity.created(uriOfNewResource).body(voteTo);
+    }
+
+    // by restaurant ID
+    @PostMapping(value = "/restaurant/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<VoteTo> createByRestaurantID(@PathVariable int id) {
+        // get today vote
+        Vote created = getTodayByUserID();
+        if (created != null) {
+            update(created, id, created.getId());
+        } else {
+            created = super.create(new Vote(), id);
+        }
+
+        VoteTo voteTo = new VoteTo();
+        voteTo.setRestaurantID(id);
         voteTo.setId(created.getId());
         voteTo.setDateTime(created.getDateTime());
+
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(REST_URL + "/{id}")
+                .buildAndExpand(created.getId()).toUri();
+
 
         return ResponseEntity.created(uriOfNewResource).body(voteTo);
     }
