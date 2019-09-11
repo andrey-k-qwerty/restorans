@@ -5,6 +5,7 @@ import graduation.raitrest.util.DateTimeUtil;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -16,13 +17,13 @@ public class MenuDetails extends AbstractBaseEntity {
 
     @Basic
     @Column(name = "DESCRIPTION")
+    @NotBlank
     private String description;
 
 
     @Column(name = "DATE_TIME")
-//    @Temporal(TemporalType.TIMESTAMP)
- //   @DateTimeFormat(iso= DateTimeFormat.ISO.DATE_TIME)
     @DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
+    @NotNull
     private LocalDateTime dateTime;
 
     @Basic

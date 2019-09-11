@@ -1,18 +1,17 @@
 package graduation.raitrest.model.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import graduation.raitrest.model.AbstractNamedEntity;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.List;
-import java.util.Set;
 
 @Entity
-@Table(name = "RESTAURANTS")
+@Table(name = "RESTAURANTS",  uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "address"}, name = "restaurant_unique_name_user_idx")})
 public class Restaurant extends AbstractNamedEntity {
 
     @Column(name = "ADDRESS", nullable = false)
@@ -24,23 +23,16 @@ public class Restaurant extends AbstractNamedEntity {
 
     @Column(name = "REGISTERED", nullable = false, columnDefinition = "timestamp default now()")
     @NotNull
-  //  @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private Date registered = new Date();
 
     @Column(name = "DESCRIPTION")
     private String description;
 
-    //    @ManyToMany(cascade = {CascadeType.PERSIST})
-//    @JoinTable(
-//            name = "RESTAURANT_OWNER",
-//            joinColumns = @JoinColumn(name = "RESTAURANT_ID"),
-//            inverseJoinColumns = @JoinColumn(name = "MANAGER_ID")
-//    )
-//    protected Set<User> managers ;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MANAGER_ID", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
     private User manager;
 

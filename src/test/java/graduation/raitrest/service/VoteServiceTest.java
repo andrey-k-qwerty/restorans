@@ -19,6 +19,7 @@ import static graduation.raitrest.RestoranTestData.RESTAURANT_PEARL;
 import static graduation.raitrest.UserTestData.*;
 import static graduation.raitrest.VotesTestData.assertMatch;
 import static graduation.raitrest.VotesTestData.*;
+import static graduation.raitrest.util.ValidationUtil.MAX_TIME;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
@@ -30,13 +31,13 @@ public class VoteServiceTest extends AbstractServiceTest {
 
     @Test
      void get() {
-        Vote vote = voteService.get(VOTES_ID);
+        Vote vote = voteService.get(VOTES_1_YESTERDAY.id());
         assertMatch(vote, VOTES_1_YESTERDAY);
 
-        vote = voteService.get(VOTES_ID + 4, USER_ID);
+        vote = voteService.get(VOTES_1_TODAY.id(), USER_ID);
         assertMatch(vote, VOTES_1_TODAY);
 
-        vote = voteService.getTodayVote(USER_1_ID);
+        vote = voteService.getTodayVote(VOTES_2_TODAY.getUser().id());
         assertMatch(vote, VOTES_2_TODAY);
 
         vote = voteService.getTodayVote(USER_3_ID);
@@ -102,8 +103,8 @@ public class VoteServiceTest extends AbstractServiceTest {
 
     }
     @Test
-    void createWrongTimeWithoutSetTime() {
-        Assumptions.assumeTrue(checkDateTimeIsAfter(LocalDateTime.now()), "Validation time");
+    void createWrongTime() {
+        Assumptions.assumeTrue(checkDateTimeIsAfter(LocalDateTime.now()), "Validation time, run after " + MAX_TIME);
         Vote newVote = new Vote();
         assertThrows(IllegalArgumentException.class ,() ->
                 voteService.create(newVote, RESTAURANT_ID, USER_3_ID));
@@ -124,7 +125,7 @@ public class VoteServiceTest extends AbstractServiceTest {
 
     @Test
      void update() {
-        Vote voteUpdate = voteService.get(VOTES_ID + 5, USER_1_ID);
+        Vote voteUpdate = voteService.get(VOTES_2_TODAY.id(), USER_1_ID);
         voteUpdate.setRestaurant(RESTAURANT_PEARL);
         voteService.update(voteUpdate , USER_1_ID);
         assertMatch(voteUpdate, voteService.get(voteUpdate.getId()));
@@ -139,7 +140,7 @@ public class VoteServiceTest extends AbstractServiceTest {
      void delete()  {
         Vote  vote = voteService.getTodayVote(USER_2_ID);
         Assertions.assertNotNull(vote);;
-        voteService.delete(VOTES_ID + 6, USER_2_ID);
+        voteService.delete(VOTES_3_TODAY.id(), USER_2_ID);
         vote = voteService.getTodayVote(USER_2_ID);
         Assertions.assertNull(vote);
 

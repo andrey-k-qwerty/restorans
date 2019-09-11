@@ -1,17 +1,19 @@
 package graduation.raitrest.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import graduation.raitrest.model.AbstractBaseEntity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
-@Table(name = "VOTES")
+@Table(name = "VOTES", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date_time"}, name = "rating_unique_user_datetime_idx")})
 public class Vote extends AbstractBaseEntity {
 
     @Column(name = "DATE_TIME")
+    @NotNull
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime dateTime = LocalDateTime.now();
 
     @ManyToOne(fetch = FetchType.LAZY)

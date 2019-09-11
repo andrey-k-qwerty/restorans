@@ -44,7 +44,7 @@ class ProfileMenuDetailRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getAllCurrentDayTo() throws Exception {
-        List<MenuDetails> allMenu = service.getFilterByDate(LocalDate.now(), LocalDate.now().plusDays(1L));
+        List<MenuDetails> allMenu = service.getFilterByDate(LocalDate.now(), LocalDate.now());
 
         mockMvc.perform(MockMvcRequestBuilders.get(REST_URL).with(userHttpBasic(USER)))
                 .andExpect(status().isOk())

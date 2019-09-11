@@ -1,10 +1,14 @@
 package graduation.raitrest.model.to;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class VoteTo extends BaseTo {
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDateTime dateTime = LocalDateTime.now();
 
     @NotNull
@@ -37,5 +41,28 @@ public class VoteTo extends BaseTo {
 
     public void setRestaurantID(Integer restaurantID) {
         RestaurantID = restaurantID;
+    }
+
+    public Integer getUserID() {
+        return UserID;
+    }
+
+    public void setUserID(Integer userID) {
+        UserID = userID;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof VoteTo)) return false;
+        VoteTo voteTo = (VoteTo) o;
+        return Objects.equals(dateTime, voteTo.dateTime) &&
+                Objects.equals(RestaurantID, voteTo.RestaurantID) &&
+                Objects.equals(UserID, voteTo.UserID);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dateTime, RestaurantID, UserID);
     }
 }

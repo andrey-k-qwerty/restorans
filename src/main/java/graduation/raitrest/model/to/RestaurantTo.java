@@ -16,10 +16,12 @@ public class RestaurantTo extends BaseTo{
 
     @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+//    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date registered = new Date();
 
     private String description;
 
+    @NotNull
     private Integer managerID;
 
     public RestaurantTo(Integer id,  String address, String owner,  Date registered, String description, Integer managerID) {

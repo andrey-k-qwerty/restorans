@@ -2,12 +2,14 @@ package graduation.raitrest.model.to;
 
 import graduation.raitrest.model.entities.Restaurant;
 
+import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class MenuDetailTo extends BaseTo{
 
+    @NotBlank
     private String description;
 
     private LocalDateTime dateTime;

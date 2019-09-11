@@ -27,6 +27,7 @@ import static graduation.raitrest.UserTestData.*;
 import static graduation.raitrest.VotesTestData.assertMatch;
 import static graduation.raitrest.VotesTestData.contentJson;
 import static graduation.raitrest.VotesTestData.*;
+import static graduation.raitrest.util.ValidationUtil.MAX_TIME;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -110,7 +111,7 @@ class VoteRestControllerTest extends AbstractControllerTest {
 
     @Test
     void update() throws Exception {
-        Assumptions.assumeTrue(checkDateTimeIsBefore(LocalDateTime.now()), "Validation time");
+        Assumptions.assumeTrue(checkDateTimeIsBefore(LocalDateTime.now()), "Validation time, run before " + MAX_TIME);
       //  Vote voteUpdate = service.get(VOTES_ID + 5, USER_1_ID);
         VoteTo voteUpdate = new VoteTo(VOTES_ID + 5, RESTAURANT_PEARL.getId());
 
@@ -131,7 +132,7 @@ class VoteRestControllerTest extends AbstractControllerTest {
 
     @Test
     void createByVote() throws Exception {
-        Assumptions.assumeTrue(checkDateTimeIsBefore(LocalDateTime.now()), "Validation time, run before 11.00");
+        Assumptions.assumeTrue(checkDateTimeIsBefore(LocalDateTime.now()), "Validation time, run before " + MAX_TIME);
         VoteTo newVote = new VoteTo(RESTAURANT_STAR.id());
 
         ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
@@ -148,7 +149,7 @@ class VoteRestControllerTest extends AbstractControllerTest {
 
     @Test
     void createByRestaurantID() throws Exception {
-        Assumptions.assumeTrue(checkDateTimeIsBefore(LocalDateTime.now()), "Validation time, run before 11.00");
+        Assumptions.assumeTrue(checkDateTimeIsBefore(LocalDateTime.now()), "Validation time, run before " + MAX_TIME);
         VoteTo newVote = new VoteTo();
 
         ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL + "restaurant/" + RESTAURANT_STAR.id())
@@ -165,7 +166,7 @@ class VoteRestControllerTest extends AbstractControllerTest {
 
     @Test
     void createDuplicateByVote() throws Exception {
-        Assumptions.assumeTrue(checkDateTimeIsBefore(LocalDateTime.now()), "Validation time, run before 11.00");
+        Assumptions.assumeTrue(checkDateTimeIsBefore(LocalDateTime.now()), "Validation time, run before " + MAX_TIME);
         VoteTo newVote = new VoteTo(RESTAURANT_STAR.id());
 
         ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
@@ -192,7 +193,7 @@ class VoteRestControllerTest extends AbstractControllerTest {
     }
     @Test
     void createDuplicateByRestaurantID() throws Exception {
-        Assumptions.assumeTrue(checkDateTimeIsBefore(LocalDateTime.now()), "Validation time, run before 11.00");
+        Assumptions.assumeTrue(checkDateTimeIsBefore(LocalDateTime.now()), "Validation time, run before " + MAX_TIME);
         VoteTo newVote = new VoteTo();
 
         ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL + "restaurant/" + RESTAURANT_STAR.id())
