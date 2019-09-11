@@ -37,7 +37,8 @@ class ProfileRestControllerTest extends AbstractControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get(REST_URL).with(userHttpBasic(USER)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(contentJson(USER));
+                .andExpect(contentJson(USER))
+                .andDo(print());
     }
     @Test
     void getUnAuth() throws Exception {

@@ -2,10 +2,16 @@
 > For windows use `Git Bash`
 
 #### get All Users
-`curl -v http://localhost:8080/restaurant/rest/admin/users`
+`curl -v http://localhost:8080/restaurant/rest/admin/users --user admin@gmail.com:admin`
 
 #### get Users 100001
-`curl -v http://localhost:8080/restaurant/rest/admin/users/100001`
+`curl -v http://localhost:8080/restaurant/rest/admin/users/100001 --user admin@gmail.com:admin`
+
+#### get not found
+`curl -v http://localhost:8080/restaurant/rest/admin/users/1 --user admin@gmail.com:admin`
+
+
+
 
 #### get All Restaurants
 `curl -v http://localhost:8080/restaurant/rest/profile/restaurant`

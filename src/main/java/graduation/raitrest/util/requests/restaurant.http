@@ -12,7 +12,7 @@ Authorization: Basic bWFuYWdlckB5YW5kZXgucnU6bWFuYWdlcg==
 ###
 
 # get restaurants by manager
-GET http://localhost:8080/restaurant/rest/profile/restaurant/manager/100002
+GET http://localhost:8080/restaurant/rest/manager/restaurant/manager/100002
 Accept: application/json
 Authorization: Basic bWFuYWdlckB5YW5kZXgucnU6bWFuYWdlcg==
 
