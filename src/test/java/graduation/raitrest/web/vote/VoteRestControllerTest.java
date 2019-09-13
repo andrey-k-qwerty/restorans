@@ -28,6 +28,7 @@ import static graduation.raitrest.VotesTestData.assertMatch;
 import static graduation.raitrest.VotesTestData.contentJson;
 import static graduation.raitrest.VotesTestData.*;
 import static graduation.raitrest.util.ValidationUtil.MAX_TIME;
+import static graduation.raitrest.util.VoteUtil.Vote_2_VoteTo;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -46,7 +47,7 @@ class VoteRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(result -> assertMatch(readFromJsonMvcResult(result, Vote.class), VOTES_1_YESTERDAY));
+                .andExpect(result -> assertMatchTo(readFromJsonMvcResult(result, VoteTo.class), Vote_2_VoteTo(VOTES_1_YESTERDAY)));
 
     }
 

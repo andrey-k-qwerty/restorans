@@ -7,22 +7,22 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class MenuDetailTo extends BaseTo{
+public class MenuDetailTo extends BaseTo {
 
-    @NotBlank
-    private String description;
-
-    private LocalDateTime dateTime;
+    private Integer restaurantID;
 
     private String typeDish;
+    @NotBlank
+    private String description;
 
     private String quantity;
 
     private BigDecimal price;
 
-    private Integer restaurantID;
+    private LocalDateTime dateTime;
 
-    public MenuDetailTo(Integer id, String description, LocalDateTime dateTime, String typeDish, String quantity, BigDecimal price, Integer restaurantID) {
+
+    public MenuDetailTo(Integer id, Integer restaurantID, String typeDish, String description, String quantity, BigDecimal price, LocalDateTime dateTime) {
         super(id);
         this.description = description;
         this.dateTime = dateTime;
@@ -89,11 +89,11 @@ public class MenuDetailTo extends BaseTo{
         return "MenuDetailTo{" +
                 "id=" + id +
                 ", restaurantID=" + restaurantID +
-                ", description='" + description + '\'' +
-                ", dateTime=" + dateTime +
                 ", typeDish='" + typeDish + '\'' +
+                ", description='" + description + '\'' +
                 ", quantity='" + quantity + '\'' +
                 ", price=" + price +
+                ", dateTime=" + dateTime +
                 '}';
     }
 

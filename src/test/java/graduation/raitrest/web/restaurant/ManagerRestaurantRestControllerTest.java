@@ -86,8 +86,9 @@ class ManagerRestaurantRestControllerTest extends AbstractControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.put(REST_URL + RESTAURANT_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(MANAGER))
-                .content(JsonUtil.writeValue(updated)))
-                .andExpect(status().isNoContent());
+                .content(JsonUtil.writeValue(restaurant_2_RestaurantTo(updated))))
+                .andExpect(status().isNoContent())
+                .andDo(print());
 
 
         assertMatch(service.get(RESTAURANT_ID, MANAGER_ID), updated);
@@ -100,7 +101,10 @@ class ManagerRestaurantRestControllerTest extends AbstractControllerTest {
         ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(MANAGER))
-                .content(JsonUtil.writeValue(newRestaurant)));
+                .content(JsonUtil.writeValue(restaurant_2_RestaurantTo(newRestaurant))))
+                .andDo(print());
+
+
 
         Restaurant returned = readFromJson(action, Restaurant.class);
         newRestaurant.setId(returned.getId());

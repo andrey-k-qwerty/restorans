@@ -12,16 +12,22 @@ public class VoteTo extends BaseTo {
     private LocalDateTime dateTime = LocalDateTime.now();
 
     @NotNull
-    private Integer RestaurantID;
+    private Integer restaurantID;
 
-    private Integer UserID;
+    private Integer userID;
 
     public VoteTo() {
     }
 
     public VoteTo(Integer id, Integer restaurantID) {
         super(id);
-        RestaurantID = restaurantID;
+        this.restaurantID = restaurantID;
+    }
+    public VoteTo(Integer id, Integer restaurantID,LocalDateTime dateTime,Integer userID) {
+        super(id);
+        this.restaurantID = restaurantID;
+        this.dateTime = dateTime;
+        this.userID = userID;
     }
     public VoteTo( Integer restaurantID) {
        this(null,restaurantID);
@@ -36,19 +42,19 @@ public class VoteTo extends BaseTo {
     }
 
     public Integer getRestaurantID() {
-        return RestaurantID;
+        return restaurantID;
     }
 
     public void setRestaurantID(Integer restaurantID) {
-        RestaurantID = restaurantID;
+        this.restaurantID = restaurantID;
     }
 
     public Integer getUserID() {
-        return UserID;
+        return userID;
     }
 
     public void setUserID(Integer userID) {
-        UserID = userID;
+        this.userID = userID;
     }
 
     @Override
@@ -57,12 +63,12 @@ public class VoteTo extends BaseTo {
         if (!(o instanceof VoteTo)) return false;
         VoteTo voteTo = (VoteTo) o;
         return Objects.equals(dateTime, voteTo.dateTime) &&
-                Objects.equals(RestaurantID, voteTo.RestaurantID) &&
-                Objects.equals(UserID, voteTo.UserID);
+                Objects.equals(restaurantID, voteTo.restaurantID) &&
+                Objects.equals(userID, voteTo.userID);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(dateTime, RestaurantID, UserID);
+        return Objects.hash(dateTime, restaurantID, userID);
     }
 }

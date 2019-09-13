@@ -17,10 +17,14 @@ public class Util {
     public static <T extends Comparable<? super T>> boolean isBetween(T value, @Nullable T start, @Nullable T end) {
         return (start == null || value.compareTo(start) >= 0) && (end == null || value.compareTo(end) <= 0);
     }
-
+/*
+    public MenuDetails(Integer id,  Restaurant restaurant, String typeDish, String description,
+                       String quantity, BigDecimal price, LocalDateTime dateTime) {
+    */
     public static MenuDetailTo menuDetail_2_MenuDetailTo (MenuDetails menuDetail) {
-        return new MenuDetailTo(menuDetail.getId(), menuDetail.getDescription(), menuDetail.getDateTime(),
-                menuDetail.getTypeDish(), menuDetail.getQuantity(),menuDetail.getPrice(),menuDetail.getRestaurant().getId());
+        return new MenuDetailTo(menuDetail.getId(), menuDetail.getRestaurant().getId(),
+                menuDetail.getTypeDish(), menuDetail.getDescription(),
+                menuDetail.getQuantity(),menuDetail.getPrice(),menuDetail.getDateTime());
     }
 
     public static List<MenuDetailTo> menuDetail_2_MenuDetailTo(List<MenuDetails> menuDetails) {
@@ -28,7 +32,7 @@ public class Util {
     }
 
     public static RestaurantTo restaurant_2_RestaurantTo (Restaurant restaurant) {
-        return new RestaurantTo(restaurant.getId(), restaurant.getAddress(),restaurant.getOwner(),restaurant.getRegistered(),
+        return new RestaurantTo(restaurant.getId(),restaurant.getName(), restaurant.getAddress(),restaurant.getOwner(),restaurant.getRegistered(),
                 restaurant.getDescription(),restaurant.getManager().getId());
     }
 

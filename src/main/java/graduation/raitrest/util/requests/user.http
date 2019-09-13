@@ -82,13 +82,27 @@ Content-Type: application/json
 
 ###
 
+# Register new user
+POST http://localhost:8080/restaurant/rest/profile/register
+Content-Type: application/json;charset=UTF-8
 
-# curl -v -X POST -d '{}' -H 'Content-Type: application/json' http://localhost:8080/topjava/rest/admin/users --user admin@gmail.com:admin
-POST http://localhost:8080/topjava/rest/admin/users
-Authorization: Basic admin@gmail.com admin
-Content-Type: application/json
+{"name":"newName","email":"newemail@ya.ru","password":"newPassword"}
+###
 
-{}
+# Update user
+PUT  http://localhost:8080/restaurant/rest/profile
+Content-Type: application/json;charset=UTF-8
+Authorization: Basic user@yandex.ru password
+
+{"name":"newName","email":"user@yandex.ru","password":"password"}
+###
+
+# Delete user
+DELETE  http://localhost:8080/restaurant/rest/profile
+Content-Type: application/json;charset=UTF-8
+Authorization: Basic newemail@ya.ru newPassword
 
 ###
+
+
 

@@ -16,15 +16,20 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static graduation.raitrest.util.VoteUtil.Vote_2_VoteTo;
+
 @RestController
 @RequestMapping(value = VoteRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class VoteRestController extends AbstractVoteController {
     public static final String REST_URL = "/rest/profile/votes";
 
-    @Override
+   // @Override
     @GetMapping("/{id}")
-    public Vote get(@PathVariable int id) {
-        return super.get(id);
+    public VoteTo getTo(@PathVariable int id) {
+
+        Vote vote = super.get(id);
+
+        return Vote_2_VoteTo(vote);
     }
 
     @Override

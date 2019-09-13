@@ -36,17 +36,16 @@ public class Restaurant extends AbstractNamedEntity {
     @NotNull
     private User manager;
 
-    public Restaurant(Integer id, String name, @NotBlank String address, String owner, @NotNull Date registered, String description, User manager) {
+    public Restaurant(Integer id, @NotBlank String name, @NotBlank String address, String owner,  String description, User manager) {
         super(id, name);
         this.address = address;
         this.owner = owner;
-        this.registered = registered;
         this.description = description;
         this.manager = manager;
     }
 
-    public Restaurant(String name, @NotBlank String address, String owner, @NotNull Date registered, String description, User manager) {
-        this(null, name, address, owner, registered, description, manager);
+    public Restaurant(@NotBlank String name, @NotBlank String address, String owner,  String description, User manager) {
+        this(null, name, address, owner,  description, manager);
     }
 
 
@@ -104,7 +103,7 @@ public class Restaurant extends AbstractNamedEntity {
                 ", owner='" + owner + '\'' +
                 ", registered=" + registered +
                 ", description='" + description + '\'' +
-                ", managerId=" + manager.getId() +
+             //   ", managerId=" + manager != null ? manager.getId().toString() : "" +
                 '}';
     }
 }

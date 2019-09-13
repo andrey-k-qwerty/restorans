@@ -2,12 +2,18 @@ package graduation.raitrest.model.to;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.Objects;
 
 public class RestaurantTo extends BaseTo{
+
+    @NotBlank
+    @Size(min = 2, max = 100)
+    protected String name;
 
     @NotBlank
     private String address;
@@ -24,8 +30,9 @@ public class RestaurantTo extends BaseTo{
     @NotNull
     private Integer managerID;
 
-    public RestaurantTo(Integer id,  String address, String owner,  Date registered, String description, Integer managerID) {
+    public RestaurantTo(Integer id, String name, String address, String owner,  Date registered, String description, Integer managerID) {
         super(id);
+        this.name = name;
         this.address = address;
         this.owner = owner;
         this.registered = registered;
@@ -68,6 +75,14 @@ public class RestaurantTo extends BaseTo{
         this.description = description;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Integer getManagerID() {
         return managerID;
     }
@@ -82,6 +97,7 @@ public class RestaurantTo extends BaseTo{
         if (!(o instanceof RestaurantTo)) return false;
         RestaurantTo that = (RestaurantTo) o;
         return  Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
                 Objects.equals(address, that.address) &&
                 Objects.equals(owner, that.owner) &&
                 Objects.equals(registered, that.registered) &&
@@ -91,6 +107,6 @@ public class RestaurantTo extends BaseTo{
 
     @Override
     public int hashCode() {
-        return Objects.hash(id,address, owner, registered, description, managerID);
+        return Objects.hash(id,name, address, owner, registered, description, managerID);
     }
 }

@@ -19,7 +19,7 @@ public class ValidationUtil {
     private ValidationUtil() {
     }
 
-    public static final LocalTime MAX_TIME = LocalTime.of(11, 00);
+    public static final LocalTime MAX_TIME = LocalTime.of(18, 00);
     public static final LocalDateTime MAX_DATE_TIME = LocalDateTime.of(LocalDate.now(), MAX_TIME);
 
     public static <T> T checkNotFoundWithId(T object, int id) {

@@ -2,6 +2,7 @@ package graduation.raitrest.repository.datajpa.grud;
 
 import graduation.raitrest.model.entities.Vote;
 import graduation.raitrest.model.to.Rating;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -22,6 +23,10 @@ public interface CrudVoteRepository extends JpaRepository<Vote, Integer> {
     @Transactional
     @Query("DELETE FROM Vote v WHERE v.id=:id AND v.user.id=:userId")
     int delete(@Param("id") int id, @Param("userId") int userId);
+
+    @EntityGraph(attributePaths = {"user","restaurant"},type = EntityGraph.EntityGraphType.LOAD)
+    @Query("SELECT v FROM Vote v  WHERE v.id=?1 and v.user.id=?2")
+    Vote getWithRestaurantAndUser(int id,int userId);
 
     @Query("SELECT v FROM Vote v WHERE v.user.id=:userId ORDER BY v.dateTime DESC")
     List<Vote> getAll(@Param("userId") int userId);

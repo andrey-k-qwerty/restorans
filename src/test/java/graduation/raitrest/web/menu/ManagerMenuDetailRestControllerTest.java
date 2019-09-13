@@ -36,12 +36,13 @@ class ManagerMenuDetailRestControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-            mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + MENU_DETAILS_ID) .with(userHttpBasic(MANAGER)))
+        mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + MENU_DETAILS_ID).with(userHttpBasic(MANAGER)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(result -> assertMatchTo(readFromJsonMvcResult(result, MenuDetailTo.class), menuDetail_2_MenuDetailTo(MENU_DETAILS_STAR_TODAY_1)));
     }
+
     @Test
     void getNotFound() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get(REST_URL + MENU_DETAILS_ID)
@@ -65,6 +66,7 @@ class ManagerMenuDetailRestControllerTest extends AbstractControllerTest {
         List<MenuDetails> menuAllManager = service.getFilterByDateByRestaurant(LocalDate.now(), LocalDate.now().plusDays(1L), RESTAURANT_ID);
         assertMatch(menuAllManager, MENU_DETAILS_STAR_TODAY_2, MENU_DETAILS_STAR_TODAY_3, MENU_DETAILS_STAR_TODAY_4);
     }
+
     @Test
     void deleteNotFound() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete(REST_URL + MENU_DETAILS_ID)
@@ -100,9 +102,9 @@ class ManagerMenuDetailRestControllerTest extends AbstractControllerTest {
     }*/
 
     @Test
-    void createWithLocation() throws Exception {
+    void create() throws Exception {
 
-        MenuDetailTo newMenu = menuDetail_2_MenuDetailTo(new MenuDetails( RESTAURANT_STAR,
+        MenuDetailTo newMenu = menuDetail_2_MenuDetailTo(new MenuDetails(RESTAURANT_STAR,
                 "Пятое блюдо", "Хлеб", "1 кусочек", new BigDecimal("0.10"), LocalDateTime.now()));
 
         ResultActions action = mockMvc.perform(MockMvcRequestBuilders.post(REST_URL).with(userHttpBasic(MANAGER))
@@ -111,7 +113,7 @@ class ManagerMenuDetailRestControllerTest extends AbstractControllerTest {
                 .andDo(print());
 
 
-        MenuDetailTo created =  readFromJson(action, MenuDetailTo.class);
+        MenuDetailTo created = readFromJson(action, MenuDetailTo.class);
         newMenu.setId(created.getId());
 
         assertMatchTo(created, newMenu);
@@ -127,7 +129,8 @@ class ManagerMenuDetailRestControllerTest extends AbstractControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.put(REST_URL/* + (MENU_DETAILS_ID + 3)*/).contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(MANAGER))
                 .content(JsonUtil.writeValue(updated)))
-                .andExpect(status().isNoContent());
+                .andExpect(status().isNoContent())
+                .andDo(print());
 
         MenuDetailTo actual = menuDetail_2_MenuDetailTo(service.get(MENU_DETAILS_STAR_TODAY_4.id(), MANAGER_ID));
         assertMatchTo(actual, updated);

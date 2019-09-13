@@ -33,7 +33,7 @@ public abstract class AbstractBaseEntity implements HasId {
     }
 
     @Override
-    public void setId(Integer id) {
+     public void setId(Integer id) {
         this.id = id;
     }
 

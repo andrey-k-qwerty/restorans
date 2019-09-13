@@ -38,16 +38,29 @@ public class ManagerRestaurantRestController extends AbstractRestaurantControlle
         super.delete(id);
     }
 
-    @Override
+  //  @Override
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void update(@Valid @RequestBody Restaurant restaurant, @PathVariable int id) {
+    public void update(@Valid @RequestBody RestaurantTo restaurantTo, @PathVariable int id) {
+        Restaurant restaurant = super.get(id);
+        // id, manager and data - do not change
+        restaurant.setName(restaurantTo.getName());
+        restaurant.setAddress(restaurantTo.getAddress());
+        restaurant.setOwner(restaurantTo.getOwner());
+        restaurant.setDescription(restaurantTo.getDescription());
+
         super.update(restaurant, id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> createWithLocation(@Valid @RequestBody Restaurant restaurant) {
-        Restaurant created = super.create(restaurant);
+    public ResponseEntity<Restaurant> createWithLocation(@Valid @RequestBody RestaurantTo restaurantTo) {
+        Restaurant created = new Restaurant(restaurantTo.getName(),
+                restaurantTo.getAddress(),
+                restaurantTo.getOwner(),
+                restaurantTo.getDescription(),
+                null
+                );
+         created = super.create(created);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
