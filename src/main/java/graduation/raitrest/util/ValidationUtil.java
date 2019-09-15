@@ -1,7 +1,10 @@
 package graduation.raitrest.util;
 
 
+import graduation.raitrest.model.entities.Role;
+import graduation.raitrest.model.entities.User;
 import graduation.raitrest.model.to.HasId;
+import graduation.raitrest.model.to.UserTo;
 import graduation.raitrest.util.exception.IllegalRequestDataException;
 import graduation.raitrest.util.exception.NotFoundException;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +22,7 @@ public class ValidationUtil {
     private ValidationUtil() {
     }
 
-    public static final LocalTime MAX_TIME = LocalTime.of(18, 00);
+    public static final LocalTime MAX_TIME = LocalTime.of(11, 00);
     public static final LocalDateTime MAX_DATE_TIME = LocalDateTime.of(LocalDate.now(), MAX_TIME);
 
     public static <T> T checkNotFoundWithId(T object, int id) {
@@ -69,13 +72,19 @@ public class ValidationUtil {
 
     public static String getMessage(Throwable e) {
      //   return e.getLocalizedMessage() != null ? e.getLocalizedMessage() : e.getClass().getName();
-        return  e.getClass().getName();
+        return  e.getClass().getName() + ": "+ e.getMessage();
     }
 
     public static void checkDateTime(LocalDateTime dateTime) {
         if (dateTime.isAfter(MAX_DATE_TIME)) {
             throw new IllegalArgumentException("Time must be before " + MAX_TIME);
         }
+    }
+
+    public static void checkRoleForProfile(UserTo userTo) {
+        //  only roles(user and manager) can be created, not admin
+        if (userTo.getRoles().contains(Role.ROLE_ADMIN))
+            throw new IllegalRequestDataException("Only roles(user and manager) can be created, not admin");
     }
 
     public static ResponseEntity<String> getErrorResponse(BindingResult result) {

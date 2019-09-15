@@ -8,8 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static graduation.raitrest.util.ValidationUtil.assureIdConsistent;
-import static graduation.raitrest.util.ValidationUtil.checkNew;
+import static graduation.raitrest.util.ValidationUtil.*;
 
 
 public abstract class AbstractUserController {
@@ -36,6 +35,7 @@ public abstract class AbstractUserController {
     }
 
     public User create(UserTo userTo) {
+        checkRoleForProfile(userTo);
         return create(UserUtil.createNewFromTo(userTo));
     }
 
@@ -47,6 +47,7 @@ public abstract class AbstractUserController {
     public void update(UserTo userTo, int id) {
         log.info("update {} with id={}", userTo, id);
         assureIdConsistent(userTo, id);
+        checkRoleForProfile(userTo);
         service.update(userTo);
     }
     public void enable(int id, boolean enabled) {

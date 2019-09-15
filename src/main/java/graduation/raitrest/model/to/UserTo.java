@@ -1,9 +1,13 @@
 package graduation.raitrest.model.to;
 
+import graduation.raitrest.model.entities.Role;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.EnumSet;
+import java.util.Set;
 
 public class UserTo extends BaseTo implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -21,6 +25,15 @@ public class UserTo extends BaseTo implements Serializable {
     @Size(min = 5, max = 32, message = "length must be between 5 and 32 characters")
     private String password;
 
+    private Set<Role> roles;
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 
     public UserTo() {
     }
@@ -30,6 +43,14 @@ public class UserTo extends BaseTo implements Serializable {
         this.name = name;
         this.email = email;
         this.password = password;
+    }
+
+    public UserTo(Integer id, String name, String email, String password,Role role) {
+        super(id);
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.roles = EnumSet.of(role);
     }
 
     public String getPassword() {
@@ -62,6 +83,7 @@ public class UserTo extends BaseTo implements Serializable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
+                ", roles=" + roles +
                 '}';
     }
 }

@@ -13,6 +13,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -83,6 +84,9 @@ public class User extends AbstractNamedEntity {
 
     public User(Integer id, String name, String email, String password, Role role, Role... roles) {
         this(id, name, email, password, true, new Date(), EnumSet.of(role, roles));
+    }
+    public User(Integer id, String name, String email, String password, Collection<Role> roles) {
+        this(id, name, email, password, true, new Date(), roles);
     }
 
     public User(Integer id, String name, String email, String password, boolean enabled, Date registered, Collection<Role> roles) {

@@ -1,9 +1,4 @@
-# For a quick start check out our HTTP Requests collection (Tools|HTTP Client|Open HTTP Requests Collection).
-#
-# Following HTTP Request Live Templates are available:
-# * 'gtrp' and 'gtr' create a GET request with or without query parameters;
-# * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
-# * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
+# ONLY ADMIN!
 
 # Get all users
 GET http://localhost:8080/restaurant/rest/admin/users
@@ -68,13 +63,14 @@ Authorization: Basic admin@gmail.com admin
 {"name":"New","email":"new@gmail.com","enabled":true,"registered":"2019-09-11T12:01","roles":["ROLE_USER","ROLE_ADMIN"],"password":"newPass"}
 ###
 
+# Enable-disable user
 PATCH http://localhost:8080/restaurant/rest/admin/users/100000?enabled=false
 Content-Type: application/json;charset=UTF-8
 Authorization: Basic admin@gmail.com admin
 
 ###
 
-#ProfileRestController
+#For
 
 GET http://localhost:8080/restaurant/rest/profile
 Authorization: Basic user@yandex.ru password

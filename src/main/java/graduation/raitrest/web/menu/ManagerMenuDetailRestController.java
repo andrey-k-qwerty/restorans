@@ -34,18 +34,6 @@ public class ManagerMenuDetailRestController extends AbstractMenuDetailControlle
         super.delete(id);
     }
 
-   /* @Override
-    @GetMapping("/all")
-    public List<MenuDetailTo> getAll() {
-        return super.getAll();
-    }
-
-    @Override
-    @GetMapping()
-    public List<MenuDetails> getAllCurrentDay() {
-        return super.getAllCurrentDay();
-    }
-*/
     @PostMapping(/*value = "/{restaurantID}",*/consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<MenuDetailTo> createWithLocation(@Valid @RequestBody MenuDetailTo menuDetailsTo /*,@PathVariable int restaurantID*/) {
         MenuDetails created = new MenuDetails(null,
@@ -77,7 +65,7 @@ public class ManagerMenuDetailRestController extends AbstractMenuDetailControlle
         menuDetails.setPrice(menuDetailsTo.getPrice());
         // date update
         menuDetails.setDateTime(new Date());
-        // user and restaurant do not touch
+        // manager and restaurant do not touch
 
         super.update(menuDetails, menuDetailsTo.id());
     }

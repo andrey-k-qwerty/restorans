@@ -20,16 +20,7 @@ class RootControllerTest extends AbstractControllerTest {
                 .with(userAuth(ADMIN)))
                 .andDo(print())
                 .andExpect(status().isOk());
-//                .andExpect(view().name("users"))
-//                .andExpect(forwardedUrl("/WEB-INF/jsp/users.jsp"))
-//                .andExpect(model().attribute("users",
-//                        new AssertionMatcher<List<User>>() {
-//                            @Override
-//                            public void assertion(List<User> actual) throws AssertionError {
-//                                assertMatch(actual, ADMIN, USER);
-//                            }
-//                        }
-//                ));
+
     }
     @Test
     void unAuth() throws Exception {
@@ -38,21 +29,6 @@ class RootControllerTest extends AbstractControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("http://localhost/login"));
     }
-   /* @Test
-    void testUsers() throws Exception {
-        mockMvc.perform(get("/users"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(view().name("users"))
-                .andExpect(forwardedUrl("/WEB-INF/jsp/users.jsp"))
-                .andExpect(model().attribute("users",
-                        new AssertionMatcher<List<User>>() {
-                            @Override
-                            public void assertion(List<User> actual) throws AssertionError {
-                                assertMatch(actual, ADMIN, USER);
-                            }
-                        }
-                ));
-    }*/
+
 
 }

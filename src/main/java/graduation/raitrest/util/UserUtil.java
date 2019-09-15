@@ -4,12 +4,13 @@ package graduation.raitrest.util;
 import graduation.raitrest.model.entities.Role;
 import graduation.raitrest.model.entities.User;
 import graduation.raitrest.model.to.UserTo;
+import graduation.raitrest.util.exception.IllegalRequestDataException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
 
 public class UserUtil {
     public static User createNewFromTo(UserTo userTo) {
-        return new User(null, userTo.getName(), userTo.getEmail().toLowerCase(), userTo.getPassword(), Role.ROLE_USER);
+        return new User(null, userTo.getName(), userTo.getEmail().toLowerCase(), userTo.getPassword(), userTo.getRoles());
     }
 
     public static User updateFromTo(User user, UserTo userTo) {
